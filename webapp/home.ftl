@@ -4,10 +4,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>SLiPP</title>
 
-<link href="./stylesheets/bootstrap.css" rel="stylesheet">
-<link href="./stylesheets/bootstrap-responsive.css" rel="stylesheet">
-<link href="./stylesheets/docs.css" rel="stylesheet">
-<link href="./stylesheets/main.css" rel="stylesheet">
+<link href="/stylesheets/bootstrap.css" rel="stylesheet">
+<link href="/stylesheets/bootstrap-responsive.css" rel="stylesheet">
+<link href="/stylesheets/docs.css" rel="stylesheet">
+<link href="/stylesheets/main.css" rel="stylesheet">
 <style>
   body {
     padding-top: 40px;
@@ -29,7 +29,7 @@
             <ul class="nav">
               <li><a href="/">Home</a></li>
               <li><a href="./login.html">로그인</a></li>
-              <li><a href="./form.html">회원가입</a></li> 
+              <li><a href="/user/form">회원가입</a></li> 
               <li><a href="#">로그아웃</a></li>
               <li><a href="#">개인정보수정</a></li> 
             </ul>
