@@ -55,18 +55,14 @@
 		                <td span="3">이메일</td>
 		                <td></td>
 		            </tr>
+		            <#list users as user>
 	                <tr>
-	                    <td>javajigi</td>
-	                    <td>박재성</td>
-	                    <td>javajigi@slipp.net</td>
+	                    <td>${user.userId}</td>
+	                    <td>${user.name}</td>
+	                    <td>${user.email}</td>
 	                    <td><a href="">수정</a></td>
 	                </tr>
-	                <tr>
-	                    <td>sanjigi</td>
-	                    <td>산지기</td>
-	                    <td>sanjigi@slipp.net</td>
-	                    <td><a href="">수정</a></td>
-	                </tr>	                
+	                </#list>               
 		        </table>
 			</div>
 		</div>
