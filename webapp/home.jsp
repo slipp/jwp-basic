@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -25,17 +26,15 @@
 			<div class="span12">
 		        <table class="table">
 		            <tr>
-		                <td span="3">사용자 아이디</td>
-		                <td span="3">이름</td>
-		                <td span="3">이메일</td>
-		                <td></td>
+		                <td span="6">제목</td>
+		                <td span="2">작성자</td>
+		                <td span="2">작성일</td>
 		            </tr>
-		            <c:forEach items="${users}" var="user">
+		            <c:forEach items="${questions}" var="each">
 		            <tr>
-	                    <td>${user.userId}</td>
-	                    <td>${user.name}</td>
-	                    <td>${user.email}</td>
-	                    <td><a href="/user/updateForm?userId=${user.userId}">수정</a></td>
+	                    <td><a href="/qna/show?questionId=${each.questionId}">${each.title}</a></td>
+	                    <td>${each.writer}</td>
+	                    <td><fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${each.createdDate}" /></td>
 	                </tr>
 	                </c:forEach>
 		        </table>
