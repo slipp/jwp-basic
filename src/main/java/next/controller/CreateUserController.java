@@ -14,7 +14,9 @@ import next.model.User;
 
 @WebServlet(value= {"/user/create", "/user/form"})
 public class CreateUserController extends HttpServlet {
-	@Override
+    private static final long serialVersionUID = 1L;
+
+    @Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 	    RequestDispatcher rd = req.getRequestDispatcher("/create.jsp");
         rd.forward(req, resp);

@@ -34,6 +34,14 @@ public class User {
         this.name = updateUser.name;
         this.email = updateUser.email;
     }
+    
+    public boolean matchPassword(String password) {
+        if (password == null) {
+            return false;
+        }
+        
+        return this.password.equals(password);
+    }
 
 	@Override
 	public int hashCode() {
@@ -76,4 +84,5 @@ public class User {
 	public String toString() {
 		return "User [userId=" + userId + ", name=" + name + ", email=" + email + "]";
 	}
+	
 }
