@@ -1,3 +1,6 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -55,14 +58,14 @@
 		                <td span="3">이메일</td>
 		                <td></td>
 		            </tr>
-		            <#list users as user>
-	                <tr>
+		            <c:forEach items="${users}" var="user">
+		            <tr>
 	                    <td>${user.userId}</td>
 	                    <td>${user.name}</td>
 	                    <td>${user.email}</td>
 	                    <td><a href="">수정</a></td>
 	                </tr>
-	                </#list>               
+	                </c:forEach>
 		        </table>
 			</div>
 		</div>
