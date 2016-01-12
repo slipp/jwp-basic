@@ -1,4 +1,4 @@
-package next.controller;
+package next.web;
 
 import java.io.IOException;
 
@@ -12,16 +12,12 @@ import javax.servlet.http.HttpServletResponse;
 import core.db.DataBase;
 import next.model.User;
 
-@WebServlet(value= {"/user/create", "/user/form"})
-public class CreateUserController extends HttpServlet {
-	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-	    RequestDispatcher rd = req.getRequestDispatcher("/create.jsp");
-        rd.forward(req, resp);
-	}
-	
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+@WebServlet("/create")
+public class CreateUserServlet extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         User user = new User(
                 req.getParameter("userId"), 
                 req.getParameter("password"), 
@@ -31,6 +27,8 @@ public class CreateUserController extends HttpServlet {
 
         DataBase.addUser(user);
 
-        resp.sendRedirect("/");
-	}
+        req.setAttribute("users", DataBase.findAll());
+        RequestDispatcher rd = req.getRequestDispatcher("index.jsp");
+        rd.forward(req, resp);
+    }
 }
