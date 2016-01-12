@@ -1,6 +1,7 @@
 package next.controller;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import core.db.DataBase;
+import next.dao.UserDao;
 import next.model.User;
 
 @WebServlet(value = { "/user/update", "/user/updateForm" })
@@ -19,13 +21,25 @@ public class UpdateUserController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String userId = req.getParameter("userId");
-        User user = DataBase.findUserById(userId);
-        if (user == null) {
-            throw new NullPointerException("사용자를 찾을 수 없습니다.");
-        }
+        User user = findByUserId(userId);
         req.setAttribute("user", user);
         RequestDispatcher rd = req.getRequestDispatcher("/update.jsp");
         rd.forward(req, resp);
+    }
+    
+    private User findByUserId(String userId) {
+        UserDao userDao = new UserDao();
+        User user = null;
+        try {
+            user = userDao.findByUserId(userId);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        
+        if (user == null) {
+            throw new NullPointerException("사용자를 찾을 수 없습니다.");
+        }
+        return user;
     }
 
     @Override
@@ -36,12 +50,14 @@ public class UpdateUserController extends HttpServlet {
                 req.getParameter("name"),
                 req.getParameter("email"));
         System.out.println("User : " + updateUser);
-
-        User user = DataBase.findUserById(updateUser.getUserId());
-        if (user == null) {
-            throw new NullPointerException("사용자를 찾을 수 없습니다.");
-        }
+        
+        User user = findByUserId(updateUser.getUserId());
+        UserDao userDao = new UserDao();
         user.update(updateUser);
+        try {
+            userDao.update(user);
+        } catch (SQLException e) {
+        }
 
         req.setAttribute("users", DataBase.findAll());
         resp.sendRedirect("/");
