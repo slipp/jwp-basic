@@ -13,7 +13,7 @@
 
 	<div class="container">
 		<div class="row">
-			<div class="span12">
+			<div class="span8">
 				<div class="page-header">
 					<h1>로그인</h1>
 				</div>
@@ -21,7 +21,7 @@
 					<form name="login" method="post" action="/login">
 						<table>
 							<tr>
-								<td>사용자 아이디</td>
+								<td class="span1">아이디</td>
 								<td><input type="text" name="userId"></td>
 							</tr>
 							<tr>

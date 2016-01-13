@@ -14,21 +14,14 @@
 <body>
 	<%@ include file="/include/navigation.jspf" %>
    
-	<header class="jumbotron subhead" id="overview">
-	<div class="container">
-		<h1>SLiPP</h1>
-		<p class="lead">Sustaninable Life, Programming, Programmer</p>
-	</div>
-	</header>     
-    
 	<div class="container">
 		<div class="row">
-			<div class="span12">
+			<div class="span8">
 		        <table class="table">
 		            <tr>
 		                <td span="6">제목</td>
-		                <td span="2">작성자</td>
-		                <td span="2">작성일</td>
+		                <td span="1">작성자</td>
+		                <td span="1">작성일</td>
 		            </tr>
 		            <c:forEach items="${questions}" var="each">
 		            <tr>
@@ -38,6 +31,7 @@
 	                </tr>
 	                </c:forEach>
 		        </table>
+		        <a class="btn btn-primary pull-right" href="/qna/create.jsp">질문하기</a>
 			</div>
 		</div>
 	</div>

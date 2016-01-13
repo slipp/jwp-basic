@@ -16,7 +16,7 @@
 
 	<div class="container">
 		<div class="row">
-			<div class="span12">
+			<div class="span8">
 			<div class="post">
 			    <h2 class="post-title">
 			        <a href="">${question.title}</a>
@@ -26,15 +26,14 @@
 			        <span class="post-date"><fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${question.createdDate}" /></span>
 			    </div>
 			    <div class="post-content">
-			        <div class="about">내용 : </div>
 			        ${question.contents}
 			    </div>
 			</div>
 			
 			<br /> 
-		  	<a href="">수정</a>&nbsp;&nbsp;
-		  	<a href="">삭제</a>&nbsp;&nbsp;
-		  	<a href="/">목록으로</a>
+		  	<a class="btn" href="">수정</a>&nbsp;&nbsp;
+		  	<a class="btn" href="">삭제</a>&nbsp;&nbsp;
+		  	<a class="btn" href="/">목록으로</a>
 		  	<br/>
 			<br/>
 			<div id="main">
@@ -50,7 +49,7 @@
 							<td><textarea name="content" id="content" class="span5" rows="5"></textarea></td>
 						</tr>
 					</table>
-					<input type="submit" value="저장" />
+					<input type="submit" class="btn btn-primary" value="저장" />
 				</form>
 			</div>
 			

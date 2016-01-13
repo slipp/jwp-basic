@@ -26,7 +26,7 @@ public class QuestionShowController extends HttpServlet {
             req.setAttribute("question", questionDao.findById(questionId));
             req.setAttribute("answers", answerDao.findAllByQuestionId(questionId));
             
-            RequestDispatcher rd = req.getRequestDispatcher("/show.jsp");
+            RequestDispatcher rd = req.getRequestDispatcher("/qna/show.jsp");
             rd.forward(req, resp);
         } catch (SQLException e) {
             System.out.println(e.getMessage());

@@ -23,7 +23,7 @@ public class UpdateUserController extends HttpServlet {
         String userId = req.getParameter("userId");
         User user = findByUserId(userId);
         req.setAttribute("user", user);
-        RequestDispatcher rd = req.getRequestDispatcher("/update.jsp");
+        RequestDispatcher rd = req.getRequestDispatcher("/user/update.jsp");
         rd.forward(req, resp);
     }
     

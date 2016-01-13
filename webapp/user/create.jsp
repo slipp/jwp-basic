@@ -13,7 +13,7 @@
 
     <div class="container">
         <div class="row">
-            <div class="span12">
+            <div class="span8">
                 <section id="typography">
                 <div class="page-header">
                     <h1>회원가입</h1>
@@ -22,7 +22,7 @@
                 <form name="user" method="post" action="/user/create">
                     <table>
                         <tr>
-                            <td>사용자 아이디</td>
+                            <td class="span1">아이디</td>
                             <td><input type="text" name="userId"></td>
                         </tr>
                         <tr>
