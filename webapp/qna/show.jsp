@@ -36,12 +36,12 @@
 		  	<a class="btn" href="/">목록으로</a>
 		  	<br/>
 			<br/>
-			<div id="main">
-				<form name="answer" method="post" action="/qna/addAnswer">
+			<div class="answerWrite">
+				<form name="answer" method="post">
 					<input type="hidden" name="questionId" value="${question.questionId}">
 					<table>
 						<tr>
-							<td>이름</td>
+							<td class="span1">이름</td>
 							<td><input type="text" name="writer" id="writer" class="span3"/></td>
 						</tr>
 						<tr>
@@ -66,5 +66,6 @@
 			</div>
 		</div>
 	</div>
+<%@ include file="/include/footer.jspf" %>	
 </body>
 </html>
