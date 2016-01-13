@@ -53,13 +53,13 @@
 				</form>
 			</div>
 			
-		    <!-- comments start -->
-			<div class="comments">
-			    <h3>
-			        댓글 수 : ${question.countOfComment}
-			    </h3>
+		    <!-- answers start -->
+		    <h3>
+		        댓글 수 : ${question.countOfComment}
+		    </h3>		    
+			<div class="answers">
 			    <c:forEach items="${answers}" var="each">
-			    <div class="comment">
+			    <div class="answer">
 			    	<b>${each.writer}</b><p>${each.contents}</p>
 			    </div>
 			    </c:forEach>
