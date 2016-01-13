@@ -143,4 +143,28 @@ public class AnswerDao {
         }
         
     }
+
+    public void delete(Long answerId) throws SQLException {
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        try {
+            con = ConnectionManager.getConnection();
+            String sql = "DELETE FROM ANSWERS WHERE answerId = ?";
+            pstmt = con.prepareStatement(sql);
+            pstmt.setLong(1, answerId);
+
+            pstmt.executeUpdate();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (pstmt != null) {
+                pstmt.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+    }
 }

@@ -61,6 +61,7 @@
 			    <c:forEach items="${answers}" var="each">
 			    <div class="answer">
 			    	<b>${each.writer}</b><p>${each.contents}</p>
+			    	<a class="answerDelete" href="/api/qna/deleteanswer?answerId=${each.answerId}">삭제</a>
 			    </div>
 			    </c:forEach>
 			</div>
