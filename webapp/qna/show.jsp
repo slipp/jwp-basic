@@ -46,20 +46,20 @@
 						</tr>
 						<tr>
 							<td>내용</td>
-							<td><textarea name="content" id="content" class="span5" rows="5"></textarea></td>
+							<td><textarea name="contents" id="content" class="span5" rows="5"></textarea></td>
 						</tr>
 					</table>
 					<input type="submit" class="btn btn-primary" value="저장" />
 				</form>
 			</div>
 			
-		    <!-- comments start -->
-			<div class="comments">
-			    <h3>
-			        댓글 수 : ${question.countOfComment}
-			    </h3>
+		    <!-- answers start -->
+		    <h3>
+		        댓글 수 : ${question.countOfComment}
+		    </h3>		    
+			<div class="answers">
 			    <c:forEach items="${answers}" var="each">
-			    <div class="comment">
+			    <div class="answer">
 			    	<b>${each.writer}</b><p>${each.contents}</p>
 			    </div>
 			    </c:forEach>
