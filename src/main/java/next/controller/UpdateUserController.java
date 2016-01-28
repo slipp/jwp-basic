@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import core.db.DataBase;
 import next.dao.UserDao;
 import next.model.User;
 
@@ -59,7 +58,6 @@ public class UpdateUserController extends HttpServlet {
         } catch (SQLException e) {
         }
 
-        req.setAttribute("users", DataBase.findAll());
         resp.sendRedirect("/");
     }
 }
