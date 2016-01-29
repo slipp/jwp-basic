@@ -15,12 +15,12 @@ function addAnswer(e) {
 	});
 }
 
-function onSuccess(data, status){
-	var answer = "<div class='answer'><b>" + data.writer + "</b><p>" + data.contents + "</p></div>";
+function onSuccess(json, status){
+	var answer = "<div class='answer'><b>" + json.writer + "</b><p>" + json.contents + "</p></div>";
     $(".answers").prepend(answer);
 }
 
-function onError(data, status) {
+function onError(xhr, status) {
 	alert("error");
 }
 
@@ -38,8 +38,8 @@ function deleteAnswer(e) {
 	    error: function(xhr, status, error){
             console.log(error);
         },
-        success : function(data){
-            if (data.status) {
+        success : function(json){
+            if (json.status) {
             	answerEle.parent().remove();
             }
         }
