@@ -2,4 +2,6 @@
 /target/
 /.classpath
 /.project
-/tomcat.8080/
+/tomcat.8080
+/.idea
+jwp-basic.iml

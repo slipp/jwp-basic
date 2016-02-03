@@ -55,22 +55,12 @@
 			<artifactId>spring-test</artifactId>
 			<version>${org.springframework.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>org.freemarker</groupId>
-			<artifactId>freemarker</artifactId>
-			<version>2.3.23</version>
-		</dependency>
 
 		<!-- logger -->
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
 			<version>1.1.2</version>
-		</dependency>
-		<dependency>
-			<groupId>org.freemarker</groupId>
-			<artifactId>freemarker</artifactId>
-			<version>2.3.23</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -120,9 +110,7 @@
 	<build>
 		<finalName>jwp-basic</finalName>
 		<sourceDirectory>src/main/java</sourceDirectory>
-		<testSourceDirectory>src/test/java</testSourceDirectory>
 		<outputDirectory>webapp/WEB-INF/classes</outputDirectory>
-		<testOutputDirectory>target/test-classes</testOutputDirectory>
 
 		<resources>
 			<resource>
