@@ -28,7 +28,7 @@ public class CreateUserServlet extends HttpServlet {
         DataBase.addUser(user);
 
         req.setAttribute("users", DataBase.findAll());
-        RequestDispatcher rd = req.getRequestDispatcher("index.jsp");
+        RequestDispatcher rd = req.getRequestDispatcher("./user/list.jsp");
         rd.forward(req, resp);
     }
 }
