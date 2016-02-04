@@ -1,4 +1,4 @@
-package next.controller;
+package next.controller.qna;
 
 import java.io.IOException;
 import java.io.PrintWriter;
