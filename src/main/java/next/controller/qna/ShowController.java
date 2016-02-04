@@ -1,4 +1,4 @@
-package next.controller;
+package next.controller.qna;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -14,7 +14,7 @@ import next.dao.AnswerDao;
 import next.dao.QuestionDao;
 
 @WebServlet("/qna/show")
-public class QuestionShowController extends HttpServlet {
+public class ShowController extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     @Override

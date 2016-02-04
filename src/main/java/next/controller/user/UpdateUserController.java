@@ -1,4 +1,4 @@
-package next.controller;
+package next.controller.user;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -10,10 +10,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import core.db.DataBase;
 import next.dao.UserDao;
 import next.model.User;
 
-@WebServlet(value = { "/user/update", "/user/updateForm" })
+@WebServlet(value = { "/users/update", "/users/updateForm" })
 public class UpdateUserController extends HttpServlet {
     private static final long serialVersionUID = 1L;
     
@@ -22,7 +23,7 @@ public class UpdateUserController extends HttpServlet {
         String userId = req.getParameter("userId");
         User user = findByUserId(userId);
         req.setAttribute("user", user);
-        RequestDispatcher rd = req.getRequestDispatcher("/user/update.jsp");
+        RequestDispatcher rd = req.getRequestDispatcher("/user/updateForm.jsp");
         rd.forward(req, resp);
     }
     
@@ -58,6 +59,7 @@ public class UpdateUserController extends HttpServlet {
         } catch (SQLException e) {
         }
 
+        req.setAttribute("users", DataBase.findAll());
         resp.sendRedirect("/");
     }
 }
