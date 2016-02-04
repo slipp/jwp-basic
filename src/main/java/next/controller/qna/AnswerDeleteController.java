@@ -15,12 +15,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import next.dao.AnswerDao;
 import next.model.Result;
 
-@WebServlet("/api/qna/deleteanswer")
+@WebServlet("/api/qna/deleteAnswer")
 public class AnswerDeleteController extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Long answerId = Long.parseLong(req.getParameter("answerId"));
         AnswerDao answerDao = new AnswerDao();
         

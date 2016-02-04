@@ -15,7 +15,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import next.dao.AnswerDao;
 import next.model.Answer;
 
-@WebServlet("/api/qna/addanswer")
+@WebServlet("/api/qna/addAnswer")
 public class AnswerAddController extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
