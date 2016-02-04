@@ -19,11 +19,11 @@ public class UpdateUserController extends HttpServlet {
     
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        HttpSession session = req.getSession();
-        if (session.getAttribute("user") == null) {
+        String userId = req.getParameter("userId");
+        User user = DataBase.findUserById(userId);
+        if (user == null) {
             throw new NullPointerException("사용자를 찾을 수 없습니다.");
         }
-        User user = (User)session.getAttribute("user");
         req.setAttribute("user", user);
         RequestDispatcher rd = req.getRequestDispatcher("/user/updateForm.jsp");
         rd.forward(req, resp);
