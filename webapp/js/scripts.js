@@ -16,13 +16,21 @@ function addAnswer(e) {
 }
 
 function onSuccess(json, status){
-  var answer =
-      "<article class='article'>" +
-        "<div class='answer'><b>" + json.writer + "</b><p>" + json.contents + "</p></div>" +
-      "</article>";
-  $(".qna-comment-slipp-articles").prepend(answer);
+  var answerTemplate = $("#answerTemplate").html();
+  var template = answerTemplate.format(json.writer, new Date(json.createdDate), json.contents);
+  $(".qna-comment-slipp-articles").prepend(template);
 }
 
 function onError(xhr, status) {
   alert("error");
 }
+
+String.prototype.format = function() {
+  var args = arguments;
+  return this.replace(/{(\d+)}/g, function(match, number) {
+    return typeof args[number] != 'undefined'
+        ? args[number]
+        : match
+        ;
+  });
+};
