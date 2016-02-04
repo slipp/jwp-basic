@@ -55,7 +55,6 @@
 					<div class="qna-comment-slipp">
 						<p class="qna-comment-count"><strong>${question.countOfComment}</strong>개의 의견</p>
 						<div class="qna-comment-slipp-articles">
-
 							<c:forEach items="${answers}" var="each">
 							<article class="article">
 								<div class="article-header">
@@ -93,9 +92,9 @@
 									<input class="form-control" id="writer" name="writer" placeholder="이름">
 								</div>
 								<div class="form-group col-lg-12">
-									<textarea name="content" id="content" class="form-control" placeholder=""></textarea>
+									<textarea name="contents" id="contents" class="form-control" placeholder=""></textarea>
 								</div>
-								<button class="btn btn-success pull-right" type="button">답변하기</button>
+								<input class="btn btn-success pull-right" type="submit" value="답변하기" />
 								<div class="clearfix" />
 							</form>
 							</div>
