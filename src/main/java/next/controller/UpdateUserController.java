@@ -14,7 +14,7 @@ import core.db.DataBase;
 import next.dao.UserDao;
 import next.model.User;
 
-@WebServlet(value = { "/user/update", "/user/updateForm" })
+@WebServlet(value = { "/users/update", "/users/updateForm" })
 public class UpdateUserController extends HttpServlet {
     private static final long serialVersionUID = 1L;
     
@@ -23,7 +23,7 @@ public class UpdateUserController extends HttpServlet {
         String userId = req.getParameter("userId");
         User user = findByUserId(userId);
         req.setAttribute("user", user);
-        RequestDispatcher rd = req.getRequestDispatcher("/update.jsp");
+        RequestDispatcher rd = req.getRequestDispatcher("/user/updateForm.jsp");
         rd.forward(req, resp);
     }
     

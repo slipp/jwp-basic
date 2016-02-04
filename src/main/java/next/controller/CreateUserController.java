@@ -13,13 +13,13 @@ import javax.servlet.http.HttpServletResponse;
 import next.dao.UserDao;
 import next.model.User;
 
-@WebServlet(value= {"/user/create", "/user/form"})
+@WebServlet(value= {"/users/create", "/users/form"})
 public class CreateUserController extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     @Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-	    RequestDispatcher rd = req.getRequestDispatcher("/create.jsp");
+	    RequestDispatcher rd = req.getRequestDispatcher("/user/form.jsp");
         rd.forward(req, resp);
 	}
 	
