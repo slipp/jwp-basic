@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import core.db.DataBase;
 import next.model.User;
 
-@WebServlet("/create")
+@WebServlet("/user/create")
 public class CreateUserServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
@@ -28,7 +28,7 @@ public class CreateUserServlet extends HttpServlet {
         DataBase.addUser(user);
 
         req.setAttribute("users", DataBase.findAll());
-        RequestDispatcher rd = req.getRequestDispatcher("./user/list.jsp");
+        RequestDispatcher rd = req.getRequestDispatcher("/user/list.jsp");
         rd.forward(req, resp);
     }
 }
