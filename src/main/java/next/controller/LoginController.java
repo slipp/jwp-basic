@@ -33,7 +33,7 @@ public class LoginController extends HttpServlet {
         }
         if (user.matchPassword(password)) {
             HttpSession session = req.getSession();
-            session.setAttribute("user", user);
+            session.setAttribute(UserSessionUtils.USER_SESSION_KEY, user);
             resp.sendRedirect("/");
         } else {
             req.setAttribute("loginFailed", true);

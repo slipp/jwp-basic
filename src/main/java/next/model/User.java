@@ -42,6 +42,10 @@ public class User {
         
         return this.password.equals(password);
     }
+    
+	public boolean isSameUser(User user) {
+		return userId.equals(user.userId);
+	}
 
 	@Override
 	public int hashCode() {
@@ -84,5 +88,4 @@ public class User {
 	public String toString() {
 		return "User [userId=" + userId + ", name=" + name + ", email=" + email + "]";
 	}
-	
 }
