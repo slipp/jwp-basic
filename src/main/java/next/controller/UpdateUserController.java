@@ -46,8 +46,6 @@ public class UpdateUserController extends HttpServlet {
                 req.getParameter("email"));
         log.debug("Update User : {}", updateUser);
         user.update(updateUser);
-
-        req.setAttribute("users", DataBase.findAll());
         resp.sendRedirect("/");
     }
 }
