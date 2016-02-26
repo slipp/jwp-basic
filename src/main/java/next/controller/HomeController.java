@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import next.dao.QuestionDao;
-import next.dao.UserDao;
 
 @WebServlet("")
 public class HomeController extends HttpServlet {
