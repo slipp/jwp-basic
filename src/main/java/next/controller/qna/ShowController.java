@@ -1,7 +1,6 @@
 package next.controller.qna;
 
 import java.io.IOException;
-import java.sql.SQLException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -22,14 +21,10 @@ public class ShowController extends HttpServlet {
         Long questionId = Long.parseLong(req.getParameter("questionId"));
         QuestionDao questionDao = new QuestionDao();
         AnswerDao answerDao = new AnswerDao();
-        try {
-            req.setAttribute("question", questionDao.findById(questionId));
-            req.setAttribute("answers", answerDao.findAllByQuestionId(questionId));
-            
-            RequestDispatcher rd = req.getRequestDispatcher("/qna/show.jsp");
-            rd.forward(req, resp);
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
+        req.setAttribute("question", questionDao.findById(questionId));
+        req.setAttribute("answers", answerDao.findAllByQuestionId(questionId));
+        
+        RequestDispatcher rd = req.getRequestDispatcher("/qna/show.jsp");
+        rd.forward(req, resp);
     }
 }
