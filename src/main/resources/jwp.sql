@@ -19,7 +19,7 @@ CREATE TABLE QUESTIONS (
 	title				varchar(50)			NOT NULL,
 	contents			varchar(5000)		NOT NULL,
 	createdDate			timestamp			NOT NULL,
-	countOfComment		int,
+	countOfAnswer int,
 	PRIMARY KEY               (questionId)
 );
 
@@ -34,20 +34,20 @@ CREATE TABLE ANSWERS (
 	PRIMARY KEY         (answerId)
 );
 
-INSERT INTO QUESTIONS (questionId, writer, title, contents, createdDate, countOfComment) VALUES
+INSERT INTO QUESTIONS (questionId, writer, title, contents, createdDate, countOfAnswer) VALUES
 (1, '자바지기',
 '국내에서 Ruby on Rails와 Play가 활성화되기 힘든 이유는 뭘까?', 
 'Ruby on Rails(이하 RoR)는 2006년 즈음에 정말 뜨겁게 달아올랐다가 금방 가라 앉았다. Play 프레임워크는 정말 한 순간 잠시 눈에 뜨이다가 사라져 버렸다. RoR과 Play 기반으로 개발을 해보면 정말 생산성이 높으며, 웹 프로그래밍이 재미있기까지 하다. Spring MVC + JPA(Hibernate) 기반으로 진행하면 설정할 부분도 많고, 기본으로 지원하지 않는 기능도 많아 RoR과 Play에서 기본적으로 지원하는 기능을 서비스하려면 추가적인 개발이 필요하다.',
 CURRENT_TIMESTAMP(), 0);
 
-INSERT INTO QUESTIONS (questionId, writer, title, contents, createdDate, countOfComment) VALUES
+INSERT INTO QUESTIONS (questionId, writer, title, contents, createdDate, countOfAnswer) VALUES
 (2, '김문수',
 'runtime 에 reflect 발동 주체 객체가 뭔지 알 방법이 있을까요?', 
 '설계를 희한하게 하는 바람에 꼬인 문제같긴 합니다만. 여쭙습니다.
 상황은 mybatis select 실행될 시에 return object 의 getter 가 호출되면서인데요. getter 안에 다른 property 에 의존중인 코드가 삽입되어 있어서, 만약 다른 mybatis select 구문에 해당 property 가 없다면 exception 이 발생하게 됩니다.',
 CURRENT_TIMESTAMP(), 0);
 
-INSERT INTO QUESTIONS (questionId, writer, title, contents, createdDate, countOfComment) VALUES
+INSERT INTO QUESTIONS (questionId, writer, title, contents, createdDate, countOfAnswer) VALUES
 (3, '자바지기',
 'scala에서 named parameter를 활용한 test fixture 생성 방법', 
 '자바로 구현할 때 귀찮은 작업 중의 하나는 객체의 복잡도가 증가하는 경우 test fixture를 생성하는 것이 여간 귀찮은 작업이 아니다.
@@ -55,7 +55,7 @@ INSERT INTO QUESTIONS (questionId, writer, title, contents, createdDate, countOf
 CURRENT_TIMESTAMP(), 0);
 
 
-INSERT INTO QUESTIONS (questionId, writer, title, contents, createdDate, countOfComment) VALUES
+INSERT INTO QUESTIONS (questionId, writer, title, contents, createdDate, countOfAnswer) VALUES
 (4, '자바지기',
 'DB 설계할 때 table id는 어떤 방식을 사용하나요?', 
 '어느 순간부터 DB id를 설계할 때 특별히 신경을 쓰지 않은 것 같네요. 최근에는 JPA 사용하면서 무의식적으로 auto increment를 사용하고 있어요. 물론 auto increment가 적합한 경우도 있겠지만 그렇지 않은 경우도 많다고 생각해요. 보통 DB 설계할 때 각 테이블의 id는 어떤 방식을 사용하나요?
@@ -63,7 +63,7 @@ UUID를 사용하는 것도 하나의 방식이 될 수 있을거 같은데요. 
 테이블 id를 설계할 때 어떤 방식으로 접근하나요? 저는 요즘 너무 아무 생각없이 id를 추가하고 있다는 마음이 들어 질문 남겨 봅니다.',
 CURRENT_TIMESTAMP(), 0);
 
-INSERT INTO QUESTIONS (questionId, writer, title, contents, createdDate, countOfComment) VALUES
+INSERT INTO QUESTIONS (questionId, writer, title, contents, createdDate, countOfAnswer) VALUES
 (5, 'johnburr',
 '이클립스 JRE설정에 대해서 질문을 드립니다.', 
 '이곳에서 보면 이클립스의 jre에 대해서 3개의 설정이 나옵니다.
@@ -72,13 +72,13 @@ jre 버전 설정
 컴파일러 설정',
 CURRENT_TIMESTAMP(), 0);
 
-INSERT INTO QUESTIONS (questionId, writer, title, contents, createdDate, countOfComment) VALUES
+INSERT INTO QUESTIONS (questionId, writer, title, contents, createdDate, countOfAnswer) VALUES
 (6, '자바지기',
 '프로그래머가 알아야할 기본 지식은 어디까지일까?', 
 '오늘 무엇인가 정리하다가 도대체 프로그래머가 알아야하는 기본 지식은 어디까지일까라는 의문이 들었다. 물론 컴퓨터 기본 구조, 네트워크, 자료 구조, 알고리즘, C, C++, 자바, 다양한 프레임워크 등등 모든 영역을 잘하면 좋겠지만 모든 영역을 학습하기에는 지금의 지식이 너무 방대하기 때문이다.',
 CURRENT_TIMESTAMP(), 0);
 
-INSERT INTO QUESTIONS (questionId, writer, title, contents, createdDate, countOfComment) VALUES
+INSERT INTO QUESTIONS (questionId, writer, title, contents, createdDate, countOfAnswer) VALUES
 (7, 'javajigi',
 'javascript 학습하기 좋은 라이브러리를 추천한다면...', 
 '이번 slipp에서 진행하는 5번째 스터디 주제가 trello의 아키텍처를 분석하고, trello에서 사용하는 기술을 학습하는 과정이다. 이 아이디어로 스터디를 진행하게 된 계기는 http://www.mimul.com/pebble/default/2014/03/17/1395028081476.html 글을 보고 스터디 주제로 진행해 보면 좋겠다는 생각을 했다.
@@ -99,7 +99,7 @@ INSERT INTO ANSWERS (writer, contents, createdDate, questionId) VALUES
 코드의 변천사도 알 수 있고, 최적화되지 않은 코드들이 기능은 그대로 두고 최적화되어 가는 걸 보면 재미가 있습니다 :)', 
 CURRENT_TIMESTAMP(), 7);
 
-INSERT INTO QUESTIONS (questionId, writer, title, contents, createdDate, countOfComment) VALUES
+INSERT INTO QUESTIONS (questionId, writer, title, contents, createdDate, countOfAnswer) VALUES
 (8, '자바지기',
 'anonymous inner class는 final 변수에만 접근해야 하는 이유는?', 
 '오늘 자바 8에 추가된 람다와 관련한 내용을 읽다가 다음과 같이 내용이 있어 궁금증이 생겼다.
