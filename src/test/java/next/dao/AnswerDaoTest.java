@@ -1,5 +1,7 @@
 package next.dao;
 
+import next.model.Answer;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.core.io.ClassPathResource;
@@ -7,7 +9,6 @@ import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 
 import core.jdbc.ConnectionManager;
-import next.model.Answer;
 
 public class AnswerDaoTest {
     @Before
@@ -22,7 +23,7 @@ public class AnswerDaoTest {
         long questionId = 1L;
         Answer expected = new Answer("javajigi", "answer contents", questionId);
         AnswerDao dut = new AnswerDao();
-        Answer answer = dut.addAnswer(expected);
+        Answer answer = dut.insert(expected);
         System.out.println("Answer : " + answer);
     }
 }
