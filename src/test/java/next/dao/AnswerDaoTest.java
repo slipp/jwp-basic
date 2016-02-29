@@ -1,5 +1,7 @@
 package next.dao;
 
+import next.model.Answer;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.core.io.ClassPathResource;
@@ -7,7 +9,6 @@ import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 
 import core.jdbc.ConnectionManager;
-import next.model.Answer;
 
 public class AnswerDaoTest {
     @Before

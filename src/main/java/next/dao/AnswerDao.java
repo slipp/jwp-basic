@@ -1,5 +1,7 @@
 package next.dao;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -7,28 +9,29 @@ import java.util.List;
 
 import next.model.Answer;
 import core.jdbc.JdbcTemplate;
+import core.jdbc.KeyHolder;
+import core.jdbc.PreparedStatementCreator;
 import core.jdbc.RowMapper;
 
 public class AnswerDao {
-    private Long newAnswerId() {
-        JdbcTemplate jdbcTemplate = new JdbcTemplate();
-        String sql = "SELECT max(answerId) as answerId FROM ANSWERS";
-        RowMapper<Long> rm = new RowMapper<Long>() {
-            @Override
-            public Long mapRow(ResultSet rs) throws SQLException {
-                return rs.getLong("answerId");
-            }
-        };
-        return jdbcTemplate.queryForObject(sql, rm) + 1;
-    }
-
     public Answer insert(Answer answer) {
-        Long newAnswerId = newAnswerId();
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
-        String sql = "INSERT INTO ANSWERS (answerId, writer, contents, createdDate, questionId) VALUES (?, ?, ?, ?, ?)";
-        jdbcTemplate.update(sql, newAnswerId, answer.getWriter(), answer.getContents(),
-                new Timestamp(answer.getTimeFromCreateDate()), answer.getQuestionId());
-        return findById(newAnswerId);
+        String sql = "INSERT INTO ANSWERS (writer, contents, createdDate, questionId) VALUES (?, ?, ?, ?)";
+        PreparedStatementCreator psc = new PreparedStatementCreator() {
+			@Override
+			public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
+				PreparedStatement pstmt = con.prepareStatement(sql);
+				pstmt.setString(1, answer.getWriter());
+				pstmt.setString(2, answer.getContents());
+				pstmt.setTimestamp(3, new Timestamp(answer.getTimeFromCreateDate()));
+				pstmt.setLong(4, answer.getQuestionId());
+				return pstmt;
+			}
+		};
+        
+		KeyHolder keyHolder = new KeyHolder();
+        jdbcTemplate.update(psc, keyHolder);
+        return findById(keyHolder.getId());
     }
 
     public Answer findById(long answerId) {
