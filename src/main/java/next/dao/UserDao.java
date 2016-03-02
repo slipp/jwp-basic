@@ -35,7 +35,7 @@ public class UserDao {
 		}
 	}
 	
-	public void update(User expected) {
+	public void update(User user) {
 		// TODO 구현 필요함.
 	}
 	
