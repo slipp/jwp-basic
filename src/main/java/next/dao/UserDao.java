@@ -35,11 +35,11 @@ public class UserDao {
 		}
 	}
 	
-	public void update(User user) {
+	public void update(User user) throws SQLException {
 		// TODO 구현 필요함.
 	}
 	
-	public List<User> findAll() {
+	public List<User> findAll() throws SQLException {
 		// TODO 구현 필요함.
 		return new ArrayList<User>();
 	}
