@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import core.jdbc.ConnectionManager;
 import next.model.User;
@@ -31,6 +33,15 @@ public class UserDao {
 				con.close();
 			}
 		}
+	}
+	
+	public void update(User expected) {
+		// TODO 구현 필요함.
+	}
+	
+	public List<User> findAll() {
+		// TODO 구현 필요함.
+		return new ArrayList<User>();
 	}
 
 	public User findByUserId(String userId) throws SQLException {
