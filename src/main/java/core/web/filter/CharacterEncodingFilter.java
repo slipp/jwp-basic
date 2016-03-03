@@ -8,9 +8,7 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.annotation.WebFilter;
 
-@WebFilter("/*")
 public class CharacterEncodingFilter implements Filter {
 	private static final String DEFAULT_ENCODING = "UTF-8";
 
