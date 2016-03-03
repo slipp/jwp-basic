@@ -1,11 +1,5 @@
 package next.controller.user;
 
-import java.io.IOException;
-
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -16,27 +10,15 @@ import next.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@WebServlet(value = { "/users/update", "/users/updateForm" })
-public class UpdateUserController extends HttpServlet {
-    private static final long serialVersionUID = 1L;
+import core.mvc.AbstractController;
+import core.mvc.ModelAndView;
+
+public class UpdateUserController extends AbstractController {
+	private UserDao userDao = new UserDao();
     private static final Logger log = LoggerFactory.getLogger(UpdateUserController.class);
     
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        UserDao userDao = new UserDao();
-    	User user = userDao.findByUserId(req.getParameter("userId"));
-
-    	if (!UserSessionUtils.isSameUser(req.getSession(), user)) {
-        	throw new IllegalStateException("다른 사용자의 정보를 수정할 수 없습니다.");
-        }
-        req.setAttribute("user", user);
-        RequestDispatcher rd = req.getRequestDispatcher("/user/updateForm.jsp");
-        rd.forward(req, resp);
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        UserDao userDao = new UserDao();
+	@Override
+	public ModelAndView execute(HttpServletRequest req, HttpServletResponse response) throws Exception {
 		User user = userDao.findByUserId(req.getParameter("userId"));
 		
         if (!UserSessionUtils.isSameUser(req.getSession(), user)) {
@@ -50,6 +32,6 @@ public class UpdateUserController extends HttpServlet {
                 req.getParameter("email"));
         log.debug("Update User : {}", updateUser);
         user.update(updateUser);
-        resp.sendRedirect("/");
-    }
+        return jspView("redirect:/");
+	}
 }

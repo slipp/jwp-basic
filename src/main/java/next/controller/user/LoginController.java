@@ -1,52 +1,33 @@
 package next.controller.user;
 
-import java.io.IOException;
-
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import next.controller.UserSessionUtils;
 import next.dao.UserDao;
 import next.model.User;
+import core.mvc.AbstractController;
+import core.mvc.ModelAndView;
 
-@WebServlet(value = { "/users/login", "/users/loginForm" })
-public class LoginController extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-
-	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		forward("/user/login.jsp", req, resp);
-	}
-
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String userId = req.getParameter("userId");
-		String password = req.getParameter("password");
-
-		UserDao userDao = new UserDao();
-		User user = userDao.findByUserId(userId);
-
-		if (user == null) {
-			req.setAttribute("loginFailed", true);
-			forward("/user/login.jsp", req, resp);
-		}
-		if (user.matchPassword(password)) {
-			HttpSession session = req.getSession();
-			session.setAttribute(UserSessionUtils.USER_SESSION_KEY, user);
-			resp.sendRedirect("/");
-		} else {
-			req.setAttribute("loginFailed", true);
-			forward("/user/login.jsp", req, resp);
-		}
-	}
-
-	private void forward(String forwardUrl, HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		RequestDispatcher rd = req.getRequestDispatcher(forwardUrl);
-		rd.forward(req, resp);
-	}
+public class LoginController extends AbstractController {
+    @Override
+    public ModelAndView execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        String userId = request.getParameter("userId");
+        String password = request.getParameter("password");
+        
+        UserDao userDao = new UserDao();
+        User user = userDao.findByUserId(userId);
+        
+        if (user == null) {
+            throw new NullPointerException("사용자를 찾을 수 없습니다.");
+        }
+        
+        if (user.matchPassword(password)) {
+            HttpSession session = request.getSession();
+            session.setAttribute("user", user);
+            return jspView("redirect:/");
+        } else {
+            throw new IllegalStateException("비밀번호가 틀립니다.");
+        }
+    }
 }
