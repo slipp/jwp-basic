@@ -33,7 +33,6 @@ function deleteAnswer(e) {
 
   var deleteBtn = $(this);
   var queryString = deleteBtn.closest("form").serialize();
-  console.log("qs : " + queryString);
 
   $.ajax({
     type: 'post',
