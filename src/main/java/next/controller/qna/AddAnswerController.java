@@ -25,7 +25,6 @@ public class AddAnswerController extends AbstractController {
 		log.debug("answer : {}", answer);
 		
 		Answer savedAnswer = answerDao.insert(answer);
-		ModelAndView mav = jsonView().addObject("answer", savedAnswer);
-		return mav;
+		return jsonView().addObject("answer", savedAnswer);
 	}
 }
