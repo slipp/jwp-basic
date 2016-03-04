@@ -7,13 +7,16 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class JstlView implements View {
+public class JspView implements View {
 	private static final String DEFAULT_REDIRECT_PREFIX = "redirect:";
 	
 	private String viewName;
 
-	public JstlView(String viewName) {
+	public JspView(String viewName) {
 		this.viewName = viewName;
+		if (viewName == null) {
+			throw new NullPointerException("viewName is null. 이동할 URL을 입력하세요.");
+		}
 	}
 
 	@Override
