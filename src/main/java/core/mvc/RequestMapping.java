@@ -41,5 +41,4 @@ public class RequestMapping {
 	void put(String url, Controller controller) {
 		mappings.put(url, controller);
 	}
-
 }

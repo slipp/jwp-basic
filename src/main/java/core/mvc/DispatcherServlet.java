@@ -31,7 +31,7 @@ public class DispatcherServlet extends HttpServlet {
 		String requestUri = req.getRequestURI();
 		logger.debug("Method : {}, Request URI : {}", req.getMethod(), requestUri);
 
-		Controller controller = rm.findController(urlExceptParameter(req.getRequestURI()));
+		Controller controller = rm.findController(requestUri);
 		try {
 			String viewName = controller.execute(req, resp);
 			move(viewName, req, resp);
@@ -49,13 +49,5 @@ public class DispatcherServlet extends HttpServlet {
 		
 		RequestDispatcher rd = req.getRequestDispatcher(viewName);
 		rd.forward(req, resp);
-	}
-
-	String urlExceptParameter(String forwardUrl) {
-		int index = forwardUrl.indexOf("?");
-		if (index > 0) {
-			return forwardUrl.substring(0, index);
-		}
-		return forwardUrl;
 	}
 }
