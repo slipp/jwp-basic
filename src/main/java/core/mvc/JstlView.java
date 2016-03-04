@@ -13,6 +13,9 @@ public class JstlView implements View {
 	private String viewName;
 
 	public JstlView(String viewName) {
+		if (viewName == null) {
+			throw new NullPointerException("viewName is null. 이동할 URL을 입력하세요.");
+		}
 		this.viewName = viewName;
 	}
 
