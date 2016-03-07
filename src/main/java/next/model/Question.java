@@ -56,6 +56,15 @@ public class Question {
 	public int getCountOfComment() {
 		return countOfComment;
 	}
+	
+	public boolean isSameUser(User user) {
+		return user.isSameUser(this.writer);
+	}
+	
+	public void update(Question newQuestion) {
+		this.title = newQuestion.title;
+		this.contents = newQuestion.contents;
+	}
 
 	@Override
 	public String toString() {

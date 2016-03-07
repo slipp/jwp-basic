@@ -8,8 +8,11 @@ import org.slf4j.LoggerFactory;
 
 import core.mvc.AbstractController;
 import core.mvc.ModelAndView;
+import next.controller.UserSessionUtils;
 import next.dao.AnswerDao;
 import next.model.Answer;
+import next.model.Result;
+import next.model.User;
 
 public class AddAnswerController extends AbstractController {
 	private static final Logger log = LoggerFactory.getLogger(AddAnswerController.class);
@@ -18,12 +21,18 @@ public class AddAnswerController extends AbstractController {
 
 	@Override
 	public ModelAndView execute(HttpServletRequest req, HttpServletResponse response) throws Exception {
-		Answer answer = new Answer(req.getParameter("writer"), 
+    	if (!UserSessionUtils.isLogined(req.getSession())) {
+			return jsonView().addObject("result", Result.fail("Login is required"));
+		}
+    	
+    	User user = UserSessionUtils.getUserFromSession(req.getSession());
+		Answer answer = new Answer(user.getUserId(), 
 				req.getParameter("contents"), 
 				Long.parseLong(req.getParameter("questionId")));
 		log.debug("answer : {}", answer);
 		
 		Answer savedAnswer = answerDao.insert(answer);
-		return jsonView().addObject("answer", savedAnswer);
+		
+		return jsonView().addObject("answer", savedAnswer).addObject("result", Result.ok());
 	}
 }

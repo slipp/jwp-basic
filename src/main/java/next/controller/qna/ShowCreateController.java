@@ -14,7 +14,7 @@ public class ShowCreateController extends AbstractController {
 	
 	@Override
 	public ModelAndView execute(HttpServletRequest req, HttpServletResponse response) throws Exception {
-		Long questionId = Long.parseLong(req.getParameter("questionId"));
+		long questionId = Long.parseLong(req.getParameter("questionId"));
 		ModelAndView mav = jspView("/qna/show.jsp");
 		mav.addObject("question", questionDao.findById(questionId));
 		mav.addObject("answers", answerDao.findAllByQuestionId(questionId));
