@@ -8,7 +8,7 @@ import next.dao.QuestionDao;
 import core.mvc.AbstractController;
 import core.mvc.ModelAndView;
 
-public class ShowCreateController extends AbstractController {
+public class ShowQuestionController extends AbstractController {
 	private QuestionDao questionDao = QuestionDao.getInstance();
 	private AnswerDao answerDao = AnswerDao.getInstance();
 	

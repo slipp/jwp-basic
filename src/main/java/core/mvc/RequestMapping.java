@@ -5,9 +5,11 @@ import java.util.Map;
 
 import next.controller.HomeController;
 import next.controller.qna.AddAnswerController;
+import next.controller.qna.ApiDeleteQuestionController;
 import next.controller.qna.CreateQuestionController;
 import next.controller.qna.DeleteAnswerController;
-import next.controller.qna.ShowCreateController;
+import next.controller.qna.DeleteQuestionController;
+import next.controller.qna.ShowQuestionController;
 import next.controller.qna.UpdateFormQuestionController;
 import next.controller.qna.UpdateQuestionController;
 import next.controller.user.CreateUserController;
@@ -37,10 +39,12 @@ public class RequestMapping {
 	    mappings.put("/users/updateForm", new UpdateFormUserController());
 	    mappings.put("/users/update", new UpdateUserController());
 		mappings.put("/qna/form", new ForwardController("/qna/form.jsp"));
-		mappings.put("/qna/show", new ShowCreateController());
+		mappings.put("/qna/show", new ShowQuestionController());
 		mappings.put("/qna/create", new CreateQuestionController());
 		mappings.put("/qna/updateForm", new UpdateFormQuestionController());
 		mappings.put("/qna/update", new UpdateQuestionController());
+		mappings.put("/qna/delete", new DeleteQuestionController());
+		mappings.put("/api/qna/deleteQuestion", new ApiDeleteQuestionController());
 		mappings.put("/api/qna/addAnswer", new AddAnswerController());
 		mappings.put("/api/qna/deleteAnswer", new DeleteAnswerController());
 
