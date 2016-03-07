@@ -14,8 +14,8 @@ import core.mvc.AbstractController;
 import core.mvc.ModelAndView;
 
 public class UpdateUserController extends AbstractController {
-	private UserDao userDao = new UserDao();
-    private static final Logger log = LoggerFactory.getLogger(UpdateUserController.class);
+	private static final Logger log = LoggerFactory.getLogger(UpdateUserController.class);
+	private UserDao userDao = UserDao.getInstance();
     
 	@Override
 	public ModelAndView execute(HttpServletRequest req, HttpServletResponse response) throws Exception {

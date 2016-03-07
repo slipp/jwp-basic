@@ -13,6 +13,6 @@ public class LogoutController extends AbstractController {
     public ModelAndView execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
         HttpSession session = request.getSession();
         session.removeAttribute("user");
-        return jspView("redirect:/qna/list.next");
+        return jspView("redirect:/qna/list");
     }
 }
