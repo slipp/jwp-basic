@@ -14,7 +14,7 @@ public class ListUserController extends AbstractController {
     @Override
     public ModelAndView execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
     	if (!UserSessionUtils.isLogined(request.getSession())) {
-			return jspView("redirect:/users/loginForm.next");
+			return jspView("redirect:/users/loginForm");
 		}
     	
         ModelAndView mav = jspView("/user/list.jsp");

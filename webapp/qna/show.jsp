@@ -71,10 +71,10 @@
 								<div class="article-util">
 									<ul class="article-util-list">
 										<li>
-											<a class="link-modify-article" href="/api/qna/updateAnswer.next?answerId=5">수정</a>
+											<a class="link-modify-article" href="/api/qna/updateAnswer?answerId=5">수정</a>
 										</li>
 										<li>
-											<form class="form-delete" action="/api/qna/deleteAnswer.next" method="POST">
+											<form class="form-delete" action="/api/qna/deleteAnswer" method="POST">
 												<input type="hidden" name="answerId" value="5">
 												<button type="submit" class="link-delete-article">삭제</button>
 											</form>
@@ -98,10 +98,10 @@
 								<div class="article-util">
 									<ul class="article-util-list">
 										<li>
-											<a class="link-modify-article" href="/api/qna/updateAnswer.next?answerId=5">수정</a>
+											<a class="link-modify-article" href="/api/qna/updateAnswer?answerId=5">수정</a>
 										</li>
 										<li>
-											<form class="form-delete" action="/api/qna/deleteAnswer.next" method="POST">
+											<form class="form-delete" action="/api/qna/deleteAnswer" method="POST">
 												<input type="hidden" name="answerId" value="5">
 												<button type="submit" class="link-delete-article">삭제</button>
 											</form>
