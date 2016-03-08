@@ -10,6 +10,7 @@ import core.mvc.AbstractController;
 import core.mvc.ModelAndView;
 import next.controller.UserSessionUtils;
 import next.dao.AnswerDao;
+import next.dao.QuestionDao;
 import next.model.Answer;
 import next.model.Result;
 import next.model.User;
@@ -17,6 +18,7 @@ import next.model.User;
 public class AddAnswerController extends AbstractController {
 	private static final Logger log = LoggerFactory.getLogger(AddAnswerController.class);
 
+	private QuestionDao questionDao = QuestionDao.getInstance();
 	private AnswerDao answerDao = AnswerDao.getInstance();
 
 	@Override
@@ -32,6 +34,7 @@ public class AddAnswerController extends AbstractController {
 		log.debug("answer : {}", answer);
 		
 		Answer savedAnswer = answerDao.insert(answer);
+		questionDao.updateCountOfAnswer(savedAnswer.getQuestionId());
 		
 		return jsonView().addObject("answer", savedAnswer).addObject("result", Result.ok());
 	}
