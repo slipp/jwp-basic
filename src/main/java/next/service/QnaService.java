@@ -38,28 +38,9 @@ public class QnaService {
 			throw new IllegalStateException("존재하지 않는 질문입니다.");
 		}
 		
-		if (!question.isSameUser(user)) {
-			throw new IllegalStateException("다른 사용자가 쓴 글을 삭제할 수 없습니다.");
-		}
-		
 		List<Answer> answers = answerDao.findAllByQuestionId(questionId);
-		if (answers.isEmpty()) {
+		if (question.canDelete(user, answers)) {
 			questionDao.delete(questionId);
 		}
-		
-		boolean canDelete = true;
-		for (Answer answer : answers) {
-			String writer = question.getWriter();
-			if (!writer.equals(answer.getWriter())) {
-				canDelete = false;
-				break;
-			}
-		}
-		
-		if (!canDelete) {
-			throw new IllegalStateException("다른 사용자가 추가한 댓글이 존재해 삭제할 수 없습니다.");
-		}
-		
-		questionDao.delete(questionId);
 	}
 }
