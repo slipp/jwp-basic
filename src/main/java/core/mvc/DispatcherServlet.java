@@ -16,11 +16,11 @@ public class DispatcherServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final Logger logger = LoggerFactory.getLogger(DispatcherServlet.class);
 
-	private RequestMapping rm;
+	private LegacyHandlerMapping rm;
 
 	@Override
 	public void init() throws ServletException {
-		rm = new RequestMapping();
+		rm = new LegacyHandlerMapping();
 		rm.initMapping();
 	}
 

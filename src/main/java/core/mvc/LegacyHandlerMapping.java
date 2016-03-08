@@ -25,7 +25,7 @@ import next.controller.user.ProfileController;
 import next.controller.user.UpdateFormUserController;
 import next.controller.user.UpdateUserController;
 
-public class RequestMapping {
+public class LegacyHandlerMapping {
 	private static final Logger logger = LoggerFactory.getLogger(DispatcherServlet.class);
 	private Map<String, Controller> mappings = new HashMap<>();
 	
