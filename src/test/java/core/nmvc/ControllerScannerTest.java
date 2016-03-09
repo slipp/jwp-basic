@@ -7,14 +7,14 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ControllerFactoryTest {
-	private static final Logger logger = LoggerFactory.getLogger(ControllerFactoryTest.class);
+public class ControllerScannerTest {
+	private static final Logger logger = LoggerFactory.getLogger(ControllerScannerTest.class);
 	
-	private ControllerFactory cf;
+	private ControllerScanner cf;
 
 	@Before
 	public void setup() {
-		cf = new ControllerFactory("core.nmvc");
+		cf = new ControllerScanner("core.nmvc");
 	}
 	
 	@Test

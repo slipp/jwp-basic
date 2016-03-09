@@ -11,12 +11,12 @@ import com.google.common.collect.Maps;
 
 import core.annotation.Controller;
 
-public class ControllerFactory {
-	private static final Logger log = LoggerFactory.getLogger(ControllerFactory.class);
+public class ControllerScanner {
+	private static final Logger log = LoggerFactory.getLogger(ControllerScanner.class);
 
 	private Reflections reflections;
 
-	public ControllerFactory(Object... basePackage) {
+	public ControllerScanner(Object... basePackage) {
 		reflections = new Reflections(basePackage);
 	}
 

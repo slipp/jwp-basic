@@ -1,14 +1,12 @@
 package core.nmvc;
 
-import static org.reflections.ReflectionUtils.getAllMethods;
-import static org.reflections.ReflectionUtils.withAnnotation;
-
 import java.lang.reflect.Method;
 import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.reflections.ReflectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,16 +21,15 @@ public class AnnotationHandlerMapping {
 	
 	private Object[] basePackage;
 	
-	private Map<HandlerKey, HandlerExecution> handlerExecutions;
+	private Map<HandlerKey, HandlerExecution> handlerExecutions = Maps.newHashMap();
 	
 	public AnnotationHandlerMapping(Object... basePackage) {
 		this.basePackage = basePackage;
-		this.handlerExecutions= Maps.newHashMap(); 
 	}
 	
 	public void initialize() {
-		ControllerFactory controllerFactory = new ControllerFactory(basePackage);
-		Map<Class<?>, Object> controllers = controllerFactory.getControllers();
+		ControllerScanner controllerScanner = new ControllerScanner(basePackage);
+		Map<Class<?>, Object> controllers = controllerScanner.getControllers();
 		Set<Method> methods = getRequestMappingMethods(controllers.keySet());
 		for (Method method : methods) {
 			RequestMapping rm = method.getAnnotation(RequestMapping.class);
@@ -46,10 +43,10 @@ public class AnnotationHandlerMapping {
 	}
 	
 	@SuppressWarnings("unchecked")
-	Set<Method> getRequestMappingMethods(Set<Class<?>> beans) {
+	private Set<Method> getRequestMappingMethods(Set<Class<?>> controlleers) {
 		Set<Method> requestMappingMethods = Sets.newHashSet();
-		for (Class<?> clazz : beans) {
-			requestMappingMethods.addAll(getAllMethods(clazz, withAnnotation(RequestMapping.class)));
+		for (Class<?> clazz : controlleers) {
+			requestMappingMethods.addAll(ReflectionUtils.getAllMethods(clazz, ReflectionUtils.withAnnotation(RequestMapping.class)));
 		}
 		return requestMappingMethods;
 	}
