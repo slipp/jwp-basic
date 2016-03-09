@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import core.mvc.AbstractController;
 import core.mvc.ModelAndView;
+import next.CannotDeleteException;
 import next.controller.UserSessionUtils;
 import next.model.Result;
 import next.service.QnaService;
@@ -22,7 +23,7 @@ public class ApiDeleteQuestionController extends AbstractController {
 		try {
 			qnaService.deleteQuestion(questionId, UserSessionUtils.getUserFromSession(req.getSession()));
 			return jsonView().addObject("result", Result.ok());
-		} catch (IllegalStateException e) {
+		} catch (CannotDeleteException e) {
 			return jsonView().addObject("result", Result.fail(e.getMessage()));
 		}
 	}

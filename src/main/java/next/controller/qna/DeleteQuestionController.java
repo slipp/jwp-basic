@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import core.mvc.AbstractController;
 import core.mvc.ModelAndView;
+import next.CannotDeleteException;
 import next.controller.UserSessionUtils;
 import next.service.QnaService;
 
@@ -21,7 +22,7 @@ public class DeleteQuestionController extends AbstractController {
 		try {
 			qnaService.deleteQuestion(questionId, UserSessionUtils.getUserFromSession(req.getSession()));
 			return jspView("redirect:/");
-		} catch (IllegalStateException e) {
+		} catch (CannotDeleteException e) {
 			return jspView("show.jsp")
 					.addObject("question", qnaService.findById(questionId))
 					.addObject("answers", qnaService.findAllByQuestionId(questionId))
