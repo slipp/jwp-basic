@@ -3,6 +3,8 @@ package next.model;
 import java.util.Date;
 import java.util.List;
 
+import next.CannotDeleteException;
+
 public class Question {
 	private long questionId;
 	
@@ -67,14 +69,14 @@ public class Question {
 		this.contents = newQuestion.contents;
 	}
 	
-	public boolean canDelete(User user, List<Answer> answers) {
+	public boolean canDelete(User user, List<Answer> answers) throws CannotDeleteException {
 		if (!user.isSameUser(this.writer)) {
-			throw new IllegalStateException("다른 사용자가 쓴 글을 삭제할 수 없습니다.");
+			throw new CannotDeleteException("다른 사용자가 쓴 글을 삭제할 수 없습니다.");
 		}
 		
 		for (Answer answer : answers) {
 			if (!answer.canDelete(user)) {
-				throw new IllegalStateException("다른 사용자가 추가한 댓글이 존재해 삭제할 수 없습니다.");
+				throw new CannotDeleteException("다른 사용자가 추가한 댓글이 존재해 삭제할 수 없습니다.");
 			}
 		}
 		
