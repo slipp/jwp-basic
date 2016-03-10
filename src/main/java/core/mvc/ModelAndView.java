@@ -11,7 +11,7 @@ public class ModelAndView {
 	
 	public ModelAndView() {
 	}
-
+	
 	public ModelAndView(View view) {
 		this.view = view;
 	}

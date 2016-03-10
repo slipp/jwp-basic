@@ -16,7 +16,7 @@ import com.google.common.collect.Sets;
 import core.annotation.RequestMapping;
 import core.annotation.RequestMethod;
 
-public class AnnotationHandlerMapping {
+public class AnnotationHandlerMapping implements HandlerMapping {
 	private static final Logger logger = LoggerFactory.getLogger(AnnotationHandlerMapping.class);
 	
 	private Object[] basePackage;
@@ -36,6 +36,8 @@ public class AnnotationHandlerMapping {
 			logger.debug("register handlerExecution : url is {}, method is {}", rm.value(), method);
 			handlerExecutions.put(createHandlerKey(rm), new HandlerExecution(controllers.get(method.getDeclaringClass()), method));
 		}
+		
+		logger.info("Initialized AnnotationHandlerMapping!");
 	}
 	
 	private HandlerKey createHandlerKey(RequestMapping rm) {
@@ -51,6 +53,7 @@ public class AnnotationHandlerMapping {
 		return requestMappingMethods;
 	}
 
+	@Override
 	public HandlerExecution getHandler(HttpServletRequest request) {
 		String requestUri = request.getRequestURI();
 		RequestMethod rm = RequestMethod.valueOf(request.getMethod().toUpperCase());
