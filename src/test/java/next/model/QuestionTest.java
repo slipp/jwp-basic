@@ -6,13 +6,18 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import org.junit.Test;
 
 public class QuestionTest {
-	private static Question newQuestion(String writer) {
-		return new Question(writer, "title", "contents");
+	public static Question newQuestion(String writer) {
+		return new Question(1L, writer, "title", "contents", new Date(), 0);
+	}
+	
+	public static Question newQuestion(long questionId, String writer) {
+		return new Question(questionId, writer, "title", "contents", new Date(), 0);
 	}
 	
 	@Test(expected = IllegalStateException.class)
