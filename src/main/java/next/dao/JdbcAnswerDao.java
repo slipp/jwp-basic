@@ -7,24 +7,17 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.List;
 
-import next.model.Answer;
 import core.jdbc.JdbcTemplate;
 import core.jdbc.KeyHolder;
 import core.jdbc.PreparedStatementCreator;
 import core.jdbc.RowMapper;
+import next.model.Answer;
 
 public class JdbcAnswerDao implements AnswerDao {
-	private static AnswerDao answerDao;
 	private JdbcTemplate jdbcTemplate = JdbcTemplate.getInstance();
 	
-	private JdbcAnswerDao() {}
+	public JdbcAnswerDao() {}
 	
-	public static AnswerDao getInstance() {
-		if (answerDao == null) {
-			answerDao = new JdbcAnswerDao();
-		}
-		return answerDao;
-	}
 	
     @Override
 	public Answer insert(Answer answer) {

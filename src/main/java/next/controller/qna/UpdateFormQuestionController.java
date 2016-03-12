@@ -3,16 +3,19 @@ package next.controller.qna;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import next.controller.UserSessionUtils;
-import next.dao.QuestionDao;
-import next.dao.JdbcQuestionDao;
-import next.model.Question;
 import core.mvc.AbstractController;
 import core.mvc.ModelAndView;
+import next.controller.UserSessionUtils;
+import next.dao.QuestionDao;
+import next.model.Question;
 
 public class UpdateFormQuestionController extends AbstractController {
-	private QuestionDao questionDao = JdbcQuestionDao.getInstance();
-	
+    private QuestionDao questionDao;
+
+    public UpdateFormQuestionController(QuestionDao questionDao) {
+    	this.questionDao = questionDao;
+    }
+    
 	@Override
 	public ModelAndView execute(HttpServletRequest req, HttpServletResponse resp) throws Exception {
     	if (!UserSessionUtils.isLogined(req.getSession())) {
