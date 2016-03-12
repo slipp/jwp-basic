@@ -20,7 +20,7 @@ public class UpdateQuestionController extends AbstractController {
 		
 		long questionId = Long.parseLong(req.getParameter("questionId"));
 		Question question = questionDao.findById(questionId);
-		if (!question.isSameWriter(UserSessionUtils.getUserFromSession(req.getSession()))) {
+		if (!question.isSameUser(UserSessionUtils.getUserFromSession(req.getSession()))) {
 			throw new IllegalStateException("다른 사용자가 쓴 글을 수정할 수 없습니다.");
 		}
 		
