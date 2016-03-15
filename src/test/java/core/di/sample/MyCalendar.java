@@ -1,4 +1,4 @@
-package core.di;
+package core.di.sample;
 
 import java.util.Calendar;
 
