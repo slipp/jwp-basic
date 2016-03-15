@@ -31,7 +31,7 @@ public class DispatcherServlet extends HttpServlet {
 	public void init() throws ServletException {
 		LegacyHandlerMapping lhm = new LegacyHandlerMapping();
 		lhm.initMapping();
-		AnnotationHandlerMapping ahm = new AnnotationHandlerMapping("next.controller");
+		AnnotationHandlerMapping ahm = new AnnotationHandlerMapping("next");
 		ahm.initialize();
 		
 		mappings.add(lhm);

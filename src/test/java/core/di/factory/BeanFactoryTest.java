@@ -2,30 +2,26 @@ package core.di.factory;
 
 import static org.junit.Assert.assertNotNull;
 
-import java.lang.annotation.Annotation;
+import java.util.Map;
 import java.util.Set;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.reflections.Reflections;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import com.google.common.collect.Sets;
-
-import core.annotation.Controller;
-import core.annotation.Repository;
-import core.annotation.Service;
 import core.di.factory.example.MyQnaService;
 import core.di.factory.example.QnaController;
 
 public class BeanFactoryTest {
-	private Reflections reflections;
+	private Logger log = LoggerFactory.getLogger(BeanFactoryTest.class);
+	
 	private BeanFactory beanFactory;
 	
 	@Before
-	@SuppressWarnings("unchecked")
 	public void setup() {
-		reflections = new Reflections("core.di.factory.example");
-		Set<Class<?>> preInstanticateClazz = getTypesAnnotatedWith(Controller.class, Service.class, Repository.class);
+		BeanScanner scanner = new BeanScanner("core.di.factory.example");
+		Set<Class<?>> preInstanticateClazz = scanner.scan();
 		beanFactory = new BeanFactory(preInstanticateClazz);
 		beanFactory.initialize();
 	}
@@ -42,12 +38,12 @@ public class BeanFactoryTest {
 		assertNotNull(qnaService.getQuestionRepository());
 	}
 	
-	@SuppressWarnings("unchecked")
-	private Set<Class<?>> getTypesAnnotatedWith(Class<? extends Annotation>... annotations) {
-		Set<Class<?>> beans = Sets.newHashSet();
-		for (Class<? extends Annotation> annotation : annotations) {
-			beans.addAll(reflections.getTypesAnnotatedWith(annotation));
+	@Test
+	public void getControllers() throws Exception {
+		Map<Class<?>, Object> controllers = beanFactory.getControllers();
+		Set<Class<?>> keys = controllers.keySet();
+		for (Class<?> clazz : keys) {
+			log.debug("Bean : {}", clazz);
 		}
-		return beans;
 	}
 }
