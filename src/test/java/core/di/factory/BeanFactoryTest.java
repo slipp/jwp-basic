@@ -18,7 +18,6 @@ import core.di.factory.example.MyQnaService;
 import core.di.factory.example.QnaController;
 
 public class BeanFactoryTest {
-	
 	private Reflections reflections;
 	private BeanFactory beanFactory;
 	
