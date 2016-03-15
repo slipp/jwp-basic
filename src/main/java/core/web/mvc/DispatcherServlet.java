@@ -1,4 +1,4 @@
-package core.nmvc;
+package core.web.mvc;
 
 import java.io.IOException;
 import java.util.List;
@@ -14,10 +14,8 @@ import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Lists;
 
-import core.mvc.ControllerHandlerAdapter;
-import core.mvc.LegacyHandlerMapping;
-import core.mvc.ModelAndView;
-import core.mvc.View;
+import core.web.view.ModelAndView;
+import core.web.view.View;
 
 @WebServlet(name = "dispatcher", urlPatterns = {"", "/"}, loadOnStartup = 1)
 public class DispatcherServlet extends HttpServlet {
@@ -29,15 +27,9 @@ public class DispatcherServlet extends HttpServlet {
 
 	@Override
 	public void init() throws ServletException {
-		LegacyHandlerMapping lhm = new LegacyHandlerMapping();
-		lhm.initMapping();
 		AnnotationHandlerMapping ahm = new AnnotationHandlerMapping("next");
 		ahm.initialize();
-		
-		mappings.add(lhm);
 		mappings.add(ahm);
-		
-		handlerAdapters.add(new ControllerHandlerAdapter());
 		handlerAdapters.add(new HandlerExecutionHandlerAdapter());
 	}
 

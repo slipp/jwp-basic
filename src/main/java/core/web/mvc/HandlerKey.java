@@ -1,4 +1,4 @@
-package core.nmvc;
+package core.web.mvc;
 
 import core.annotation.RequestMethod;
 

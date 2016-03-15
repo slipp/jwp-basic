@@ -7,6 +7,8 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import core.web.mvc.ControllerScanner;
+
 public class ControllerScannerTest {
 	private static final Logger logger = LoggerFactory.getLogger(ControllerScannerTest.class);
 	

@@ -1,4 +1,4 @@
-package core.nmvc;
+package core.web.mvc;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import core.mvc.ModelAndView;
+import core.web.view.ModelAndView;
 
 public class HandlerExecution {
 	private static final Logger logger = LoggerFactory.getLogger(HandlerExecution.class);

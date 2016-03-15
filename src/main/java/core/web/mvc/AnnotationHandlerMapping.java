@@ -1,4 +1,4 @@
-package core.nmvc;
+package core.web.mvc;
 
 import java.lang.reflect.Method;
 import java.util.Map;

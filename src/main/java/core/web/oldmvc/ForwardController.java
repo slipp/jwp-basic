@@ -1,7 +1,9 @@
-package core.mvc;
+package core.web.oldmvc;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import core.web.view.ModelAndView;
 
 public class ForwardController extends AbstractController {
 	private String forwardUrl;

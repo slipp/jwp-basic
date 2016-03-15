@@ -6,8 +6,8 @@ import javax.servlet.http.HttpServletResponse;
 import core.annotation.Controller;
 import core.annotation.Inject;
 import core.annotation.RequestMapping;
-import core.mvc.ModelAndView;
-import core.nmvc.AbstractNewController;
+import core.web.mvc.AbstractNewController;
+import core.web.view.ModelAndView;
 
 @Controller
 public class QnaController extends AbstractNewController {

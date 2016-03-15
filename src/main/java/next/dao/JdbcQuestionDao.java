@@ -7,12 +7,14 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.List;
 
+import core.annotation.Repository;
 import core.jdbc.JdbcTemplate;
 import core.jdbc.KeyHolder;
 import core.jdbc.PreparedStatementCreator;
 import core.jdbc.RowMapper;
 import next.model.Question;
 
+@Repository
 public class JdbcQuestionDao implements QuestionDao {
 	private JdbcTemplate jdbcTemplate = JdbcTemplate.getInstance();
 	

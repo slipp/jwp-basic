@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 import core.annotation.Controller;
 import core.annotation.RequestMapping;
 import core.annotation.RequestMethod;
-import core.mvc.ModelAndView;
+import core.web.view.ModelAndView;
 
 @Controller
 public class MyController {

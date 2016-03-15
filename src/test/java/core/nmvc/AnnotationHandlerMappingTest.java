@@ -5,6 +5,9 @@ import org.junit.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
+import core.web.mvc.AnnotationHandlerMapping;
+import core.web.mvc.HandlerExecution;
+
 public class AnnotationHandlerMappingTest {
 	private AnnotationHandlerMapping handlerMapping;
 	

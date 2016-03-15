@@ -1,5 +1,8 @@
-package core.mvc;
+package core.web.oldmvc;
 
+import core.web.view.JsonView;
+import core.web.view.JspView;
+import core.web.view.ModelAndView;
 
 public abstract class AbstractController implements Controller {
 	protected ModelAndView jspView(String forwardUrl) {

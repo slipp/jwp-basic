@@ -1,9 +1,10 @@
-package core.mvc;
+package core.web.oldmvc;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import core.nmvc.HandlerAdapter;
+import core.web.mvc.HandlerAdapter;
+import core.web.view.ModelAndView;
 
 public class ControllerHandlerAdapter implements HandlerAdapter {
 	@Override

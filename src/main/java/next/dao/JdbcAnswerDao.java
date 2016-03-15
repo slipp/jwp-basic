@@ -7,17 +7,16 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.List;
 
+import core.annotation.Repository;
 import core.jdbc.JdbcTemplate;
 import core.jdbc.KeyHolder;
 import core.jdbc.PreparedStatementCreator;
 import core.jdbc.RowMapper;
 import next.model.Answer;
 
+@Repository
 public class JdbcAnswerDao implements AnswerDao {
 	private JdbcTemplate jdbcTemplate = JdbcTemplate.getInstance();
-	
-	public JdbcAnswerDao() {}
-	
 	
     @Override
 	public Answer insert(Answer answer) {
