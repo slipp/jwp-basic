@@ -1,4 +1,4 @@
-package core.di.sample;
+package core.di;
 
 public class Hour {
 	private int hour;

@@ -1,4 +1,4 @@
-package core.di.sample;
+package core.di;
 
 import static org.junit.Assert.assertEquals;
 
