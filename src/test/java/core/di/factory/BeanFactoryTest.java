@@ -34,15 +34,17 @@ public class BeanFactoryTest {
 	@Test
 	public void di() throws Exception {
 		QnaController qnaController = beanFactory.getBean(QnaController.class);
+		
 		assertNotNull(qnaController);
 		assertNotNull(qnaController.getQnaService());
+		
 		MyQnaService qnaService = qnaController.getQnaService();
 		assertNotNull(qnaService.getUserRepository());
 		assertNotNull(qnaService.getQuestionRepository());
 	}
 	
 	@SuppressWarnings("unchecked")
-	Set<Class<?>> getTypesAnnotatedWith(Class<? extends Annotation>... annotations) {
+	private Set<Class<?>> getTypesAnnotatedWith(Class<? extends Annotation>... annotations) {
 		Set<Class<?>> beans = Sets.newHashSet();
 		for (Class<? extends Annotation> annotation : annotations) {
 			beans.addAll(reflections.getTypesAnnotatedWith(annotation));
