@@ -1,9 +1,14 @@
 package core.di.factory;
 
 import static org.reflections.ReflectionUtils.getAllConstructors;
+import static org.reflections.ReflectionUtils.getAllFields;
+import static org.reflections.ReflectionUtils.getAllMethods;
 import static org.reflections.ReflectionUtils.withAnnotation;
+import static org.reflections.ReflectionUtils.withReturnType;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.Set;
 
 import com.google.common.collect.Sets;
@@ -11,6 +16,16 @@ import com.google.common.collect.Sets;
 import core.annotation.Inject;
 
 public class BeanFactoryUtils {
+	@SuppressWarnings({ "unchecked" })
+	public static Set<Method> getInjectedMethods(Class<?> clazz) {
+		return getAllMethods(clazz, withAnnotation(Inject.class), withReturnType(void.class));
+	}
+	
+	@SuppressWarnings({ "unchecked" })
+	public static Set<Field> getInjectedFields(Class<?> clazz) {
+		return getAllFields(clazz, withAnnotation(Inject.class));
+	}
+	
 	/**
 	 * 인자로 전달하는 클래스의 생성자 중 @Inject 애노테이션이 설정되어 있는 생성자를 반환
 	 * @Inject 애노테이션이 설정되어 있는 생성자는 클래스당 하나로 가정한다.
