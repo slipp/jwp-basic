@@ -10,14 +10,14 @@ import org.springframework.beans.BeanUtils;
 
 import com.google.common.collect.Lists;
 
-public abstract class AbstractorInjector implements Injector {
-	private static final Logger logger = LoggerFactory.getLogger(ConstructorInjector.class);
+public abstract class AbstractInjector implements Injector {
+	private static final Logger logger = LoggerFactory.getLogger(AbstractInjector.class);
 	
 	private Set<Class<?>> preInstanticateBeans;
 
 	private BeanFactory beanFactory;
 
-	public AbstractorInjector(Set<Class<?>> preInstanticateBeans, BeanFactory beanFactory) {
+	public AbstractInjector(Set<Class<?>> preInstanticateBeans, BeanFactory beanFactory) {
 		this.preInstanticateBeans = preInstanticateBeans;
 		this.beanFactory = beanFactory;
 	}
@@ -27,9 +27,9 @@ public abstract class AbstractorInjector implements Injector {
 		injectInline(clazz, preInstanticateBeans, beanFactory);
 	}
 	
-	abstract void injectInline(Class<?> clazz, Set<Class<?>> preInstanticateBeans, BeanFactory beanFactory);
-	
-    protected Object instantiateClass(Class<?> clazz) {
+    abstract void injectInline(Class<?> clazz, Set<Class<?>> preInstanticateBeans, BeanFactory beanFactory);
+
+	protected Object instantiateClass(Class<?> clazz) {
         Object bean = beanFactory.getBean(clazz);
         if (bean != null) {
             return bean;
