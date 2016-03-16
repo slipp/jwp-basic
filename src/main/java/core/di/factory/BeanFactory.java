@@ -60,15 +60,18 @@ public class BeanFactory implements BeanDefinitionRegistry {
 	private Object injectProperties(BeanDefinition beanDefinition) {
 		Class<?> beanClass = beanDefinition.getBeanClass();
 		Object bean = BeanUtils.instantiate(beanClass);
+		Set<Class<?>> injectProperties = beanDefinition.getInjectProperties();
 		Field[] fields = beanClass.getDeclaredFields();
 		for (Field field : fields) {
-			logger.debug("Inject Bean : {}, Field : {}", beanClass, field);
-			Class<?> concreteClass = findBeanClass(field.getType(), getPreInstanticateBeans());
-			try {
-				field.setAccessible(true);
-				field.set(bean, instantiateClass(concreteClass));
-			} catch (IllegalAccessException | IllegalArgumentException e) {
-				logger.error(e.getMessage());
+			if (injectProperties.contains(field.getType())) {
+				logger.debug("Inject Bean : {}, Field : {}", beanClass, field);
+				Class<?> concreteClass = findBeanClass(field.getType(), getPreInstanticateBeans());
+				try {
+					field.setAccessible(true);
+					field.set(bean, instantiateClass(concreteClass));
+				} catch (IllegalAccessException | IllegalArgumentException e) {
+					logger.error(e.getMessage());
+				}
 			}
 		}
 		registerBean(beanClass, bean);
