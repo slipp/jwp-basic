@@ -26,6 +26,11 @@ public class BeanFactoryUtils {
 		return getAllFields(clazz, withAnnotation(Inject.class));
 	}
 	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public static Set<Constructor> getInjectedConstructors(Class<?> clazz) {
+		return getAllConstructors(clazz, withAnnotation(Inject.class));
+	}
+	
 	/**
 	 * 인자로 전달하는 클래스의 생성자 중 @Inject 애노테이션이 설정되어 있는 생성자를 반환
 	 * @Inject 애노테이션이 설정되어 있는 생성자는 클래스당 하나로 가정한다.

@@ -26,9 +26,13 @@ public class BeanFactory {
 		this.preInstanticateBeans = preInstanticateBeans;
 		
 		injectors = Arrays.asList(
-						new ConstructorInjector(preInstanticateBeans, this), 
-						new FieldInjector(preInstanticateBeans, this),  
-						new SetterInjector(preInstanticateBeans, this));
+						new FieldInjector(this),  
+						new SetterInjector(this),
+						new ConstructorInjector(this));
+	}
+	
+	public Set<Class<?>> getPreInstanticateBeans() {
+		return preInstanticateBeans;
 	}
 	
 	@SuppressWarnings("unchecked")

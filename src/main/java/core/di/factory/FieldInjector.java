@@ -9,26 +9,26 @@ import org.slf4j.LoggerFactory;
 public class FieldInjector extends AbstractInjector {
 	private static final Logger logger = LoggerFactory.getLogger(FieldInjector.class);
 
-	public FieldInjector(Set<Class<?>> preInstanticateBeans, BeanFactory beanFactory) {
-		super(preInstanticateBeans, beanFactory);
+	public FieldInjector(BeanFactory beanFactory) {
+		super(beanFactory);
+	}
+	
+	Set<?> getInjectedBeans(Class<?> clazz) {
+		return BeanFactoryUtils.getInjectedFields(clazz);
 	}
 
-	@Override
-	void injectInline(Class<?> clazz, Set<Class<?>> preInstanticateBeans, BeanFactory beanFactory) {
-		Set<Field> injectedFields = BeanFactoryUtils.getInjectedFields(clazz);
-		for (Field field : injectedFields) {
-			logger.debug("invoke field : {}", field);
-			Class<?> concreteClazz = findBeanClass(field.getType(), preInstanticateBeans);
-			Object bean = beanFactory.getBean(concreteClazz);
-			if (bean == null) {
-				bean = instantiateClass(concreteClazz);
-			}
-			try {
-				field.setAccessible(true);
-				field.set(beanFactory.getBean(field.getDeclaringClass()), bean);
-			} catch (IllegalAccessException | IllegalArgumentException e) {
-				logger.error(e.getMessage());
-			}
+	void inject(Object injectedBean, Object bean, BeanFactory beanFactory) {
+		Field field = (Field)injectedBean;
+		try {
+			field.setAccessible(true);
+			field.set(beanFactory.getBean(field.getDeclaringClass()), bean);
+		} catch (IllegalAccessException | IllegalArgumentException e) {
+			logger.error(e.getMessage());
 		}
+	}
+
+	Class<?> getBeanClass(Object injectedBean) {
+		Field field = (Field)injectedBean;
+		return field.getType();
 	}
 }
