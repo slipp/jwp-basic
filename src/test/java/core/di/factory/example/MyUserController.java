@@ -5,6 +5,9 @@ import core.annotation.Inject;
 
 @Controller
 public class MyUserController {
+	@Inject
+	private MyQnaService qnaService;
+	
 	private MyUserService userService;
 	
 	@Inject

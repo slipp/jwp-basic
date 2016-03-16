@@ -15,6 +15,7 @@ import core.di.factory.example.MyQnaService;
 import core.di.factory.example.MyUserController;
 import core.di.factory.example.MyUserService;
 import core.di.factory.example.QnaController;
+import core.di.factory.support.ClasspathBeanDefinitionScanner;
 
 public class BeanFactoryTest {
 	private Logger log = LoggerFactory.getLogger(BeanFactoryTest.class);
@@ -23,9 +24,9 @@ public class BeanFactoryTest {
 
 	@Before
 	public void setup() {
-		BeanScanner scanner = new BeanScanner("core.di.factory.example");
-		Set<Class<?>> preInstanticateClazz = scanner.scan();
-		beanFactory = new BeanFactory(preInstanticateClazz);
+		beanFactory = new BeanFactory();
+		ClasspathBeanDefinitionScanner scanner = new ClasspathBeanDefinitionScanner(beanFactory);
+		scanner.doScan("core.di.factory.example");
 		beanFactory.initialize();
 	}
 
