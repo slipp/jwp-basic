@@ -1,6 +1,4 @@
-package core.di.factory.support;
-
-import core.di.factory.config.BeanDefinition;
+package core.di.factory;
 
 public interface BeanDefinitionRegistry {
     void registerBeanDefinition(Class<?> clazz, BeanDefinition beanDefinition);

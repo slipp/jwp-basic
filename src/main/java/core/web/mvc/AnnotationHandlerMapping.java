@@ -16,7 +16,7 @@ import com.google.common.collect.Sets;
 import core.annotation.RequestMapping;
 import core.annotation.RequestMethod;
 import core.di.factory.BeanFactory;
-import core.di.factory.support.ClasspathBeanDefinitionScanner;
+import core.di.factory.ClasspathBeanDefinitionScanner;
 
 public class AnnotationHandlerMapping implements HandlerMapping {
 	private static final Logger logger = LoggerFactory.getLogger(AnnotationHandlerMapping.class);

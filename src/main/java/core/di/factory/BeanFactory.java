@@ -15,9 +15,6 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
 import core.annotation.Controller;
-import core.di.factory.config.BeanDefinition;
-import core.di.factory.config.InjectType;
-import core.di.factory.support.BeanDefinitionRegistry;
 
 public class BeanFactory implements BeanDefinitionRegistry {
 	private static final Logger log = LoggerFactory.getLogger(BeanFactory.class);
@@ -39,14 +36,14 @@ public class BeanFactory implements BeanDefinitionRegistry {
 			return (T)bean;
 		}
 		
-		Class<?> concreteClass = findBeanClass(clazz);
+		Class<?> concreteClass = findConcreteClass(clazz);
 		BeanDefinition beanDefinition = beanDefinitions.get(concreteClass);
 		bean = inject(beanDefinition);
 		registerBean(concreteClass, bean);
 		return (T)bean;
 	}
 	
-	private Class<?> findBeanClass(Class<?> clazz) {
+	private Class<?> findConcreteClass(Class<?> clazz) {
 		Set<Class<?>> beanClasses = beanDefinitions.keySet();
     	Class<?> concreteClazz = BeanFactoryUtils.findConcreteClass(clazz, beanClasses);
         if (!beanClasses.contains(concreteClazz)) {

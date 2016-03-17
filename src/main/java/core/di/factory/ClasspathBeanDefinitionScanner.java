@@ -1,4 +1,4 @@
-package core.di.factory.support;
+package core.di.factory;
 
 import java.lang.annotation.Annotation;
 import java.util.Set;
@@ -23,7 +23,7 @@ public class ClasspathBeanDefinitionScanner {
 		Reflections reflections = new Reflections(basePackages);
 		Set<Class<?>> beanClasses = getTypesAnnotatedWith(reflections, Controller.class, Service.class, Repository.class);
 		for (Class<?> clazz : beanClasses) {
-			beanDefinitionRegistry.registerBeanDefinition(clazz, new DefaultBeanDefinition(clazz));
+			beanDefinitionRegistry.registerBeanDefinition(clazz, new BeanDefinition(clazz));
 		}
 	}
 	

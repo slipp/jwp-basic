@@ -1,4 +1,4 @@
-package core.di.factory.config;
+package core.di.factory;
 
 public enum InjectType {
 	INJECT_NO,

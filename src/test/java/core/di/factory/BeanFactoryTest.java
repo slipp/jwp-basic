@@ -15,7 +15,6 @@ import core.di.factory.example.MyQnaService;
 import core.di.factory.example.MyUserController;
 import core.di.factory.example.MyUserService;
 import core.di.factory.example.QnaController;
-import core.di.factory.support.ClasspathBeanDefinitionScanner;
 
 public class BeanFactoryTest {
 	private Logger log = LoggerFactory.getLogger(BeanFactoryTest.class);
