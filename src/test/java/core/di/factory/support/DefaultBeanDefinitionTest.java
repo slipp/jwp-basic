@@ -2,7 +2,7 @@ package core.di.factory.support;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.List;
+import java.lang.reflect.Constructor;
 import java.util.Set;
 
 import org.junit.Test;
@@ -36,13 +36,11 @@ public class DefaultBeanDefinitionTest {
 	}
 	
 	@Test
-	public void getConstructorArguments() throws Exception {
+	public void getConstructor() throws Exception {
 		DefaultBeanDefinition dbd = new DefaultBeanDefinition(MyQnaService.class);
 		Set<Class<?>> properties = dbd.getInjectProperties();
 		assertEquals(0, properties.size());
-		List<Class<?>> arguments = dbd.getConstructorArguments();
-		for (Class<?> argument : arguments) {
-			log.debug("inject argument : {}", argument);
-		}
+		Constructor<?> constructor = dbd.getConstructor();
+		log.debug("inject constructor : {}", constructor);
 	}
 }

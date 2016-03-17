@@ -21,6 +21,6 @@ public class HomeController extends AbstractNewController {
     
     @RequestMapping("/")
     public ModelAndView home(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        return jspView("index.jsp").addObject("questions", questionDao.findAll());
+    	return jspView("index.jsp").addObject("questions", questionDao.findAll());
     }
 }

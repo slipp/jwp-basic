@@ -16,7 +16,7 @@ import com.google.common.collect.Sets;
 import core.annotation.RequestMapping;
 import core.annotation.RequestMethod;
 import core.di.factory.BeanFactory;
-import core.di.factory.BeanScanner;
+import core.di.factory.support.ClasspathBeanDefinitionScanner;
 
 public class AnnotationHandlerMapping implements HandlerMapping {
 	private static final Logger logger = LoggerFactory.getLogger(AnnotationHandlerMapping.class);
@@ -30,8 +30,9 @@ public class AnnotationHandlerMapping implements HandlerMapping {
 	}
 	
 	public void initialize() {
-		BeanScanner scanner = new BeanScanner(basePackage);
-		BeanFactory beanFactory = new BeanFactory(scanner.scan());
+		BeanFactory beanFactory = new BeanFactory();
+		ClasspathBeanDefinitionScanner scanner = new ClasspathBeanDefinitionScanner(beanFactory);
+		scanner.doScan(basePackage);
 		beanFactory.initialize();
 		Map<Class<?>, Object> controllers = beanFactory.getControllers();
 		Set<Method> methods = getRequestMappingMethods(controllers.keySet());

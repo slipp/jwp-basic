@@ -1,6 +1,6 @@
 package core.di.factory.config;
 
-import java.util.List;
+import java.lang.reflect.Constructor;
 import java.util.Set;
 
 public interface BeanDefinition {
@@ -8,7 +8,7 @@ public interface BeanDefinition {
     
     InjectType getResolvedInjectMode();
     
-    List<Class<?>> getConstructorArguments();
+    Constructor<?> getConstructor();
     
     Set<Class<?>> getInjectProperties();
 }
