@@ -3,6 +3,7 @@ package core.di.factory.support;
 import static org.junit.Assert.assertEquals;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.util.Set;
 
 import org.junit.Test;
@@ -20,6 +21,9 @@ public class DefaultBeanDefinitionTest {
 	@Test
 	public void getResolvedAutowireMode() {
 		DefaultBeanDefinition dbd = new DefaultBeanDefinition(JdbcUserRepository.class);
+		assertEquals(InjectType.INJECT_NO, dbd.getResolvedInjectMode());
+		
+		dbd = new DefaultBeanDefinition(MyUserController.class);
 		assertEquals(InjectType.INJECT_TYPE, dbd.getResolvedInjectMode());
 		
 		dbd = new DefaultBeanDefinition(MyQnaService.class);
@@ -29,18 +33,18 @@ public class DefaultBeanDefinitionTest {
 	@Test
 	public void getInjectProperties() throws Exception {
 		DefaultBeanDefinition dbd = new DefaultBeanDefinition(MyUserController.class);
-		Set<Class<?>> properties = dbd.getInjectProperties();
-		for (Class<?> property : properties) {
-			log.debug("inject property : {}", property);
+		Set<Field> injectFields = dbd.getInjectFields();
+		for (Field field : injectFields) {
+			log.debug("inject field : {}", field);
 		}
 	}
 	
 	@Test
 	public void getConstructor() throws Exception {
 		DefaultBeanDefinition dbd = new DefaultBeanDefinition(MyQnaService.class);
-		Set<Class<?>> properties = dbd.getInjectProperties();
-		assertEquals(0, properties.size());
-		Constructor<?> constructor = dbd.getConstructor();
+		Set<Field> injectFields = dbd.getInjectFields();
+		assertEquals(0, injectFields.size());
+		Constructor<?> constructor = dbd.getInjectConstructor();
 		log.debug("inject constructor : {}", constructor);
 	}
 }

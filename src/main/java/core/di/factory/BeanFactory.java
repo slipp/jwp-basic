@@ -20,15 +20,17 @@ import core.di.factory.config.InjectType;
 import core.di.factory.support.BeanDefinitionRegistry;
 
 public class BeanFactory implements BeanDefinitionRegistry {
-	private static final Logger logger = LoggerFactory.getLogger(BeanFactory.class);
+	private static final Logger log = LoggerFactory.getLogger(BeanFactory.class);
 	
 	private Map<Class<?>, Object> beans = Maps.newHashMap();
 	
 	private Map<Class<?>, BeanDefinition> beanDefinitions = Maps.newHashMap();
 	
-	public Set<Class<?>> getPreInstanticateBeans() {
-		return beanDefinitions.keySet();
-	}
+    public void initialize() {
+    	for (Class<?> clazz : beanDefinitions.keySet()) {
+			getBean(clazz);
+		}
+    }
 	
 	@SuppressWarnings("unchecked")
 	public <T> T getBean(Class<T> clazz) {
@@ -37,71 +39,67 @@ public class BeanFactory implements BeanDefinitionRegistry {
 			return (T)bean;
 		}
 		
-		Class<?> concreteClass = findBeanClass(clazz, getPreInstanticateBeans());
+		Class<?> concreteClass = findBeanClass(clazz);
 		BeanDefinition beanDefinition = beanDefinitions.get(concreteClass);
 		bean = inject(beanDefinition);
 		registerBean(concreteClass, bean);
 		return (T)bean;
 	}
 	
-    public void initialize() {
-    	Set<Class<?>> beanClasses = beanDefinitions.keySet();
-    	for (Class<?> clazz : beanClasses) {
-			getBean(clazz);
-		}
+	private Class<?> findBeanClass(Class<?> clazz) {
+		Set<Class<?>> beanClasses = beanDefinitions.keySet();
+    	Class<?> concreteClazz = BeanFactoryUtils.findConcreteClass(clazz, beanClasses);
+        if (!beanClasses.contains(concreteClazz)) {
+            throw new IllegalStateException(clazz + "는 Bean이 아니다.");
+        }
+        return concreteClazz;
     }
 
 	private Object inject(BeanDefinition beanDefinition) {
 		if (beanDefinition.getResolvedInjectMode() == InjectType.INJECT_NO) {
 			return BeanUtils.instantiate(beanDefinition.getBeanClass());
 		} else if (beanDefinition.getResolvedInjectMode() == InjectType.INJECT_TYPE){
-			return injectProperties(beanDefinition);
+			return injectFields(beanDefinition);
 		} else {
-			Constructor<?> constructor = beanDefinition.getConstructor();
-			List<Object> args = Lists.newArrayList();
-	        for (Class<?> clazz : constructor.getParameterTypes()) {
-	            Class<?> concreteClazz = findBeanClass(clazz, getPreInstanticateBeans());
-	            args.add(getBean(concreteClazz));
-	        }
-	        return BeanUtils.instantiateClass(constructor, args.toArray());
+			return injectConstructor(beanDefinition);
 		}
 	}
 
-	private Object injectProperties(BeanDefinition beanDefinition) {
-		Class<?> beanClass = beanDefinition.getBeanClass();
-		Object bean = BeanUtils.instantiate(beanClass);
-		Set<Class<?>> injectProperties = beanDefinition.getInjectProperties();
-		Field[] fields = beanClass.getDeclaredFields();
-		for (Field field : fields) {
-			if (injectProperties.contains(field.getType())) {
-				logger.debug("Inject Bean : {}, Field : {}", beanClass, field);
-				Class<?> concreteClass = findBeanClass(field.getType(), getPreInstanticateBeans());
-				try {
-					field.setAccessible(true);
-					field.set(bean, getBean(concreteClass));
-				} catch (IllegalAccessException | IllegalArgumentException e) {
-					logger.error(e.getMessage());
-				}
-			}
+	private Object injectConstructor(BeanDefinition beanDefinition) {
+		Constructor<?> constructor = beanDefinition.getInjectConstructor();
+		List<Object> args = Lists.newArrayList();
+		for (Class<?> clazz : constructor.getParameterTypes()) {
+		    args.add(getBean(clazz));
+		}
+		return BeanUtils.instantiateClass(constructor, args.toArray());
+	}
+
+	private Object injectFields(BeanDefinition beanDefinition) {
+		Object bean = BeanUtils.instantiate(beanDefinition.getBeanClass());
+		Set<Field> injectFields = beanDefinition.getInjectFields();
+		for (Field field : injectFields) {
+			injectField(bean, field);
 		}
 		return bean;
 	}
 
-	private Class<?> findBeanClass(Class<?> clazz, Set<Class<?>> preInstanticateBeans) {
-    	Class<?> concreteClazz = BeanFactoryUtils.findConcreteClass(clazz, preInstanticateBeans);
-        if (!preInstanticateBeans.contains(concreteClazz)) {
-            throw new IllegalStateException(clazz + "는 Bean이 아니다.");
-        }
-        return concreteClazz;
-    }
-    
-    void registerBean(Class<?> clazz, Object bean) {
+	private void injectField(Object bean, Field field) {
+		log.debug("Inject Bean : {}, Field : {}", bean, field);
+		try {
+			field.setAccessible(true);
+			field.set(bean, getBean(field.getType()));
+		} catch (IllegalAccessException | IllegalArgumentException e) {
+			log.error(e.getMessage());
+		}
+	}
+
+    public void registerBean(Class<?> clazz, Object bean) {
     	beans.put(clazz, bean);
     }
 
 	public Map<Class<?>, Object> getControllers() {
 		Map<Class<?>, Object> controllers = Maps.newHashMap();
-		for (Class<?> clazz : getPreInstanticateBeans()) {
+		for (Class<?> clazz : beanDefinitions.keySet()) {
 			Annotation annotation = clazz.getAnnotation(Controller.class);
 			if (annotation != null) {
 				controllers.put(clazz, beans.get(clazz));
@@ -110,14 +108,14 @@ public class BeanFactory implements BeanDefinitionRegistry {
 		return controllers;
 	}
 	
-	void clear() {
+	public void clear() {
 		beanDefinitions.clear();
 		beans.clear();
 	}
 
 	@Override
 	public void registerBeanDefinition(Class<?> clazz, BeanDefinition beanDefinition) {
-		logger.debug("register bean : {}", clazz);
+		log.debug("register bean : {}", clazz);
 		beanDefinitions.put(clazz, beanDefinition);
 	}
 }

@@ -13,24 +13,36 @@ import core.di.factory.config.InjectType;
 
 public class DefaultBeanDefinition implements BeanDefinition {
 	private Class<?> beanClazz;
-	private Constructor<?> constructor;
-	private Set<Class<?>> injectProperties;
+	private Constructor<?> injectConstructor;
+	private Set<Field> injectFields;
 
 	public DefaultBeanDefinition(Class<?> clazz) {
 		this.beanClazz = clazz;
-		constructor = getInjectConstructor(clazz);
-		injectProperties = getInjectPropertiesType(clazz, constructor);
+		injectConstructor = getInjectConstructor(clazz);
+		injectFields = getInjectFields(clazz, injectConstructor);
 	}
 
 	private static Constructor<?> getInjectConstructor(Class<?> clazz) {
 		return BeanFactoryUtils.getInjectedConstructor(clazz);
 	}
 
-	private static Set<Class<?>> getInjectPropertiesType(Class<?> clazz, Constructor<?> constructor) {
+	private Set<Field> getInjectFields(Class<?> clazz, Constructor<?> constructor) {
 		if (constructor != null) {
 			return Sets.newHashSet();
 		}
+		
+		Set<Field> injectFields = Sets.newHashSet();
+		Set<Class<?>> injectProperties = getInjectPropertiesType(clazz);
+		Field[] fields = clazz.getDeclaredFields();
+		for (Field field : fields) {
+			if (injectProperties.contains(field.getType())) {
+				injectFields.add(field);
+			}
+		}
+		return injectFields;
+	}
 
+	private static Set<Class<?>> getInjectPropertiesType(Class<?> clazz) {
 		Set<Class<?>> injectProperties = Sets.newHashSet();
 		Set<Method> injectMethod = BeanFactoryUtils.getInjectedMethods(clazz);
 		for (Method method : injectMethod) {
@@ -49,12 +61,13 @@ public class DefaultBeanDefinition implements BeanDefinition {
 		return injectProperties;
 	}
 
-	public Constructor<?> getConstructor() {
-		return constructor;
+	public Constructor<?> getInjectConstructor() {
+		return injectConstructor;
 	}
 
-	public Set<Class<?>> getInjectProperties() {
-		return injectProperties;
+	@Override
+	public Set<Field> getInjectFields() {
+		return this.injectFields;
 	}
 
 	@Override
@@ -64,11 +77,11 @@ public class DefaultBeanDefinition implements BeanDefinition {
 
 	@Override
 	public InjectType getResolvedInjectMode() {
-		if (constructor != null) {
+		if (injectConstructor != null) {
 			return InjectType.INJECT_CONSTRUCTOR;
 		}
 
-		if (!injectProperties.isEmpty()) {
+		if (!injectFields.isEmpty()) {
 			return InjectType.INJECT_TYPE;
 		}
 
