@@ -6,24 +6,16 @@ import next.model.User;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils;
-import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 
-import core.di.factory.ApplicationContext;
-import core.jdbc.ConnectionManager;
+import core.di.factory.AnnotationConfigApplicationContext;
 
 public class UserDaoTest {
 	private UserDao userDao;
 	
     @Before
     public void setup() {
-    	ApplicationContext ac = new ApplicationContext(MyConfiguration.class);
+    	AnnotationConfigApplicationContext ac = new AnnotationConfigApplicationContext(MyConfiguration.class);
     	userDao = ac.getBean(UserDao.class);
-    	
-        ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
-        populator.addScript(new ClassPathResource("jwp.sql"));
-        DatabasePopulatorUtils.execute(populator, ConnectionManager.getDataSource());
     }
 
 	@Test

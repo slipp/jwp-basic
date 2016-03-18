@@ -1,17 +1,14 @@
-package next.config;
+package di.examples;
 
 import javax.sql.DataSource;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 
 import core.annotation.Bean;
-import core.annotation.ComponentScan;
 import core.annotation.Configuration;
-import core.jdbc.JdbcTemplate;
 
 @Configuration
-@ComponentScan({ "next", "core" })
-public class MyConfiguration {
+public class IntegrationConfig {
 	@Bean
 	public DataSource dataSource() {
 		BasicDataSource ds = new BasicDataSource();
@@ -23,7 +20,7 @@ public class MyConfiguration {
 	}
 	
 	@Bean
-	public JdbcTemplate jdbcTemplate(DataSource dataSource) {
-		return new JdbcTemplate(dataSource);
+	public MyJdbcTemplate jdbcTemplate(DataSource dataSource) {
+		return new MyJdbcTemplate(dataSource);
 	}
 }

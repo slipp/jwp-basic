@@ -9,14 +9,14 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import core.annotation.Component;
-import core.annotation.Inject;
-
-@Component
 public class JdbcTemplate {
-	@Inject
 	private DataSource dataSource;
 	
+	public JdbcTemplate(DataSource dataSource) {
+		super();
+		this.dataSource = dataSource;
+	}
+
 	public void update(String sql, PreparedStatementSetter pss) throws DataAccessException {
 		try (Connection conn = dataSource.getConnection(); 
 			PreparedStatement pstmt = conn.prepareStatement(sql)) {

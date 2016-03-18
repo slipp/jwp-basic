@@ -18,9 +18,4 @@ public class ExampleConfig {
 		ds.setPassword("");
 		return ds;
 	}
-	
-	@Bean
-	public MyJdbcTemplate jdbcTemplate(DataSource dataSource) {
-		return new MyJdbcTemplate(dataSource);
-	}
 }
