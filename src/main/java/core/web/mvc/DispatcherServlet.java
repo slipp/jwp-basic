@@ -16,19 +16,22 @@ import com.google.common.collect.Lists;
 import core.web.view.ModelAndView;
 import core.web.view.View;
 
-// @WebServlet(name = "dispatcher", urlPatterns = {"", "/"}, loadOnStartup = 1)
 public class DispatcherServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final Logger logger = LoggerFactory.getLogger(DispatcherServlet.class);
 
 	private List<HandlerMapping> mappings = Lists.newArrayList();
 	private List<HandlerAdapter> handlerAdapters = Lists.newArrayList();
+	
+	private HandlerMapping hm;
 
+	public DispatcherServlet(HandlerMapping hm) {
+		this.hm = hm;
+	}
+	
 	@Override
 	public void init() throws ServletException {
-		AnnotationHandlerMapping ahm = new AnnotationHandlerMapping("next");
-		ahm.initialize();
-		mappings.add(ahm);
+		mappings.add(hm);
 		handlerAdapters.add(new HandlerExecutionHandlerAdapter());
 	}
 

@@ -6,10 +6,10 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import core.di.factory.example.MyQnaService;
-import core.di.factory.example.MyUserController;
-import core.di.factory.example.MyUserService;
-import core.di.factory.example.QnaController;
+import di.examples.MyQnaService;
+import di.examples.MyUserController;
+import di.examples.MyUserService;
+import di.examples.QnaController;
 
 public class BeanFactoryTest {
 	private BeanFactory beanFactory;
@@ -18,7 +18,7 @@ public class BeanFactoryTest {
 	public void setup() {
 		beanFactory = new BeanFactory();
 		ClasspathBeanDefinitionScanner scanner = new ClasspathBeanDefinitionScanner(beanFactory);
-		scanner.doScan("core.di.factory.example");
+		scanner.doScan("di.examples");
 		beanFactory.initialize();
 	}
 

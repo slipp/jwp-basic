@@ -1,4 +1,4 @@
-package core.di.factory.example;
+package di.examples;
 
 public interface UserRepository {
 

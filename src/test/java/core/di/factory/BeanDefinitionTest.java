@@ -12,9 +12,9 @@ import org.slf4j.LoggerFactory;
 
 import core.di.factory.BeanDefinition;
 import core.di.factory.InjectType;
-import core.di.factory.example.JdbcUserRepository;
-import core.di.factory.example.MyQnaService;
-import core.di.factory.example.MyUserController;
+import di.examples.JdbcUserRepository;
+import di.examples.MyQnaService;
+import di.examples.MyUserController;
 
 public class BeanDefinitionTest {
 	private static final Logger log = LoggerFactory.getLogger(BeanDefinitionTest.class);

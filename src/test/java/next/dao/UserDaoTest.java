@@ -9,11 +9,16 @@ import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 
 import core.jdbc.ConnectionManager;
+import core.jdbc.JdbcTemplate;
 import next.model.User;
 
 public class UserDaoTest {
+	private JdbcTemplate jdbcTemplate;
+	
     @Before
     public void setup() {
+    	jdbcTemplate = new JdbcTemplate();
+    	
         ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
         populator.addScript(new ClassPathResource("jwp.sql"));
         DatabasePopulatorUtils.execute(populator, ConnectionManager.getDataSource());
@@ -22,7 +27,7 @@ public class UserDaoTest {
 	@Test
 	public void crud() throws Exception {
 		User expected = new User("userId", "password", "name", "javajigi@email.com");
-		UserDao userDao = new UserDao();
+		UserDao userDao = new UserDao(jdbcTemplate);
 		userDao.insert(expected);
 		
 		User actual = userDao.findByUserId(expected.getUserId());

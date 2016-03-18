@@ -1,4 +1,4 @@
-package core.di.factory.example;
+package di.examples;
 
 import core.annotation.Inject;
 import core.annotation.Service;

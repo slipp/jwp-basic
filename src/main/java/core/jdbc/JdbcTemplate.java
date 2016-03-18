@@ -7,18 +7,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import core.annotation.Component;
+
+@Component
 public class JdbcTemplate {
-	private static JdbcTemplate jdbcTemplate;
-	
-	private JdbcTemplate() {}
-	
-	public static JdbcTemplate getInstance() {
-		if (jdbcTemplate == null) {
-			jdbcTemplate = new JdbcTemplate();
-		}
-		return jdbcTemplate;
-	}
-	
 	public void update(String sql, PreparedStatementSetter pss) throws DataAccessException {
 		try (Connection conn = ConnectionManager.getConnection(); 
 			PreparedStatement pstmt = conn.prepareStatement(sql)) {

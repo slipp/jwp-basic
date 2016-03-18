@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+import core.annotation.Inject;
 import core.annotation.Repository;
 import core.jdbc.JdbcTemplate;
 import core.jdbc.RowMapper;
@@ -11,9 +12,14 @@ import next.model.User;
 
 @Repository
 public class UserDao {
-	private JdbcTemplate jdbcTemplate = JdbcTemplate.getInstance();
+	private JdbcTemplate jdbcTemplate;
 	
-    public void insert(User user) {
+	@Inject
+    public UserDao(JdbcTemplate jdbcTemplate) {
+		this.jdbcTemplate = jdbcTemplate;
+	}
+
+	public void insert(User user) {
         String sql = "INSERT INTO USERS VALUES (?, ?, ?, ?)";
         jdbcTemplate.update(sql, user.getUserId(),
                 user.getPassword(),
