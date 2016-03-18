@@ -1,5 +1,6 @@
 package core.web.mvc;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.Map;
 import java.util.Set;
@@ -13,28 +14,25 @@ import org.slf4j.LoggerFactory;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 
+import core.annotation.Controller;
 import core.annotation.RequestMapping;
 import core.annotation.RequestMethod;
-import core.di.factory.BeanFactory;
-import core.di.factory.ClasspathBeanDefinitionScanner;
+import core.di.factory.ApplicationContext;
 
 public class AnnotationHandlerMapping implements HandlerMapping {
 	private static final Logger logger = LoggerFactory.getLogger(AnnotationHandlerMapping.class);
 	
-	private Object[] basePackage;
+	private Object[] basePackages;
 	
 	private Map<HandlerKey, HandlerExecution> handlerExecutions = Maps.newHashMap();
 	
-	public AnnotationHandlerMapping(Object... basePackage) {
-		this.basePackage = basePackage;
+	public AnnotationHandlerMapping(Object... basePackages) {
+		this.basePackages = basePackages;
 	}
 	
 	public void initialize() {
-		BeanFactory beanFactory = new BeanFactory();
-		ClasspathBeanDefinitionScanner scanner = new ClasspathBeanDefinitionScanner(beanFactory);
-		scanner.doScan(basePackage);
-		beanFactory.initialize();
-		Map<Class<?>, Object> controllers = beanFactory.getControllers();
+		ApplicationContext ac = new ApplicationContext(basePackages);
+		Map<Class<?>, Object> controllers = getControllers(ac);
 		Set<Method> methods = getRequestMappingMethods(controllers.keySet());
 		for (Method method : methods) {
 			RequestMapping rm = method.getAnnotation(RequestMapping.class);
@@ -43,6 +41,17 @@ public class AnnotationHandlerMapping implements HandlerMapping {
 		}
 		
 		logger.info("Initialized AnnotationHandlerMapping!");
+	}
+	
+	private Map<Class<?>, Object> getControllers(ApplicationContext ac) {
+		Map<Class<?>, Object> controllers = Maps.newHashMap();
+		for (Class<?> clazz : ac.getBeanClasses()) {
+			Annotation annotation = clazz.getAnnotation(Controller.class);
+			if (annotation != null) {
+				controllers.put(clazz, ac.getBean(clazz));
+			}
+		}
+		return controllers;
 	}
 	
 	private HandlerKey createHandlerKey(RequestMapping rm) {

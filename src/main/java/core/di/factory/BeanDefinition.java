@@ -75,7 +75,7 @@ public class BeanDefinition {
 		}
 
 		if (!injectFields.isEmpty()) {
-			return InjectType.INJECT_TYPE;
+			return InjectType.INJECT_FIELD;
 		}
 
 		return InjectType.INJECT_NO;

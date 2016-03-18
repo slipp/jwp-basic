@@ -25,7 +25,7 @@ public class BeanDefinitionTest {
 		assertEquals(InjectType.INJECT_NO, dbd.getResolvedInjectMode());
 		
 		dbd = new BeanDefinition(MyUserController.class);
-		assertEquals(InjectType.INJECT_TYPE, dbd.getResolvedInjectMode());
+		assertEquals(InjectType.INJECT_FIELD, dbd.getResolvedInjectMode());
 		
 		dbd = new BeanDefinition(MyQnaService.class);
 		assertEquals(InjectType.INJECT_CONSTRUCTOR, dbd.getResolvedInjectMode());

@@ -1,6 +1,5 @@
 package core.di.factory;
 
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.util.List;
@@ -14,8 +13,6 @@ import org.springframework.beans.BeanUtils;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
-import core.annotation.Controller;
-
 public class BeanFactory implements BeanDefinitionRegistry {
 	private static final Logger log = LoggerFactory.getLogger(BeanFactory.class);
 	
@@ -24,9 +21,13 @@ public class BeanFactory implements BeanDefinitionRegistry {
 	private Map<Class<?>, BeanDefinition> beanDefinitions = Maps.newHashMap();
 	
     public void initialize() {
-    	for (Class<?> clazz : beanDefinitions.keySet()) {
+    	for (Class<?> clazz : getBeanClasses()) {
 			getBean(clazz);
 		}
+    }
+    
+    public Set<Class<?>> getBeanClasses() {
+    	return beanDefinitions.keySet();
     }
 	
 	@SuppressWarnings("unchecked")
@@ -39,12 +40,12 @@ public class BeanFactory implements BeanDefinitionRegistry {
 		Class<?> concreteClass = findConcreteClass(clazz);
 		BeanDefinition beanDefinition = beanDefinitions.get(concreteClass);
 		bean = inject(beanDefinition);
-		registerBean(concreteClass, bean);
+		beans.put(concreteClass, bean);
 		return (T)bean;
 	}
 	
 	private Class<?> findConcreteClass(Class<?> clazz) {
-		Set<Class<?>> beanClasses = beanDefinitions.keySet();
+		Set<Class<?>> beanClasses = getBeanClasses();
     	Class<?> concreteClazz = BeanFactoryUtils.findConcreteClass(clazz, beanClasses);
         if (!beanClasses.contains(concreteClazz)) {
             throw new IllegalStateException(clazz + "는 Bean이 아니다.");
@@ -55,7 +56,7 @@ public class BeanFactory implements BeanDefinitionRegistry {
 	private Object inject(BeanDefinition beanDefinition) {
 		if (beanDefinition.getResolvedInjectMode() == InjectType.INJECT_NO) {
 			return BeanUtils.instantiate(beanDefinition.getBeanClass());
-		} else if (beanDefinition.getResolvedInjectMode() == InjectType.INJECT_TYPE){
+		} else if (beanDefinition.getResolvedInjectMode() == InjectType.INJECT_FIELD){
 			return injectFields(beanDefinition);
 		} else {
 			return injectConstructor(beanDefinition);
@@ -90,21 +91,6 @@ public class BeanFactory implements BeanDefinitionRegistry {
 		}
 	}
 
-    public void registerBean(Class<?> clazz, Object bean) {
-    	beans.put(clazz, bean);
-    }
-
-	public Map<Class<?>, Object> getControllers() {
-		Map<Class<?>, Object> controllers = Maps.newHashMap();
-		for (Class<?> clazz : beanDefinitions.keySet()) {
-			Annotation annotation = clazz.getAnnotation(Controller.class);
-			if (annotation != null) {
-				controllers.put(clazz, beans.get(clazz));
-			}
-		}
-		return controllers;
-	}
-	
 	public void clear() {
 		beanDefinitions.clear();
 		beans.clear();
