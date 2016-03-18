@@ -7,7 +7,8 @@ import javax.sql.DataSource;
 import org.junit.Test;
 
 import di.examples.JdbcUserRepository;
-import di.examples.MyConfig;
+import di.examples.ExampleConfig;
+import di.examples.MyJdbcTemplate;
 
 public class AnnotatedBeanDefinitionReaderTest {
 
@@ -15,7 +16,7 @@ public class AnnotatedBeanDefinitionReaderTest {
 	public void register() {
 		BeanFactory beanFactory = new BeanFactory();
 		AnnotatedBeanDefinitionReader abdr = new AnnotatedBeanDefinitionReader(beanFactory);
-		abdr.register(MyConfig.class);
+		abdr.register(ExampleConfig.class);
 		
 		ClasspathBeanDefinitionScanner cbds = new ClasspathBeanDefinitionScanner(beanFactory);
 		cbds.doScan("di.examples");
@@ -27,5 +28,9 @@ public class AnnotatedBeanDefinitionReaderTest {
 		JdbcUserRepository userRepository = beanFactory.getBean(JdbcUserRepository.class);
 		assertNotNull(userRepository);
 		assertNotNull(userRepository.getDataSource());
+		
+		MyJdbcTemplate jdbcTemplate = beanFactory.getBean(MyJdbcTemplate.class);
+		assertNotNull(jdbcTemplate);
+		assertNotNull(jdbcTemplate.getDataSource());
 	}
 }

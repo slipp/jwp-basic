@@ -1,14 +1,16 @@
-package di.examples;
+package next.config;
 
 import javax.sql.DataSource;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 
 import core.annotation.Bean;
+import core.annotation.ComponentScan;
 import core.annotation.Configuration;
 
 @Configuration
-public class MyConfig {
+@ComponentScan({ "next", "core" })
+public class MyConfiguration {
 	@Bean
 	public DataSource dataSource() {
 		BasicDataSource ds = new BasicDataSource();

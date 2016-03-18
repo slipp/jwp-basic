@@ -10,9 +10,7 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import core.di.factory.BeanDefinition;
-import core.di.factory.InjectType;
-import di.examples.JdbcUserRepository;
+import di.examples.JdbcQuestionRepository;
 import di.examples.MyQnaService;
 import di.examples.MyUserController;
 
@@ -21,7 +19,7 @@ public class BeanDefinitionTest {
 
 	@Test
 	public void getResolvedAutowireMode() {
-		BeanDefinition dbd = new BeanDefinition(JdbcUserRepository.class);
+		BeanDefinition dbd = new BeanDefinition(JdbcQuestionRepository.class);
 		assertEquals(InjectType.INJECT_NO, dbd.getResolvedInjectMode());
 		
 		dbd = new BeanDefinition(MyUserController.class);

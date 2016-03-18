@@ -7,6 +7,7 @@ import javax.servlet.ServletRegistration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import core.di.factory.ApplicationContext;
 import core.web.WebApplicationInitializer;
 import core.web.mvc.AnnotationHandlerMapping;
 import core.web.mvc.DispatcherServlet;
@@ -16,7 +17,8 @@ public class MyWebApplicationInitializer implements WebApplicationInitializer {
     
     @Override
     public void onStartup(ServletContext servletContext) throws ServletException {
-    	AnnotationHandlerMapping ahm = new AnnotationHandlerMapping("core", "next");
+    	ApplicationContext ac = new ApplicationContext(MyConfiguration.class);
+    	AnnotationHandlerMapping ahm = new AnnotationHandlerMapping(ac);
     	ahm.initialize();
         ServletRegistration.Dynamic dispatcher = servletContext.addServlet("dispatcher", new DispatcherServlet(ahm));
         dispatcher.setLoadOnStartup(1);

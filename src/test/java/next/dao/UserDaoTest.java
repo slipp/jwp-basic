@@ -1,6 +1,8 @@
 package next.dao;
 
 import static org.junit.Assert.assertEquals;
+import next.config.MyConfiguration;
+import next.model.User;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -8,16 +10,16 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 
+import core.di.factory.ApplicationContext;
 import core.jdbc.ConnectionManager;
-import core.jdbc.JdbcTemplate;
-import next.model.User;
 
 public class UserDaoTest {
-	private JdbcTemplate jdbcTemplate;
+	private UserDao userDao;
 	
     @Before
     public void setup() {
-    	jdbcTemplate = new JdbcTemplate();
+    	ApplicationContext ac = new ApplicationContext(MyConfiguration.class);
+    	userDao = ac.getBean(UserDao.class);
     	
         ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
         populator.addScript(new ClassPathResource("jwp.sql"));
@@ -27,7 +29,6 @@ public class UserDaoTest {
 	@Test
 	public void crud() throws Exception {
 		User expected = new User("userId", "password", "name", "javajigi@email.com");
-		UserDao userDao = new UserDao(jdbcTemplate);
 		userDao.insert(expected);
 		
 		User actual = userDao.findByUserId(expected.getUserId());

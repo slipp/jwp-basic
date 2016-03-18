@@ -1,19 +1,21 @@
 package core.web.mvc;
 
+import next.config.MyConfiguration;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
-import core.web.mvc.AnnotationHandlerMapping;
-import core.web.mvc.HandlerExecution;
+import core.di.factory.ApplicationContext;
 
 public class AnnotationHandlerMappingTest {
 	private AnnotationHandlerMapping handlerMapping;
 	
 	@Before
 	public void setup() {
-		handlerMapping = new AnnotationHandlerMapping("core.nmvc");
+		ApplicationContext ac = new ApplicationContext(MyConfiguration.class);
+		handlerMapping = new AnnotationHandlerMapping(ac);
 		handlerMapping.initialize();
 	}
 
