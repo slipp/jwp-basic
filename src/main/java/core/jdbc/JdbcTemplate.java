@@ -7,10 +7,16 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.sql.DataSource;
+
 import core.annotation.Component;
+import core.annotation.Inject;
 
 @Component
 public class JdbcTemplate {
+	@Inject
+	private DataSource dataSource;
+	
 	public void update(String sql, PreparedStatementSetter pss) throws DataAccessException {
 		try (Connection conn = ConnectionManager.getConnection(); 
 			PreparedStatement pstmt = conn.prepareStatement(sql)) {

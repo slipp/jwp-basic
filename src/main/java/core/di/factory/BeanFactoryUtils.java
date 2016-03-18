@@ -9,16 +9,23 @@ import static org.reflections.ReflectionUtils.withReturnType;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.Optional;
 import java.util.Set;
 
 import com.google.common.collect.Sets;
 
+import core.annotation.Bean;
 import core.annotation.Inject;
 
 public class BeanFactoryUtils {
 	@SuppressWarnings({ "unchecked" })
 	public static Set<Method> getInjectedMethods(Class<?> clazz) {
 		return getAllMethods(clazz, withAnnotation(Inject.class), withReturnType(void.class));
+	}
+	
+	@SuppressWarnings({ "unchecked" })
+	public static Set<Method> getBeanMethods(Class<?> clazz) {
+		return getAllMethods(clazz, withAnnotation(Bean.class));
 	}
 	
 	@SuppressWarnings({ "unchecked" })
@@ -55,18 +62,18 @@ public class BeanFactoryUtils {
 	 * @param preInstanticateBeans
 	 * @return
 	 */
-	public static Class<?> findConcreteClass(Class<?> injectedClazz, Set<Class<?>> preInstanticateBeans) {
+	public static Optional<Class<?>> findConcreteClass(Class<?> injectedClazz, Set<Class<?>> preInstanticateBeans) {
 		if (!injectedClazz.isInterface()) {
-			return injectedClazz;
+			return Optional.of(injectedClazz);
 		}
 		
 		for (Class<?> clazz : preInstanticateBeans) {
 			Set<Class<?>> interfaces = Sets.newHashSet(clazz.getInterfaces());
 			if (interfaces.contains(injectedClazz)) {
-				return clazz;
+				return Optional.of(clazz);
 			}
 		}
 		
-		throw new IllegalStateException(injectedClazz + "인터페이스를 구현하는 Bean이 존재하지 않는다.");
+		return Optional.empty();
 	}
 }
