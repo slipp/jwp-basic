@@ -7,12 +7,15 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.List;
 
-import core.annotation.Inject;
-import core.annotation.Repository;
-import core.jdbc.JdbcTemplate;
-import core.jdbc.KeyHolder;
-import core.jdbc.PreparedStatementCreator;
-import core.jdbc.RowMapper;
+import javax.inject.Inject;
+
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Repository;
+
 import next.model.Question;
 
 @Repository
@@ -39,9 +42,9 @@ public class JdbcQuestionDao implements QuestionDao {
 			}
 		};
         
-		KeyHolder keyHolder = new KeyHolder();
+		KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(psc, keyHolder);
-        return findById(keyHolder.getId());
+        return findById(keyHolder.getKey().longValue());
     }
 	
 	@Override
@@ -51,7 +54,7 @@ public class JdbcQuestionDao implements QuestionDao {
 		
 		RowMapper<Question> rm = new RowMapper<Question>() {
 			@Override
-			public Question mapRow(ResultSet rs) throws SQLException {
+			public Question mapRow(ResultSet rs, int index) throws SQLException {
 				return new Question(rs.getLong("questionId"),
 						rs.getString("writer"), rs.getString("title"), null,
 						rs.getTimestamp("createdDate"),
@@ -70,7 +73,7 @@ public class JdbcQuestionDao implements QuestionDao {
 		
 		RowMapper<Question> rm = new RowMapper<Question>() {
 			@Override
-			public Question mapRow(ResultSet rs) throws SQLException {
+			public Question mapRow(ResultSet rs, int index) throws SQLException {
 				return new Question(rs.getLong("questionId"),
 						rs.getString("writer"), rs.getString("title"),
 						rs.getString("contents"),

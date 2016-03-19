@@ -1,26 +1,16 @@
 package next.dao;
 
-import next.config.MyConfiguration;
-import next.model.Answer;
-
-import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import core.di.factory.AnnotationConfigApplicationContext;
+import next.model.Answer;
 
 public class AnswerDaoTest {
 	private static final Logger log = LoggerFactory.getLogger(AnswerDaoTest.class);
 	
 	private AnswerDao answerDao;
 	
-    @Before
-    public void setup() {
-    	AnnotationConfigApplicationContext ac = new AnnotationConfigApplicationContext(MyConfiguration.class);
-    	answerDao = ac.getBean(AnswerDao.class);
-    }
-    
     @Test
     public void addAnswer() throws Exception {
         long questionId = 1L;

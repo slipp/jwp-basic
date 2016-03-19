@@ -1,26 +1,21 @@
 package next.controller;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.inject.Inject;
 
-import core.annotation.Controller;
-import core.annotation.Inject;
-import core.annotation.RequestMapping;
-import core.web.mvc.AbstractNewController;
-import core.web.view.ModelAndView;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+
 import next.dao.QuestionDao;
 
 @Controller
-public class HomeController extends AbstractNewController {
+public class HomeController {
+	@Inject
     private QuestionDao questionDao;
 
-    @Inject
-    public HomeController(QuestionDao questionDao) {
-    	this.questionDao = questionDao;
-    }
-    
     @RequestMapping("/")
-    public ModelAndView home(HttpServletRequest request, HttpServletResponse response) throws Exception {
-    	return jspView("index.jsp").addObject("questions", questionDao.findAll());
+    public String execute(Model model) throws Exception {
+    	model.addAttribute("questions", questionDao.findAll());
+        return "index";
     }
 }
