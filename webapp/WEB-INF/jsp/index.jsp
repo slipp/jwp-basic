@@ -19,12 +19,12 @@
 					<div class="wrap">
 						<div class="main">
 							<strong class="subject">
-								<a href="/qna/show?questionId=${each.questionId}">${each.title}</a>
+								<a href="/questions/${each.questionId}">${each.title}</a>
 							</strong>
 							<div class="auth-info">
 								<i class="icon-add-comment"></i>
 								<span class="time"><fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${each.createdDate}" /></span>
-								<a href="#" class="author">${each.writer}</a>
+								<a href="#" class="author">${each.writer.userId}</a>
 							</div>
 							<div class="reply" title="댓글">
 								<i class="icon-reply"></i>
@@ -49,7 +49,7 @@
 					</ul>
 				</div>
 				<div class="col-md-3 qna-write">
-					<a href="/qna/form" class="btn btn-primary pull-right" role="button">질문하기</a>
+					<a href="/questions/form" class="btn btn-primary pull-right" role="button">질문하기</a>
 				</div>
 			</div>
 		</div>

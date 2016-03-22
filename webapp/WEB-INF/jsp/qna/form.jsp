@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <!DOCTYPE html>
 <html lang="kr">
@@ -13,18 +14,18 @@
 <div class="container" id="main">
    <div class="col-md-12 col-sm-12 col-lg-10 col-lg-offset-1">
       <div class="panel panel-default content-main">
-          <form name="question" method="post" action="/qna/create">
+      	  <form:form name="question" modelAttribute="question" action="/questions" method="POST">
               <div class="form-group">
                   <label for="title">제목</label>
-                  <input type="text" class="form-control" id="title" name="title" placeholder="제목"/>
+                  <form:input path="title" cssClass="form-control"/>
               </div>
               <div class="form-group">
                   <label for="contents">내용</label>
-                  <textarea name="contents" id="contents" rows="5" class="form-control"></textarea>
+                  <form:textarea path="contents" rows="5" cssClass="form-control"/>
               </div>
               <button type="submit" class="btn btn-success clearfix pull-right">질문하기</button>
               <div class="clearfix" />
-          </form>
+          </form:form>
         </div>
     </div>
 </div>

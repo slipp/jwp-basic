@@ -7,16 +7,16 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import next.dao.QuestionDao;
+import next.service.QnaService;
 
 @Controller
 public class HomeController {
 	@Inject
-	private QuestionDao questionDao;
+	private QnaService qnaService;
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String execute(Model model) throws Exception {
-		model.addAttribute("questions", questionDao.findAll());
+		model.addAttribute("questions", qnaService.findQuestions());
 		return "index";
 	}
 }

@@ -19,7 +19,7 @@
 <div class="container" id="main">
     <div class="col-md-6 col-md-offset-3">
         <div class="panel panel-default content-main">
-        	<form:form name="question" modelAttribute="user" action="/users" method="${method}">
+        	<form:form name="user" modelAttribute="user" action="/users" method="${method}">
         		<form:hidden path="id"/>
                 <div class="form-group">
                     <label for="userId">사용자 아이디</label>

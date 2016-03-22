@@ -1,30 +1,26 @@
 package next.support;
 
-import javax.sql.DataSource;
+import javax.annotation.PostConstruct;
+import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils;
-import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
+import org.springframework.stereotype.Component;
 
-import core.annotation.Component;
-import core.annotation.Inject;
-import core.annotation.PostConstruct;
+import next.model.User;
+import next.repository.UserRepository;
 
 @Component
 public class DBInitializer {
 	private static final Logger log = LoggerFactory.getLogger(DBInitializer.class);
 	
 	@Inject
-	private DataSource dataSource;
+	private UserRepository userRepository;
 	
 	@PostConstruct
 	public void initialize() {
-		ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
-		populator.addScript(new ClassPathResource("jwp.sql"));
-		DatabasePopulatorUtils.execute(populator, dataSource);
-		
-		log.info("Completed Load ServletContext!");
+		User user = new User("admin", "test", "name", "javajigi@sample.com");
+		userRepository.save(user);
+		log.info("DB Initialized Success!!");
 	}
 }

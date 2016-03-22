@@ -58,14 +58,14 @@
 					<div class="qna-comment-slipp">
 						<p class="qna-comment-count"><strong>${question.countOfComment}</strong>개의 의견</p>
 						<div class="qna-comment-slipp-articles">
-							<c:forEach items="${answers}" var="each">
+							<c:forEach items="${question.answers}" var="each">
 							<article class="article">
 								<div class="article-header">
 									<div class="article-header-thumb">
 										<img src="https://graph.facebook.com/v2.3/1324855987/picture" class="article-author-thumb" alt="">
 									</div>
 									<div class="article-header-text">
-										${each.writer}
+										${each.writer.userId}
 										<div class="article-header-time"><fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${each.createdDate}" /></div>
 									</div>
 								</div>

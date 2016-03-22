@@ -2,43 +2,49 @@ package next.service;
 
 import java.util.List;
 
-import core.annotation.Inject;
-import core.annotation.Service;
+import javax.inject.Inject;
+
+import org.springframework.stereotype.Service;
+
 import next.CannotDeleteException;
-import next.dao.AnswerDao;
-import next.dao.QuestionDao;
 import next.model.Answer;
 import next.model.Question;
 import next.model.User;
+import next.repository.AnswerRepository;
+import next.repository.QuestionRepository;
 
 @Service
 public class QnaService {
-	private QuestionDao questionDao;
-	private AnswerDao answerDao;
+	private QuestionRepository questionRepository;
+	private AnswerRepository answerRepository;
 
 	@Inject
-	public QnaService(QuestionDao questionDao, AnswerDao answerDao) {
-		this.questionDao = questionDao;
-		this.answerDao = answerDao;
+	public QnaService(QuestionRepository questionRepository, AnswerRepository answerRepository) {
+		this.questionRepository = questionRepository;
+		this.answerRepository = answerRepository;
 	}
 	
-	public Question findById(long questionId) {
-		return questionDao.findById(questionId);
+	public List<Question> findQuestions() {
+		return questionRepository.findAll();
 	}
-	
-	public List<Answer> findAllByQuestionId(long questionId) {
-		return answerDao.findAllByQuestionId(questionId);
+
+	public Question findById(Long questionId) {
+		return questionRepository.findOne(questionId);
 	}
-	
-	public void deleteQuestion(long questionId, User user) throws CannotDeleteException {
-		Question question = questionDao.findById(questionId);
+
+	public List<Answer> findAllByQuestionId(Long questionId) {
+		return answerRepository.findByQuestion(findById(questionId));
+	}
+
+	public void deleteQuestion(Long questionId, User user) throws CannotDeleteException {
+		Question question = findById(questionId);
 		if (question == null) {
 			throw new CannotDeleteException("존재하지 않는 질문입니다.");
 		}
-		
-		List<Answer> answers = answerDao.findAllByQuestionId(questionId);
+
+		List<Answer> answers = findAllByQuestionId(questionId);
 		if (question.canDelete(user, answers)) {
-			questionDao.delete(questionId);
+			questionRepository.delete(question);
 		}
 	}
 }
