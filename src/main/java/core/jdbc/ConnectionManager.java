@@ -5,7 +5,7 @@ import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
-import org.apache.commons.dbcp.BasicDataSource;
+import org.apache.commons.dbcp2.BasicDataSource;
 
 public class ConnectionManager {
 	private static final String DB_DRIVER = "org.h2.Driver";
