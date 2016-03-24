@@ -3,6 +3,10 @@ package next.controller.user;
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
+import next.controller.UserSessionUtils;
+import next.model.User;
+import next.repository.UserRepository;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -11,9 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import next.controller.UserSessionUtils;
-import next.model.User;
-import next.repository.UserRepository;
+import core.web.argumentresolver.LoginUser;
 
 @Controller
 @RequestMapping("/users")
@@ -28,11 +30,7 @@ public class UserController {
     }
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
-    public String list(HttpSession session, Model model) throws Exception {
-    	if (!UserSessionUtils.isLogined(session)) {
-			return "redirect:/users/loginForm";
-		}
-    	
+    public String list(@LoginUser(UserSessionUtils.USER_SESSION_KEY) User user, Model model) throws Exception {
         model.addAttribute("users", userRepository.findAll());
         return "/user/list";
     }

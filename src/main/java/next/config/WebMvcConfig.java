@@ -57,7 +57,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
     	argumentResolvers.add(new LoginUserHandlerMethodArgumentResolver());
     }
-
+    
     @Override
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
         // Serving static files using the Servlet container's default Servlet.
