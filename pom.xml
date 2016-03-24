@@ -29,11 +29,7 @@
 			<artifactId>javax.servlet-api</artifactId>
 			<version>3.1.0</version>
 			<scope>provided</scope>
-<<<<<<< HEAD
 		</dependency>		
-=======
-		</dependency>
->>>>>>> cc52eef... 라이브러리 버전 업그레이드함.
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
@@ -83,11 +79,6 @@
 			<artifactId>logback-classic</artifactId>
 			<version>1.1.2</version>
 		</dependency>
-<<<<<<< HEAD
-		
-=======
-
->>>>>>> cc52eef... 라이브러리 버전 업그레이드함.
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
