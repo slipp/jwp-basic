@@ -4,8 +4,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import org.springframework.stereotype.Service;
-
 import next.CannotDeleteException;
 import next.model.Answer;
 import next.model.Question;
@@ -13,7 +11,11 @@ import next.model.User;
 import next.repository.AnswerRepository;
 import next.repository.QuestionRepository;
 
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 @Service
+@Transactional
 public class QnaService {
 	private QuestionRepository questionRepository;
 	private AnswerRepository answerRepository;
@@ -46,5 +48,17 @@ public class QnaService {
 		if (question.canDelete(user, answers)) {
 			questionRepository.delete(question);
 		}
+	}
+
+	public void create(Question question, User user) {
+		questionRepository.save(question.writeBy(user));
+	}
+
+	public void update(Question editQuestion, User user) {
+		Question question = questionRepository.findOne(editQuestion.getQuestionId());
+		if (!question.isSameWriter(user)) {
+			throw new IllegalStateException("다른 사용자가 쓴 글을 수정할 수 없습니다.");
+		}
+		question.update(editQuestion);
 	}
 }

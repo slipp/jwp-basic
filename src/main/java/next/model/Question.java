@@ -118,6 +118,10 @@ public class Question {
 		return user.isSameUser(this.writer);
 	}
 	
+	public Question writeBy(User user) {
+		return new Question(user, title, contents);
+	}
+	
 	public void update(Question newQuestion) {
 		this.title = newQuestion.title;
 		this.contents = newQuestion.contents;
