@@ -4,15 +4,15 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import next.CannotDeleteException;
 import next.model.Answer;
 import next.model.Question;
 import next.model.User;
 import next.repository.AnswerRepository;
 import next.repository.QuestionRepository;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
@@ -44,8 +44,7 @@ public class QnaService {
 			throw new CannotDeleteException("존재하지 않는 질문입니다.");
 		}
 
-		List<Answer> answers = findAllByQuestionId(questionId);
-		if (question.canDelete(user, answers)) {
+		if (question.canDelete(user)) {
 			questionRepository.delete(question);
 		}
 	}

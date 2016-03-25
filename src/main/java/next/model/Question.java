@@ -131,20 +131,24 @@ public class Question {
 		this.countOfComment += 1;
 	}
 	
-	public boolean canDelete(User user, List<Answer> answers) throws CannotDeleteException {
-		if (!user.isSameUser(this.writer)) {
+	public boolean canDelete(User loginUser) throws CannotDeleteException {
+		return canDelete(loginUser, this.answers);
+	}
+	
+	boolean canDelete(User loginUser, List<Answer> answers) throws CannotDeleteException {
+		if (!loginUser.isSameUser(this.writer)) {
 			throw new CannotDeleteException("다른 사용자가 쓴 글을 삭제할 수 없습니다.");
 		}
 		
 		for (Answer answer : answers) {
-			if (!answer.canDelete(user)) {
+			if (!answer.canDelete(loginUser)) {
 				throw new CannotDeleteException("다른 사용자가 추가한 댓글이 존재해 삭제할 수 없습니다.");
 			}
 		}
 		
 		return true;
 	}
-
+	
 	@Override
 	public String toString() {
 		return "Question [questionId=" + questionId + ", writer=" + writer

@@ -91,11 +91,11 @@ public class User {
 	}
 
 	public boolean isSameUser(User user) {
-		return isSameUser(user.getUserId());
+		return isSameUser(user.getId());
 	}
 
-	public boolean isSameUser(String newUserId) {
-		return userId.equals(newUserId);
+	public boolean isSameUser(Long newUserId) {
+		return this.id.equals(newUserId);
 	}
 	
 	public boolean isGuestUser() {
