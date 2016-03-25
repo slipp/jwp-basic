@@ -17,6 +17,8 @@ import javax.persistence.OrderBy;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.google.common.collect.Lists;
+
 import next.CannotDeleteException;
 
 @Entity
@@ -48,18 +50,19 @@ public class Question {
 	public Question() {
 	}
 	
-	public Question(User writer, String title, String contents) {
-		this(0L, writer, title, contents, new Date(), 0);
+	public Question(User writer, String title, String contents, List<Answer> answers) {
+		this(0L, writer, title, contents, new Date(), 0, answers);
 	}	
 	
 	public Question(Long questionId, User writer, String title, String contents,
-			Date createdDate, int countOfComment) {
+			Date createdDate, int countOfComment, List<Answer> answers) {
 		this.questionId = questionId;
 		this.writer = writer;
 		this.title = title;
 		this.contents = contents;
 		this.createdDate = createdDate;
 		this.countOfComment = countOfComment;
+		this.answers = answers;
 	}
 
 	public Long getQuestionId() {
@@ -119,7 +122,7 @@ public class Question {
 	}
 	
 	public Question writeBy(User user) {
-		return new Question(user, title, contents);
+		return new Question(user, title, contents, Lists.newArrayList());
 	}
 	
 	public void update(Question newQuestion) {
@@ -132,15 +135,11 @@ public class Question {
 	}
 	
 	public boolean canDelete(User loginUser) throws CannotDeleteException {
-		return canDelete(loginUser, this.answers);
-	}
-	
-	boolean canDelete(User loginUser, List<Answer> answers) throws CannotDeleteException {
 		if (!loginUser.isSameUser(this.writer)) {
 			throw new CannotDeleteException("다른 사용자가 쓴 글을 삭제할 수 없습니다.");
 		}
 		
-		for (Answer answer : answers) {
+		for (Answer answer : this.answers) {
 			if (!answer.canDelete(loginUser)) {
 				throw new CannotDeleteException("다른 사용자가 추가한 댓글이 존재해 삭제할 수 없습니다.");
 			}
