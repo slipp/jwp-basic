@@ -61,4 +61,19 @@ public class QnaService {
 		}
 		question.update(editQuestion);
 	}
+
+	public Answer addAnswer(User writer, Long questionId, String contents) {
+		Question question = findById(questionId);
+		Answer newAnswer = new Answer(writer, contents, question);
+		question.addAnswer();
+		return answerRepository.save(newAnswer);
+	}
+
+	public void deleteAnswer(Long answerId, User loginUser) {
+		Answer answer = answerRepository.findOne(answerId);
+		if (!answer.isSameWriter(loginUser)) {
+			throw new IllegalStateException("다른 사용자가 쓴 글을 삭제할 수 없습니다.");
+		}
+		answerRepository.delete(answer);
+	}
 }

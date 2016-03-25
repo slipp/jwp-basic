@@ -50,11 +50,11 @@
         <c:choose>
         <c:when test="${not empty sessionUser}">
         <li><a href="/users/logout" role="button">로그아웃</a></li>
-        <li><a href="/users/${sessionUser.userId}/form" role="button">개인정보수정</a></li>
+        <li><a href="/users/${sessionUser.userId}/edit" role="button">개인정보수정</a></li>
         </c:when>
         <c:otherwise>
-        <li><a href="/users/loginForm" role="button">로그인</a></li>
-        <li><a href="/users/form" role="button">회원가입</a></li>
+        <li><a href="/users/login" role="button">로그인</a></li>
+        <li><a href="/users/new" role="button">회원가입</a></li>
         <!--
         <li><a href="#loginModal" role="button" data-toggle="modal">로그인</a></li>
         <li><a href="#registerModal" role="button" data-toggle="modal">회원가입</a></li>

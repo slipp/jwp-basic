@@ -2,9 +2,6 @@ package next.config;
 
 import java.util.List;
 
-import javax.annotation.PostConstruct;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -14,7 +11,6 @@ import org.springframework.web.servlet.config.annotation.DefaultServletHandlerCo
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
@@ -22,19 +18,11 @@ import core.web.argumentresolver.LoginUserHandlerMethodArgumentResolver;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = { "next.controller" })
+@ComponentScan(basePackages = { "next.controller", "core.web" })
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
     private static final int CACHE_PERIOD = 31556926; // one year
     
-    @Autowired
-    private RequestMappingHandlerAdapter requestMappingHandlerAdapter;
-
-    @PostConstruct
-    public void init() {
-        requestMappingHandlerAdapter.setIgnoreDefaultModelOnRedirect(true);
-    }
-
     @Bean
     public ViewResolver viewResolver() {
         InternalResourceViewResolver bean = new InternalResourceViewResolver();
@@ -42,6 +30,11 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         bean.setPrefix("/WEB-INF/jsp/");
         bean.setSuffix(".jsp");
         return bean;
+    }
+    
+    @Bean
+    public HandlerMethodArgumentResolver loginUserHandlerMethodArgumentResolver() {
+    	return new LoginUserHandlerMethodArgumentResolver();
     }
 
     @Override
@@ -55,12 +48,11 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
     
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
-    	argumentResolvers.add(new LoginUserHandlerMethodArgumentResolver());
+    	argumentResolvers.add(loginUserHandlerMethodArgumentResolver());
     }
     
     @Override
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
-        // Serving static files using the Servlet container's default Servlet.
         configurer.enable();
     }
 }

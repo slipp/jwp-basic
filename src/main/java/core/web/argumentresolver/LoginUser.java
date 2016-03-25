@@ -21,6 +21,4 @@ public @interface LoginUser {
 	 * @return
 	 */
 	boolean required() default true;
-	
-	String value();
 }

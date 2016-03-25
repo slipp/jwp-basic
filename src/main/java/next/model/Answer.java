@@ -93,6 +93,10 @@ public class Answer {
 		return user.isSameUser(this.writer);
 	}
 	
+	public boolean isSameWriter(User user) {
+		return user.isSameUser(this.writer);
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

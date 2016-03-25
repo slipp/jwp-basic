@@ -11,15 +11,17 @@
 <%@ include file="/include/navigation.jspf" %>
 
 <c:set var="method" value = "POST"/>
+<c:set var="action" value = "/users"/>
 <c:set var="submitBtn" value = "회원가입"/>
 <c:if test = "${not empty user.userId}">
 <c:set var="method" value = "PUT"/>
+<c:set var="action" value = "/users/${user.userId}"/>
 <c:set var="submitBtn" value = "개인정보수정"/>
 </c:if>
 <div class="container" id="main">
     <div class="col-md-6 col-md-offset-3">
         <div class="panel panel-default content-main">
-        	<form:form name="user" modelAttribute="user" action="/users" method="${method}">
+        	<form:form name="user" modelAttribute="user" action="${action}" method="${method}">
         		<form:hidden path="id"/>
                 <div class="form-group">
                     <label for="userId">사용자 아이디</label>

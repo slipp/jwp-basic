@@ -3,10 +3,6 @@ package next.controller.user;
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
-import next.controller.UserSessionUtils;
-import next.model.User;
-import next.repository.UserRepository;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -16,6 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import core.web.argumentresolver.LoginUser;
+import next.model.User;
+import next.repository.UserRepository;
+import next.service.SessionComponent;
 
 @Controller
 @RequestMapping("/users")
@@ -30,7 +29,7 @@ public class UserController {
     }
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
-    public String list(@LoginUser(UserSessionUtils.USER_SESSION_KEY) User user, Model model) throws Exception {
+    public String list(@LoginUser User loginUser, Model model) throws Exception {
         model.addAttribute("users", userRepository.findAll());
         return "/user/list";
     }
@@ -41,7 +40,7 @@ public class UserController {
         return "/user/profile";
     }
     
-    @RequestMapping(value = "/form", method = RequestMethod.GET)
+    @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String form(Model model) throws Exception {
     	model.addAttribute("user", new User());
     	return "/user/form";
@@ -54,21 +53,20 @@ public class UserController {
 		return "redirect:/";
 	}
     
-    @RequestMapping(value = "/{userId}/form", method = RequestMethod.GET)
-	public String updateForm(@PathVariable String userId, HttpSession session, Model model) throws Exception {
+    @RequestMapping(value = "/{userId}/edit", method = RequestMethod.GET)
+	public String updateForm(@LoginUser User loginUser, @PathVariable String userId, Model model) throws Exception {
     	User user = userRepository.findByUserId(userId);
-    	
-    	if (!UserSessionUtils.isSameUser(session, user)) {
+    	if (!loginUser.isSameUser(user)) {
         	throw new IllegalStateException("다른 사용자의 정보를 수정할 수 없습니다.");
         }
     	model.addAttribute("user", user);
     	return "/user/form";
 	}
     
-    @RequestMapping(value = "", method = RequestMethod.PUT)
-	public String update(User newUser, HttpSession session) throws Exception {
-		User user = userRepository.findByUserId(newUser.getUserId());
-        if (!UserSessionUtils.isSameUser(session, user)) {
+    @RequestMapping(value = "/{userId}", method = RequestMethod.PUT)
+	public String update(@LoginUser User loginUser, @PathVariable String userId, User newUser) throws Exception {
+		User user = userRepository.findByUserId(userId);
+        if (!loginUser.isSameUser(newUser)) {
         	throw new IllegalStateException("다른 사용자의 정보를 수정할 수 없습니다.");
         }
         
@@ -78,29 +76,31 @@ public class UserController {
         return "redirect:/";
 	}
     
-    @RequestMapping(value = "/loginForm", method = RequestMethod.GET)
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String loginForm() throws Exception {
     	return "/user/login";
     }
     
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String login(String userId, String password, HttpSession session) throws Exception {
+    public String login(String userId, String password, HttpSession session, Model model) throws Exception {
         User user = userRepository.findByUserId(userId);
         if (user == null) {
-            throw new NullPointerException("사용자를 찾을 수 없습니다.");
+            model.addAttribute("loginFailed", true);
+            return "/user/login";
         }
         
         if (user.matchPassword(password)) {
-            session.setAttribute(UserSessionUtils.USER_SESSION_KEY, user);
+            session.setAttribute(SessionComponent.USER_SESSION_KEY, user);
             return "redirect:/";
         } else {
-            throw new IllegalStateException("비밀번호가 틀립니다.");
+        	model.addAttribute("loginFailed", true);
+            return "/user/login";
         }
     }
     
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
     public String logout(HttpSession session) throws Exception {
-        session.removeAttribute(UserSessionUtils.USER_SESSION_KEY);
+        session.removeAttribute(SessionComponent.USER_SESSION_KEY);
         return "redirect:/";
     }
 }
