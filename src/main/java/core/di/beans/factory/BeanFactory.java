@@ -8,5 +8,4 @@ public interface BeanFactory {
 	<T> T getBean(Class<T> clazz);
 
 	void clear();
-
 }

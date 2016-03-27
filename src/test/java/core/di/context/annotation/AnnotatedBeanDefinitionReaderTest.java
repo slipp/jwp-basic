@@ -6,6 +6,7 @@ import javax.sql.DataSource;
 
 import org.junit.Test;
 
+import core.di.beans.factory.support.BeanDefinitionReader;
 import core.di.beans.factory.support.DefaultBeanFactory;
 import di.examples.ExampleConfig;
 import di.examples.IntegrationConfig;
@@ -16,8 +17,8 @@ public class AnnotatedBeanDefinitionReaderTest {
 	@Test
 	public void register_simple() {
 		DefaultBeanFactory beanFactory = new DefaultBeanFactory();
-		AnnotatedBeanDefinitionReader abdr = new AnnotatedBeanDefinitionReader(beanFactory);
-		abdr.register(ExampleConfig.class);
+		BeanDefinitionReader abdr = new AnnotatedBeanDefinitionReader(beanFactory);
+		abdr.loadBeanDefinitions(ExampleConfig.class);
 		beanFactory.preInstantiateSinglonetons();
 		
 		assertNotNull(beanFactory.getBean(DataSource.class));
@@ -26,8 +27,8 @@ public class AnnotatedBeanDefinitionReaderTest {
 	@Test
 	public void register_ClasspathBeanDefinitionScanner_통합() {
 		DefaultBeanFactory beanFactory = new DefaultBeanFactory();
-		AnnotatedBeanDefinitionReader abdr = new AnnotatedBeanDefinitionReader(beanFactory);
-		abdr.register(IntegrationConfig.class);
+		BeanDefinitionReader abdr = new AnnotatedBeanDefinitionReader(beanFactory);
+		abdr.loadBeanDefinitions(IntegrationConfig.class);
 		
 		ClasspathBeanDefinitionScanner cbds = new ClasspathBeanDefinitionScanner(beanFactory);
 		cbds.doScan("di.examples");

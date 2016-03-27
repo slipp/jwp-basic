@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import com.google.common.collect.Lists;
 
 import core.annotation.ComponentScan;
+import core.di.beans.factory.support.BeanDefinitionReader;
 import core.di.beans.factory.support.DefaultBeanFactory;
 import core.di.context.ApplicationContext;
 import core.di.context.annotation.AnnotatedBeanDefinitionReader;
@@ -23,8 +24,8 @@ public class AnnotationConfigApplicationContext implements ApplicationContext {
 	public AnnotationConfigApplicationContext(Class<?>... annotatedClasses) {
 		Object[] basePackages = findBasePackages(annotatedClasses);
 		beanFactory = new DefaultBeanFactory();
-		AnnotatedBeanDefinitionReader abdr = new AnnotatedBeanDefinitionReader(beanFactory);
-		abdr.register(annotatedClasses);
+		BeanDefinitionReader abdr = new AnnotatedBeanDefinitionReader(beanFactory);
+		abdr.loadBeanDefinitions(annotatedClasses);
 		
 		if (basePackages.length > 0) {
 			ClasspathBeanDefinitionScanner scanner = new ClasspathBeanDefinitionScanner(beanFactory);
