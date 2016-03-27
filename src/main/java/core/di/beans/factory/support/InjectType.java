@@ -1,4 +1,4 @@
-package core.di.factory;
+package core.di.beans.factory.support;
 
 public enum InjectType {
 	INJECT_NO,

@@ -1,4 +1,4 @@
-package core.di.factory;
+package core.di.context.annotation;
 
 import java.lang.reflect.Method;
 import java.util.Set;
@@ -7,6 +7,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import core.annotation.Bean;
+import core.di.beans.factory.support.BeanDefinitionRegistry;
+import core.di.beans.factory.support.BeanFactoryUtils;
+import core.di.beans.factory.support.DefaultBeanDefinition;
 
 
 public class AnnotatedBeanDefinitionReader {
@@ -25,7 +28,7 @@ public class AnnotatedBeanDefinitionReader {
 	}
 
 	public void registerBean(Class<?> annotatedClass) {
-		beanDefinitionRegistry.registerBeanDefinition(annotatedClass, new BeanDefinition(annotatedClass));
+		beanDefinitionRegistry.registerBeanDefinition(annotatedClass, new DefaultBeanDefinition(annotatedClass));
 		Set<Method> beanMethods = BeanFactoryUtils.getBeanMethods(annotatedClass, Bean.class);
 		for (Method beanMethod : beanMethods) {
 			log.debug("@Bean method : {}", beanMethod);

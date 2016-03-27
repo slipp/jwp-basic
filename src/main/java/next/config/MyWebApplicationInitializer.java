@@ -7,8 +7,8 @@ import javax.servlet.ServletRegistration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import core.di.factory.AnnotationConfigApplicationContext;
-import core.di.factory.ApplicationContext;
+import core.di.context.ApplicationContext;
+import core.di.context.support.AnnotationConfigApplicationContext;
 import core.web.WebApplicationInitializer;
 import core.web.mvc.AnnotationHandlerMapping;
 import core.web.mvc.DispatcherServlet;

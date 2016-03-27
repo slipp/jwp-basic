@@ -1,13 +1,13 @@
 package next.dao;
 
 import static org.junit.Assert.assertEquals;
-import next.config.MyConfiguration;
-import next.model.User;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import core.di.factory.AnnotationConfigApplicationContext;
+import core.di.context.support.AnnotationConfigApplicationContext;
+import next.config.MyConfiguration;
+import next.model.User;
 
 public class UserDaoTest {
 	private UserDao userDao;

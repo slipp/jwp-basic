@@ -1,4 +1,4 @@
-package core.di.factory;
+package core.di.context.support;
 
 import java.util.Arrays;
 import java.util.List;
@@ -10,15 +10,19 @@ import org.slf4j.LoggerFactory;
 import com.google.common.collect.Lists;
 
 import core.annotation.ComponentScan;
+import core.di.beans.factory.support.DefaultBeanFactory;
+import core.di.context.ApplicationContext;
+import core.di.context.annotation.AnnotatedBeanDefinitionReader;
+import core.di.context.annotation.ClasspathBeanDefinitionScanner;
 
 public class AnnotationConfigApplicationContext implements ApplicationContext {
 	private static final Logger log = LoggerFactory.getLogger(AnnotationConfigApplicationContext.class);
 	
-	private BeanFactory beanFactory;
+	private DefaultBeanFactory beanFactory;
 
 	public AnnotationConfigApplicationContext(Class<?>... annotatedClasses) {
 		Object[] basePackages = findBasePackages(annotatedClasses);
-		beanFactory = new BeanFactory();
+		beanFactory = new DefaultBeanFactory();
 		AnnotatedBeanDefinitionReader abdr = new AnnotatedBeanDefinitionReader(beanFactory);
 		abdr.register(annotatedClasses);
 		
@@ -26,7 +30,7 @@ public class AnnotationConfigApplicationContext implements ApplicationContext {
 			ClasspathBeanDefinitionScanner scanner = new ClasspathBeanDefinitionScanner(beanFactory);
 			scanner.doScan(basePackages);
 		}
-		beanFactory.initialize();
+		beanFactory.preInstantiateSinglonetons();
 	}
 
 	private Object[] findBasePackages(Class<?>[] annotatedClasses) {

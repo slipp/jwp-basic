@@ -1,14 +1,13 @@
 package next.dao;
 
-import next.config.MyConfiguration;
-import next.model.Answer;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import core.di.factory.AnnotationConfigApplicationContext;
+import core.di.context.support.AnnotationConfigApplicationContext;
+import next.config.MyConfiguration;
+import next.model.Answer;
 
 public class AnswerDaoTest {
 	private static final Logger log = LoggerFactory.getLogger(AnswerDaoTest.class);

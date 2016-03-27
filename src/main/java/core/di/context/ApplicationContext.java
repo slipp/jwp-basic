@@ -1,4 +1,4 @@
-package core.di.factory;
+package core.di.context;
 
 import java.util.Set;
 

@@ -1,4 +1,4 @@
-package core.di.factory;
+package core.di.beans.factory.support;
 
 import static org.reflections.ReflectionUtils.getAllConstructors;
 import static org.reflections.ReflectionUtils.getAllFields;

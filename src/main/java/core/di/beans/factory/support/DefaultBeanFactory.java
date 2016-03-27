@@ -1,4 +1,4 @@
-package core.di.factory;
+package core.di.beans.factory.support;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -16,24 +16,30 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
 import core.annotation.PostConstruct;
+import core.di.beans.factory.ConfigurableListableBeanFactory;
+import core.di.beans.factory.config.BeanDefinition;
+import core.di.context.annotation.AnnotatedBeanDefinition;
 
-public class BeanFactory implements BeanDefinitionRegistry {
-	private static final Logger log = LoggerFactory.getLogger(BeanFactory.class);
+public class DefaultBeanFactory implements BeanDefinitionRegistry, ConfigurableListableBeanFactory {
+	private static final Logger log = LoggerFactory.getLogger(DefaultBeanFactory.class);
 	
 	private Map<Class<?>, Object> beans = Maps.newHashMap();
 	
 	private Map<Class<?>, BeanDefinition> beanDefinitions = Maps.newHashMap();
 	
-    public void initialize() {
+    @Override
+	public void preInstantiateSinglonetons() {
     	for (Class<?> clazz : getBeanClasses()) {
 			getBean(clazz);
 		}
     }
     
-    public Set<Class<?>> getBeanClasses() {
+    @Override
+	public Set<Class<?>> getBeanClasses() {
     	return beanDefinitions.keySet();
     }
     
+	@Override
 	@SuppressWarnings("unchecked")
 	public <T> T getBean(Class<T> clazz) {
 		Object bean = beans.get(clazz);
@@ -126,6 +132,7 @@ public class BeanFactory implements BeanDefinitionRegistry {
 		}
 	}
 
+	@Override
 	public void clear() {
 		beanDefinitions.clear();
 		beans.clear();

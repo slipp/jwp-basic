@@ -1,8 +1,10 @@
-package core.di.factory;
+package core.di.context.annotation;
 
 import java.lang.reflect.Method;
 
-public class AnnotatedBeanDefinition extends BeanDefinition {
+import core.di.beans.factory.support.DefaultBeanDefinition;
+
+public class AnnotatedBeanDefinition extends DefaultBeanDefinition {
 	private Method method;
 
 	public AnnotatedBeanDefinition(Class<?> clazz, Method method) {

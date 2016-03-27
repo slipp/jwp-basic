@@ -1,4 +1,4 @@
-package core.di.factory;
+package core.di.beans.factory.support;
 
 import static org.junit.Assert.assertNotNull;
 
@@ -6,26 +6,26 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import core.di.context.annotation.ClasspathBeanDefinitionScanner;
 import di.examples.MyQnaService;
 import di.examples.MyUserController;
 import di.examples.MyUserService;
 import di.examples.QnaController;
 
 public class BeanFactoryTest {
-	private BeanFactory beanFactory;
+	private DefaultBeanFactory beanFactory;
 
 	@Before
 	public void setup() {
-		beanFactory = new BeanFactory();
+		beanFactory = new DefaultBeanFactory();
 		ClasspathBeanDefinitionScanner scanner = new ClasspathBeanDefinitionScanner(beanFactory);
 		scanner.doScan("di.examples");
-		beanFactory.initialize();
+		beanFactory.preInstantiateSinglonetons();
 	}
 
 	@Test
 	public void constructorDI() throws Exception {
 		QnaController qnaController = beanFactory.getBean(QnaController.class);
-
 		assertNotNull(qnaController);
 		assertNotNull(qnaController.getQnaService());
 
