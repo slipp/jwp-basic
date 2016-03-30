@@ -5,9 +5,12 @@ import javax.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.env.Environment;
 
 @Configuration
@@ -21,13 +24,6 @@ public class ApplicationConfig {
     @Autowired
     private Environment         env;
 
-    /**
-     * Application custom initialization code.
-     * <p/>
-     * Spring profiles can be configured with a system property
-     * -Dspring.profiles.active=javaee
-     * <p/>
-     */
     @PostConstruct
     public void initApp() {
     	log.debug("Looking for Spring profiles...");
@@ -38,5 +34,13 @@ public class ApplicationConfig {
             	log.info("Detected Spring profile: {}", profile);
             }
         }
+    }
+    
+    @Bean
+    public MessageSource messageSource() {
+    	ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
+    	messageSource.setBasename("messages/messages");
+    	messageSource.setDefaultEncoding("UTF-8");
+    	return messageSource;
     }
 }

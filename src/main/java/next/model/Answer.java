@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Answer {
@@ -23,6 +25,8 @@ public class Answer {
 	@JoinColumn(foreignKey = @ForeignKey(name = "fk_answer_writer"))
 	private User writer;
 	
+	@NotNull
+	@Size(min = 4, max = 5000)
 	@Column(length = 5000, nullable = false)
 	private String contents;
 	

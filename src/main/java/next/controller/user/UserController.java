@@ -2,11 +2,14 @@ package next.controller.user;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -29,7 +32,7 @@ public class UserController {
     }
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
-    public String list(@LoginUser User loginUser, Model model) throws Exception {
+    public String index(@LoginUser User loginUser, Model model) throws Exception {
         model.addAttribute("users", userRepository.findAll());
         return "/user/list";
     }
@@ -47,8 +50,12 @@ public class UserController {
     }
     
     @RequestMapping(value = "", method = RequestMethod.POST)
-	public String create(User user) throws Exception {
+	public String create(@ModelAttribute("user") @Valid User user, BindingResult bindingResult) throws Exception {
         log.debug("User : {}", user);
+        if (bindingResult.hasErrors()) {
+        	return "/user/form";
+        }
+        
         userRepository.save(user);
 		return "redirect:/";
 	}
@@ -60,11 +67,17 @@ public class UserController {
         	throw new IllegalStateException("다른 사용자의 정보를 수정할 수 없습니다.");
         }
     	model.addAttribute("user", user);
-    	return "/user/form";
+    	return "/user/edit";
 	}
     
     @RequestMapping(value = "/{userId}", method = RequestMethod.PUT)
-	public String update(@LoginUser User loginUser, @PathVariable String userId, User newUser) throws Exception {
+	public String update(@LoginUser User loginUser, @PathVariable String userId, 
+			@ModelAttribute("user") @Valid User newUser, BindingResult bindingResult) throws Exception {
+    	log.debug("User : {}", newUser);
+        if (bindingResult.hasErrors()) {
+        	return "/user/edit";
+        }
+    	
 		User user = userRepository.findByUserId(userId);
         if (!loginUser.isSameUser(newUser)) {
         	throw new IllegalStateException("다른 사용자의 정보를 수정할 수 없습니다.");
