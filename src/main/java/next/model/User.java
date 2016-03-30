@@ -5,11 +5,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 public class User {
@@ -19,22 +18,22 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
-	@NotEmpty
+	@NotBlank
 	@Size(min = 4, max = 12)
 	@Column(length = 12, nullable = false, unique = true)
 	private String userId;
 
-	@NotEmpty
+	@NotBlank
 	@Size(min = 4, max = 12)
 	@Column(length = 12, nullable = false)
 	private String password;
 
-	@NotNull
+	@NotBlank
 	@Size(min = 2, max = 20)
 	@Column(length = 20, nullable = false)
 	private String name;
 
-	@Email
+	@Email(message="this is invalid email")
 	@Column(length = 50, nullable = true)
 	private String email;
 

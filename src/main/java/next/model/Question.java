@@ -16,8 +16,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotBlank;
 
 import com.google.common.collect.Lists;
 
@@ -33,12 +34,12 @@ public class Question {
 	@JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
 	private User writer;
 	
-	@NotNull
+	@NotBlank
 	@Size(min = 4, max = 50)
 	@Column(length = 50, nullable = false)
 	private String title;
 	
-	@NotNull
+	@NotBlank
 	@Size(min = 4, max = 5000)
 	@Column(length = 5000, nullable = false)
 	private String contents;
