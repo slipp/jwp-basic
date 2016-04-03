@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 public class JstlView implements View {
 	private static final String DEFAULT_REDIRECT_PREFIX = "redirect:";
-	
+
 	private String viewName;
 
 	public JstlView(String viewName) {

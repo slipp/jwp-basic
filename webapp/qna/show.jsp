@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
+<%@ taglib prefix="fn"  uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html lang="kr">
 <head>
@@ -36,12 +36,12 @@
 					<div class="article-util">
 						<ul class="article-util-list">
 							<li>
-								<a class="link-modify-article" href="#">수정</a>
+								<a class="link-modify-article" href="/qna/modify?questionId=${question.questionId}">수정</a>
 							</li>
 							<li>
-								<form class="form-delete" action="#" method="POST">
+								<form class="form-delete" action="/qna/deleteQuestion" method="POST">
 									<input type="hidden" name="_method" value="DELETE">
-									<button class="link-delete-article" type="submit">삭제</button>
+									<button class="link-delete-article" type="submit" data-questionId = "${question.questionId}" data-questionWriter = "${question.writer}" data-countOfComment = "${question.countOfComment}">삭제</button>
 								</form>
 							</li>
 							<li>
@@ -55,60 +55,36 @@
 					<div class="qna-comment-slipp">
 						<p class="qna-comment-count"><strong>${question.countOfComment}</strong>개의 의견</p>
 						<div class="qna-comment-slipp-articles">
-							<article class="article">
+							<c:forEach var="i" varStatus="0" begin="0" end="${countOfAnswer}" step="1">
+
+							<article class="article" id = "${answers[i].answerId}">
 								<div class="article-header">
 									<div class="article-header-thumb">
 										<img src="https://graph.facebook.com/v2.3/1324855987/picture" class="article-author-thumb" alt="">
 									</div>
 									<div class="article-header-text">
-										Toby Lee
-										<div class="article-header-time">2016-02-15 13:13:45</div>
+										${answers[i].writer}
+										<div class="article-header-time">${answers[i].createdDate}</div>
 									</div>
 								</div>
 								<div class="article-doc comment-doc">
-									<p>람다식에서 사용되는 변수라면 람다식 내부에서 정의된 로컬 변수이거나 람다식이 선언된 외부의 변수를 참조하는 것일텐데, 전자라면 아무리 변경해도 문제될 이유가 없고, 후자는 변경 자체가 허용이 안될텐데. 이 설명이 무슨 뜻인지 이해가 안 됨.</p>
-								</div>
+									<p>${answers[i].contents}</p>
 								<div class="article-util">
 									<ul class="article-util-list">
 										<li>
-											<a class="link-modify-article" href="/api/qna/updateAnswer?answerId=5">수정</a>
+											<a class="link-modify-article" href="/api/qna/updateAnswer?answerId=${answers[i].answerId}">수정</a>
 										</li>
 										<li>
 											<form class="form-delete" action="/api/qna/deleteAnswer" method="POST">
-												<input type="hidden" name="answerId" value="5">
+												<input type="hidden" name="answerId" value="${answers[i].answerId}">
+												<input type="hidden" name="questionId" value="${question.questionId}">
 												<button type="submit" class="link-delete-article">삭제</button>
 											</form>
 										</li>
 									</ul>
 								</div>
 							</article>
-							<article class="article">
-								<div class="article-header">
-									<div class="article-header-thumb">
-										<img src="https://graph.facebook.com/v2.3/1324855987/picture" class="article-author-thumb" alt="">
-									</div>
-									<div class="article-header-text">
-										Toby Lee
-										<div class="article-header-time">2016-02-15 13:13:45</div>
-									</div>
-								</div>
-								<div class="article-doc comment-doc">
-									<p>람다식에서 사용되는 변수라면 람다식 내부에서 정의된 로컬 변수이거나 람다식이 선언된 외부의 변수를 참조하는 것일텐데, 전자라면 아무리 변경해도 문제될 이유가 없고, 후자는 변경 자체가 허용이 안될텐데. 이 설명이 무슨 뜻인지 이해가 안 됨.</p>
-								</div>
-								<div class="article-util">
-									<ul class="article-util-list">
-										<li>
-											<a class="link-modify-article" href="/api/qna/updateAnswer?answerId=5">수정</a>
-										</li>
-										<li>
-											<form class="form-delete" action="/api/qna/deleteAnswer" method="POST">
-												<input type="hidden" name="answerId" value="5">
-												<button type="submit" class="link-delete-article">삭제</button>
-											</form>
-										</li>
-									</ul>
-								</div>
-							</article>
+							</c:forEach>
 							<div class="answerWrite">
                             <form name="answer" method="post">
 								<input type="hidden" name="questionId" value="${question.questionId}">
@@ -131,7 +107,7 @@
 </div>
 
 <script type="text/template" id="answerTemplate">
-	<article class="article">
+	<article class="article" id="{4}">
 		<div class="article-header">
 			<div class="article-header-thumb">
 				<img src="https://graph.facebook.com/v2.3/1324855987/picture" class="article-author-thumb" alt="">
@@ -152,6 +128,7 @@
 			<li>
 				<form class="form-delete" action="/api/qna/deleteAnswer" method="POST">
 					<input type="hidden" name="answerId" value="{4}" />
+					<input type="hidden" name="questionId" value="{5}" />
 					<button type="submit" class="link-delete-article">삭제</button>
 				</form>
 			</li>
