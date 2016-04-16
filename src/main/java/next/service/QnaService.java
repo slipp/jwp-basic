@@ -7,7 +7,7 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import next.CannotDeleteException;
+import next.CannotOperateException;
 import next.model.Answer;
 import next.model.Question;
 import next.model.User;
@@ -38,10 +38,10 @@ public class QnaService {
 		return answerRepository.findByQuestion(findById(questionId));
 	}
 
-	public void deleteQuestion(Long questionId, User user) throws CannotDeleteException {
+	public void deleteQuestion(Long questionId, User user) throws CannotOperateException {
 		Question question = findById(questionId);
 		if (question == null) {
-			throw new CannotDeleteException("존재하지 않는 질문입니다.");
+			throw new CannotOperateException("존재하지 않는 질문입니다.");
 		}
 
 		if (question.canDelete(user)) {

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import core.web.argumentresolver.LoginUser;
-import next.CannotDeleteException;
+import next.CannotOperateException;
 import next.model.Question;
 import next.model.Result;
 import next.model.User;
@@ -36,7 +36,7 @@ public class ApiQuestionController {
 		try {
 			qnaService.deleteQuestion(questionId, loginUser);
 			return Result.ok();
-		} catch (CannotDeleteException e) {
+		} catch (CannotOperateException e) {
 			return Result.fail(e.getMessage());
 		}
 	}

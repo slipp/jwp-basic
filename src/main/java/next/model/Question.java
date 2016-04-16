@@ -22,7 +22,7 @@ import org.hibernate.validator.constraints.NotBlank;
 
 import com.google.common.collect.Lists;
 
-import next.CannotDeleteException;
+import next.CannotOperateException;
 
 @Entity
 public class Question {
@@ -141,14 +141,14 @@ public class Question {
 		this.countOfComment += 1;
 	}
 	
-	public boolean canDelete(User loginUser) throws CannotDeleteException {
+	public boolean canDelete(User loginUser) throws CannotOperateException {
 		if (!loginUser.isSameUser(this.writer)) {
-			throw new CannotDeleteException("다른 사용자가 쓴 글을 삭제할 수 없습니다.");
+			throw new CannotOperateException("다른 사용자가 쓴 글을 삭제할 수 없습니다.");
 		}
 		
 		for (Answer answer : this.answers) {
 			if (!answer.canDelete(loginUser)) {
-				throw new CannotDeleteException("다른 사용자가 추가한 댓글이 존재해 삭제할 수 없습니다.");
+				throw new CannotOperateException("다른 사용자가 추가한 댓글이 존재해 삭제할 수 없습니다.");
 			}
 		}
 		

@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ include file="/include/tags.jspf" %>
 
 <!DOCTYPE html>
 <html lang="kr">
@@ -13,19 +12,18 @@
 <div class="container" id="main">
    <div class="col-md-12 col-sm-12 col-lg-10 col-lg-offset-1">
       <div class="panel panel-default content-main">
-          <form name="question" method="post" action="/qna/update">
-          	  <input type="hidden" name="questionId" value="${question.questionId}" />
+      	  <form:form name="question" modelAttribute="question" action="/questions/${question.questionId}" method="put">
               <div class="form-group">
                   <label for="title">제목</label>
-                  <input type="text" class="form-control" id="title" name="title" placeholder="제목" value="${question.title}"/>
+                  <form:input path="title" cssClass="form-control"/>
               </div>
               <div class="form-group">
                   <label for="contents">내용</label>
-                  <textarea name="contents" id="contents" rows="5" class="form-control">${question.contents}</textarea>
+                  <form:textarea path="contents" rows="5" cssClass="form-control"/>
               </div>
               <button type="submit" class="btn btn-success clearfix pull-right">수정하기</button>
               <div class="clearfix" />
-          </form>
+          </form:form>
         </div>
     </div>
 </div>
