@@ -27,7 +27,7 @@ public class AnnotationHandlerMappingTest {
 		HandlerExecution execution = handlerMapping.getHandler(request);
 		ModelAndView mav = execution.handle(request, response);
 		mav.getView().render(mav.getModel(), request, response);
-		assertEquals("/users/list", response.getForwardedUrl());
+		assertEquals("/users/list.jsp", response.getForwardedUrl());
 	}
 
 	@Test
@@ -36,7 +36,7 @@ public class AnnotationHandlerMappingTest {
 		HandlerExecution execution = handlerMapping.getHandler(request);
 		ModelAndView mav = execution.handle(request, response);
 		mav.getView().render(mav.getModel(), request, response);
-		assertEquals("/users/show", response.getForwardedUrl());
+		assertEquals("/users/show.jsp", response.getForwardedUrl());
 	}
 	
 	@Test
