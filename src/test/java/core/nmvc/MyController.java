@@ -19,13 +19,13 @@ public class MyController {
     @RequestMapping("/users")
     public ModelAndView list(HttpServletRequest request, HttpServletResponse response) {
         logger.debug("users findUserId");
-        return new ModelAndView(new JspView("/users/list"));
+        return new ModelAndView(new JspView("/users/list.jsp"));
     }
     
     @RequestMapping(value="/users/show", method=RequestMethod.GET)
     public ModelAndView show(HttpServletRequest request, HttpServletResponse response) {
         logger.debug("users findUserId");
-        return new ModelAndView(new JspView("/users/show"));
+        return new ModelAndView(new JspView("/users/show.jsp"));
     }
     
     @RequestMapping(value="/users", method=RequestMethod.POST)
