@@ -12,15 +12,15 @@ import next.dao.QuestionDao;
 
 @Controller
 public class HomeController extends AbstractNewController {
-    private QuestionDao questionDao;
+	private QuestionDao questionDao;
 
-    @Inject
-    public HomeController(QuestionDao questionDao) {
-    	this.questionDao = questionDao;
-    }
-    
-    @RequestMapping("/")
-    public ModelAndView home(HttpServletRequest request, HttpServletResponse response) throws Exception {
-    	return jspView("index.jsp").addObject("questions", questionDao.findAll());
-    }
+	@Inject
+	public HomeController(QuestionDao questionDao) {
+		this.questionDao = questionDao;
+	}
+
+	@RequestMapping("/")
+	public ModelAndView home(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		return jspView("home.jsp").addObject("questions", questionDao.findAll());
+	}
 }
