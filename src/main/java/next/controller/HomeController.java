@@ -11,6 +11,6 @@ public class HomeController implements Controller {
 	public String execute(HttpServletRequest req, HttpServletResponse resp) throws Exception {
 		UserDao userDao = new UserDao();
 		req.setAttribute("users", userDao.findAll());
-		return "index.jsp";
+		return "home.jsp";
 	}
 }
