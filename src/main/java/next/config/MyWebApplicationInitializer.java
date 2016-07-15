@@ -23,7 +23,7 @@ public class MyWebApplicationInitializer implements WebApplicationInitializer {
     	ahm.initialize();
         ServletRegistration.Dynamic dispatcher = servletContext.addServlet("dispatcher", new DispatcherServlet(ahm));
         dispatcher.setLoadOnStartup(1);
-        dispatcher.addMapping("", "/");
+        dispatcher.addMapping("/");
         
         log.info("Start MyWebApplication Initializer");
     }

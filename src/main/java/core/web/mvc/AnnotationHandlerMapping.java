@@ -21,27 +21,28 @@ import core.di.context.ApplicationContext;
 
 public class AnnotationHandlerMapping implements HandlerMapping {
 	private static final Logger logger = LoggerFactory.getLogger(AnnotationHandlerMapping.class);
-	
+
 	private ApplicationContext applicationContext;
 
 	private Map<HandlerKey, HandlerExecution> handlerExecutions = Maps.newHashMap();
-	
+
 	public AnnotationHandlerMapping(ApplicationContext applicationContext) {
 		this.applicationContext = applicationContext;
 	}
-	
+
 	public void initialize() {
 		Map<Class<?>, Object> controllers = getControllers(applicationContext);
 		Set<Method> methods = getRequestMappingMethods(controllers.keySet());
 		for (Method method : methods) {
 			RequestMapping rm = method.getAnnotation(RequestMapping.class);
 			logger.debug("register handlerExecution : url is {}, method is {}", rm.value(), method);
-			handlerExecutions.put(createHandlerKey(rm), new HandlerExecution(controllers.get(method.getDeclaringClass()), method));
+			handlerExecutions.put(createHandlerKey(rm),
+					new HandlerExecution(controllers.get(method.getDeclaringClass()), method));
 		}
-		
+
 		logger.info("Initialized AnnotationHandlerMapping!");
 	}
-	
+
 	private Map<Class<?>, Object> getControllers(ApplicationContext ac) {
 		Map<Class<?>, Object> controllers = Maps.newHashMap();
 		for (Class<?> clazz : ac.getBeanClasses()) {
@@ -52,16 +53,17 @@ public class AnnotationHandlerMapping implements HandlerMapping {
 		}
 		return controllers;
 	}
-	
+
 	private HandlerKey createHandlerKey(RequestMapping rm) {
 		return new HandlerKey(rm.value(), rm.method());
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	private Set<Method> getRequestMappingMethods(Set<Class<?>> controlleers) {
 		Set<Method> requestMappingMethods = Sets.newHashSet();
 		for (Class<?> clazz : controlleers) {
-			requestMappingMethods.addAll(ReflectionUtils.getAllMethods(clazz, ReflectionUtils.withAnnotation(RequestMapping.class)));
+			requestMappingMethods
+					.addAll(ReflectionUtils.getAllMethods(clazz, ReflectionUtils.withAnnotation(RequestMapping.class)));
 		}
 		return requestMappingMethods;
 	}

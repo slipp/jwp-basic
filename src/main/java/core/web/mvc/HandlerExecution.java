@@ -13,7 +13,7 @@ import core.web.view.ModelAndView;
 
 public class HandlerExecution {
 	private static final Logger logger = LoggerFactory.getLogger(HandlerExecution.class);
-	
+
 	private Object declaredObject;
 	private Method method;
 
@@ -24,7 +24,7 @@ public class HandlerExecution {
 
 	public ModelAndView handle(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		try {
-			return (ModelAndView)method.invoke(declaredObject, request, response);
+			return (ModelAndView) method.invoke(declaredObject, request, response);
 		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 			logger.error("{} method invoke fail. error message : {}", method, e.getMessage());
 			throw new RuntimeException(e);

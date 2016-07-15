@@ -22,13 +22,13 @@ public class DispatcherServlet extends HttpServlet {
 
 	private List<HandlerMapping> mappings = Lists.newArrayList();
 	private List<HandlerAdapter> handlerAdapters = Lists.newArrayList();
-	
+
 	private HandlerMapping hm;
 
 	public DispatcherServlet(HandlerMapping hm) {
 		this.hm = hm;
 	}
-	
+
 	@Override
 	public void init() throws ServletException {
 		mappings.add(hm);
@@ -44,7 +44,7 @@ public class DispatcherServlet extends HttpServlet {
 		if (handler == null) {
 			throw new IllegalArgumentException("존재하지 않는 URL입니다.");
 		}
-		
+
 		try {
 			ModelAndView mav = execute(handler, req, resp);
 			if (mav != null) {
@@ -66,7 +66,7 @@ public class DispatcherServlet extends HttpServlet {
 		}
 		return null;
 	}
-	
+
 	private ModelAndView execute(Object handler, HttpServletRequest req, HttpServletResponse resp) throws Exception {
 		for (HandlerAdapter handlerAdapter : handlerAdapters) {
 			if (handlerAdapter.supports(handler)) {

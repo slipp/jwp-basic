@@ -14,6 +14,6 @@ public class HandlerExecutionHandlerAdapter implements HandlerAdapter {
 	@Override
 	public ModelAndView handle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		return ((HandlerExecution)handler).handle(request, response);
+		return ((HandlerExecution) handler).handle(request, response);
 	}
 }

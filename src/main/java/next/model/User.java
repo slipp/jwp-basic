@@ -28,25 +28,25 @@ public class User {
 	public String getEmail() {
 		return email;
 	}
-	
-    public void update(User updateUser) {
-        this.password = updateUser.password;
-        this.name = updateUser.name;
-        this.email = updateUser.email;
-    }
-    
-    public boolean matchPassword(String password) {
-        if (password == null) {
-            return false;
-        }
-        
-        return this.password.equals(password);
-    }
-    
+
+	public void update(User updateUser) {
+		this.password = updateUser.password;
+		this.name = updateUser.name;
+		this.email = updateUser.email;
+	}
+
+	public boolean matchPassword(String password) {
+		if (password == null) {
+			return false;
+		}
+
+		return this.password.equals(password);
+	}
+
 	public boolean isSameUser(User user) {
 		return isSameUser(user.getUserId());
 	}
-	
+
 	public boolean isSameUser(String newUserId) {
 		return userId.equals(newUserId);
 	}

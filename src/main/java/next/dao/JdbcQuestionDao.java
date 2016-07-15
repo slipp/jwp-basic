@@ -18,16 +18,16 @@ import next.model.Question;
 @Repository
 public class JdbcQuestionDao implements QuestionDao {
 	private JdbcTemplate jdbcTemplate;
-	
+
 	@Inject
-    public JdbcQuestionDao(JdbcTemplate jdbcTemplate) {
+	public JdbcQuestionDao(JdbcTemplate jdbcTemplate) {
 		this.jdbcTemplate = jdbcTemplate;
 	}
-	
-    @Override
+
+	@Override
 	public Question insert(Question question) {
-        String sql = "INSERT INTO QUESTIONS (writer, title, contents, createdDate) VALUES (?, ?, ?, ?)";
-        PreparedStatementCreator psc = new PreparedStatementCreator() {
+		String sql = "INSERT INTO QUESTIONS (writer, title, contents, createdDate) VALUES (?, ?, ?, ?)";
+		PreparedStatementCreator psc = new PreparedStatementCreator() {
 			@Override
 			public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
 				PreparedStatement pstmt = con.prepareStatement(sql);
@@ -38,28 +38,26 @@ public class JdbcQuestionDao implements QuestionDao {
 				return pstmt;
 			}
 		};
-        
+
 		KeyHolder keyHolder = new KeyHolder();
-        jdbcTemplate.update(psc, keyHolder);
-        return findById(keyHolder.getId());
-    }
-	
+		jdbcTemplate.update(psc, keyHolder);
+		return findById(keyHolder.getId());
+	}
+
 	@Override
 	public List<Question> findAll() {
 		String sql = "SELECT questionId, writer, title, createdDate, countOfAnswer FROM QUESTIONS "
 				+ "order by questionId desc";
-		
+
 		RowMapper<Question> rm = new RowMapper<Question>() {
 			@Override
 			public Question mapRow(ResultSet rs) throws SQLException {
-				return new Question(rs.getLong("questionId"),
-						rs.getString("writer"), rs.getString("title"), null,
-						rs.getTimestamp("createdDate"),
-						rs.getInt("countOfAnswer"));
+				return new Question(rs.getLong("questionId"), rs.getString("writer"), rs.getString("title"), null,
+						rs.getTimestamp("createdDate"), rs.getInt("countOfAnswer"));
 			}
-			
+
 		};
-		
+
 		return jdbcTemplate.query(sql, rm);
 	}
 
@@ -67,28 +65,22 @@ public class JdbcQuestionDao implements QuestionDao {
 	public Question findById(long questionId) {
 		String sql = "SELECT questionId, writer, title, contents, createdDate, countOfAnswer FROM QUESTIONS "
 				+ "WHERE questionId = ?";
-		
+
 		RowMapper<Question> rm = new RowMapper<Question>() {
 			@Override
 			public Question mapRow(ResultSet rs) throws SQLException {
-				return new Question(rs.getLong("questionId"),
-						rs.getString("writer"), rs.getString("title"),
-						rs.getString("contents"),
-						rs.getTimestamp("createdDate"),
-						rs.getInt("countOfAnswer"));
+				return new Question(rs.getLong("questionId"), rs.getString("writer"), rs.getString("title"),
+						rs.getString("contents"), rs.getTimestamp("createdDate"), rs.getInt("countOfAnswer"));
 			}
 		};
-		
+
 		return jdbcTemplate.queryForObject(sql, rm, questionId);
 	}
 
 	@Override
 	public void update(Question question) {
 		String sql = "UPDATE QUESTIONS set title = ?, contents = ? WHERE questionId = ?";
-        jdbcTemplate.update(sql, 
-        		question.getTitle(),
-                question.getContents(),
-                question.getQuestionId());
+		jdbcTemplate.update(sql, question.getTitle(), question.getContents(), question.getQuestionId());
 	}
 
 	@Override
