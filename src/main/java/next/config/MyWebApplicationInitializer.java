@@ -18,7 +18,7 @@ public class MyWebApplicationInitializer implements WebApplicationInitializer {
 		// AnnotationApplicationContext를 생성한 후 DisptacherSerlvet의 생성자로 전달한다.
 		ServletRegistration.Dynamic dispatcher = servletContext.addServlet("dispatcher", new DispatcherServlet());
         dispatcher.setLoadOnStartup(1);
-        dispatcher.addMapping("", "/");
+        dispatcher.addMapping("/");
         
 		log.info("Start My WebApplication Initializer");
 	}
