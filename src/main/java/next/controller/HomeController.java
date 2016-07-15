@@ -15,6 +15,6 @@ public class HomeController extends AbstractController {
     }
     
     public ModelAndView execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        return jspView("index.jsp").addObject("questions", questionDao.findAll());
+        return jspView("home.jsp").addObject("questions", questionDao.findAll());
     }
 }
