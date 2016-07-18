@@ -10,20 +10,20 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import core.di.factory.AnnotationConfigApplicationContext;
 
 public class AnnotationHandlerMappingTest {
-	private AnnotationHandlerMapping handlerMapping;
-	
-	@Before
-	public void setup() {
-		AnnotationConfigApplicationContext ac = new AnnotationConfigApplicationContext(MyConfiguration.class);
-		handlerMapping = new AnnotationHandlerMapping(ac);
-		handlerMapping.initialize();
-	}
+    private AnnotationHandlerMapping handlerMapping;
 
-	@Test
-	public void getHandler() throws Exception {
-		MockHttpServletRequest request = new MockHttpServletRequest("GET", "/users/findUserId");
-		MockHttpServletResponse response = new MockHttpServletResponse();
-		HandlerExecution execution = handlerMapping.getHandler(request);
-		execution.handle(request, response);
-	}
+    @Before
+    public void setup() {
+        AnnotationConfigApplicationContext ac = new AnnotationConfigApplicationContext(MyConfiguration.class);
+        handlerMapping = new AnnotationHandlerMapping(ac);
+        handlerMapping.initialize();
+    }
+
+    @Test
+    public void getHandler() throws Exception {
+        MockHttpServletRequest request = new MockHttpServletRequest("GET", "/users/findUserId");
+        MockHttpServletResponse response = new MockHttpServletResponse();
+        HandlerExecution execution = handlerMapping.getHandler(request);
+        execution.handle(request, response);
+    }
 }

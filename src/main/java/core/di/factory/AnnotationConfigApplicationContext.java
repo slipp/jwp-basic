@@ -12,45 +12,45 @@ import com.google.common.collect.Lists;
 import core.annotation.ComponentScan;
 
 public class AnnotationConfigApplicationContext implements ApplicationContext {
-	private static final Logger log = LoggerFactory.getLogger(AnnotationConfigApplicationContext.class);
-	
-	private BeanFactory beanFactory;
+    private static final Logger log = LoggerFactory.getLogger(AnnotationConfigApplicationContext.class);
 
-	public AnnotationConfigApplicationContext(Class<?>... annotatedClasses) {
-		Object[] basePackages = findBasePackages(annotatedClasses);
-		beanFactory = new BeanFactory();
-		AnnotatedBeanDefinitionReader abdr = new AnnotatedBeanDefinitionReader(beanFactory);
-		abdr.register(annotatedClasses);
-		
-		if (basePackages.length > 0) {
-			ClasspathBeanDefinitionScanner scanner = new ClasspathBeanDefinitionScanner(beanFactory);
-			scanner.doScan(basePackages);
-		}
-		beanFactory.initialize();
-	}
+    private BeanFactory beanFactory;
 
-	private Object[] findBasePackages(Class<?>[] annotatedClasses) {
-		List<Object> basePackages = Lists.newArrayList();
-		for (Class<?> annotatedClass : annotatedClasses) {
-			ComponentScan componentScan = annotatedClass.getAnnotation(ComponentScan.class);
-			if (componentScan == null) {
-				continue;
-			}
-			for(String basePackage : componentScan.value()) {
-				log.info("Component Scan basePackage : {}", basePackage);
-			}
-			basePackages.addAll(Arrays.asList(componentScan.value()));
-		}
-		return basePackages.toArray();
-	}
+    public AnnotationConfigApplicationContext(Class<?>... annotatedClasses) {
+        Object[] basePackages = findBasePackages(annotatedClasses);
+        beanFactory = new BeanFactory();
+        AnnotatedBeanDefinitionReader abdr = new AnnotatedBeanDefinitionReader(beanFactory);
+        abdr.register(annotatedClasses);
 
-	@Override
-	public <T> T getBean(Class<T> clazz) {
-		return beanFactory.getBean(clazz);
-	}
+        if (basePackages.length > 0) {
+            ClasspathBeanDefinitionScanner scanner = new ClasspathBeanDefinitionScanner(beanFactory);
+            scanner.doScan(basePackages);
+        }
+        beanFactory.initialize();
+    }
 
-	@Override
-	public Set<Class<?>> getBeanClasses() {
-		return beanFactory.getBeanClasses();
-	}
+    private Object[] findBasePackages(Class<?>[] annotatedClasses) {
+        List<Object> basePackages = Lists.newArrayList();
+        for (Class<?> annotatedClass : annotatedClasses) {
+            ComponentScan componentScan = annotatedClass.getAnnotation(ComponentScan.class);
+            if (componentScan == null) {
+                continue;
+            }
+            for (String basePackage : componentScan.value()) {
+                log.info("Component Scan basePackage : {}", basePackage);
+            }
+            basePackages.addAll(Arrays.asList(componentScan.value()));
+        }
+        return basePackages.toArray();
+    }
+
+    @Override
+    public <T> T getBean(Class<T> clazz) {
+        return beanFactory.getBean(clazz);
+    }
+
+    @Override
+    public Set<Class<?>> getBeanClasses() {
+        return beanFactory.getBeanClasses();
+    }
 }

@@ -12,45 +12,45 @@ import di.examples.MyUserService;
 import di.examples.QnaController;
 
 public class BeanFactoryTest {
-	private BeanFactory beanFactory;
+    private BeanFactory beanFactory;
 
-	@Before
-	public void setup() {
-		beanFactory = new BeanFactory();
-		ClasspathBeanDefinitionScanner scanner = new ClasspathBeanDefinitionScanner(beanFactory);
-		scanner.doScan("di.examples");
-		beanFactory.initialize();
-	}
+    @Before
+    public void setup() {
+        beanFactory = new BeanFactory();
+        ClasspathBeanDefinitionScanner scanner = new ClasspathBeanDefinitionScanner(beanFactory);
+        scanner.doScan("di.examples");
+        beanFactory.initialize();
+    }
 
-	@Test
-	public void constructorDI() throws Exception {
-		QnaController qnaController = beanFactory.getBean(QnaController.class);
+    @Test
+    public void constructorDI() throws Exception {
+        QnaController qnaController = beanFactory.getBean(QnaController.class);
 
-		assertNotNull(qnaController);
-		assertNotNull(qnaController.getQnaService());
+        assertNotNull(qnaController);
+        assertNotNull(qnaController.getQnaService());
 
-		MyQnaService qnaService = qnaController.getQnaService();
-		assertNotNull(qnaService.getUserRepository());
-		assertNotNull(qnaService.getQuestionRepository());
-	}
+        MyQnaService qnaService = qnaController.getQnaService();
+        assertNotNull(qnaService.getUserRepository());
+        assertNotNull(qnaService.getQuestionRepository());
+    }
 
-	@Test
-	public void fieldDI() throws Exception {
-		MyUserService userService = beanFactory.getBean(MyUserService.class);
-		assertNotNull(userService);
-		assertNotNull(userService.getUserRepository());
-	}
+    @Test
+    public void fieldDI() throws Exception {
+        MyUserService userService = beanFactory.getBean(MyUserService.class);
+        assertNotNull(userService);
+        assertNotNull(userService.getUserRepository());
+    }
 
-	@Test
-	public void setterDI() throws Exception {
-		MyUserController userController = beanFactory.getBean(MyUserController.class);
+    @Test
+    public void setterDI() throws Exception {
+        MyUserController userController = beanFactory.getBean(MyUserController.class);
 
-		assertNotNull(userController);
-		assertNotNull(userController.getUserService());
-	}
+        assertNotNull(userController);
+        assertNotNull(userController.getUserService());
+    }
 
-	@After
-	public void tearDown() {
-		beanFactory.clear();
-	}
+    @After
+    public void tearDown() {
+        beanFactory.clear();
+    }
 }

@@ -12,18 +12,18 @@ import core.jdbc.JdbcTemplate;
 @Configuration
 @ComponentScan({ "next", "core" })
 public class MyConfiguration {
-	@Bean
-	public DataSource dataSource() {
-		BasicDataSource ds = new BasicDataSource();
-		ds.setDriverClassName("org.h2.Driver");
-		ds.setUrl("jdbc:h2:~/jwp-basic;AUTO_SERVER=TRUE");
-		ds.setUsername("sa");
-		ds.setPassword("");
-		return ds;
-	}
-	
-	@Bean
-	public JdbcTemplate jdbcTemplate(DataSource dataSource) {
-		return new JdbcTemplate(dataSource);
-	}
+    @Bean
+    public DataSource dataSource() {
+        BasicDataSource ds = new BasicDataSource();
+        ds.setDriverClassName("org.h2.Driver");
+        ds.setUrl("jdbc:h2:~/jwp-basic;AUTO_SERVER=TRUE");
+        ds.setUsername("sa");
+        ds.setPassword("");
+        return ds;
+    }
+
+    @Bean
+    public JdbcTemplate jdbcTemplate(DataSource dataSource) {
+        return new JdbcTemplate(dataSource);
+    }
 }
