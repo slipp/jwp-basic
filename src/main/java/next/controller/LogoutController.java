@@ -7,10 +7,10 @@ import javax.servlet.http.HttpSession;
 import core.mvc.Controller;
 
 public class LogoutController implements Controller {
-	@Override
-	public String execute(HttpServletRequest req, HttpServletResponse resp) throws Exception {
-		HttpSession session = req.getSession();
+    @Override
+    public String execute(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+        HttpSession session = req.getSession();
         session.removeAttribute(UserSessionUtils.USER_SESSION_KEY);
         return "redirect:/";
-	}
+    }
 }
