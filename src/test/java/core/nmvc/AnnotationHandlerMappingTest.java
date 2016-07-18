@@ -12,15 +12,15 @@ import core.mvc.ModelAndView;
 public class AnnotationHandlerMappingTest {
     private AnnotationHandlerMapping handlerMapping;
     private MockHttpServletResponse response;
-    
+
     @Before
     public void setup() {
         handlerMapping = new AnnotationHandlerMapping("core.nmvc");
         handlerMapping.initialize();
-        
+
         response = new MockHttpServletResponse();
     }
-    
+
     @Test
     public void list() throws Exception {
         MockHttpServletRequest request = new MockHttpServletRequest("GET", "/users");
@@ -38,7 +38,7 @@ public class AnnotationHandlerMappingTest {
         mav.getView().render(mav.getModel(), request, response);
         assertEquals("/users/show.jsp", response.getForwardedUrl());
     }
-    
+
     @Test
     public void create() throws Exception {
         MockHttpServletRequest request = new MockHttpServletRequest("POST", "/users");

@@ -9,14 +9,14 @@ import core.mvc.AbstractController;
 import core.mvc.ModelAndView;
 
 public class ListUserController extends AbstractController {
-	private UserDao userDao = UserDao.getInstance();
+    private UserDao userDao = UserDao.getInstance();
 
     @Override
     public ModelAndView execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-    	if (!UserSessionUtils.isLogined(request.getSession())) {
-			return jspView("redirect:/users/loginForm");
-		}
-    	
+        if (!UserSessionUtils.isLogined(request.getSession())) {
+            return jspView("redirect:/users/loginForm");
+        }
+
         ModelAndView mav = jspView("/user/list.jsp");
         mav.addObject("users", userDao.findAll());
         return mav;
