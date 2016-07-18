@@ -13,20 +13,20 @@ import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import core.jdbc.ConnectionManager;
 
 public class AnswerDaoTest {
-	private static final Logger log = LoggerFactory.getLogger(AnswerDaoTest.class);
-	
+    private static final Logger log = LoggerFactory.getLogger(AnswerDaoTest.class);
+
     @Before
     public void setup() {
         ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
         populator.addScript(new ClassPathResource("jwp.sql"));
         DatabasePopulatorUtils.execute(populator, ConnectionManager.getDataSource());
     }
-    
+
     @Test
     public void addAnswer() throws Exception {
         long questionId = 1L;
         Answer expected = new Answer("javajigi", "answer contents", questionId);
-    	AnswerDao dut = AnswerDao.getInstance();
+        AnswerDao dut = AnswerDao.getInstance();
         Answer answer = dut.insert(expected);
         log.debug("Answer : {}", answer);
     }

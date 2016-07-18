@@ -19,14 +19,14 @@ public class UserDaoTest {
         DatabasePopulatorUtils.execute(populator, ConnectionManager.getDataSource());
     }
 
-	@Test
-	public void crud() throws Exception {
-		User expected = new User("userId", "password", "name", "javajigi@email.com");
-		UserDao userDao = UserDao.getInstance();
-		userDao.insert(expected);
-		
-		User actual = userDao.findByUserId(expected.getUserId());
-		assertEquals(expected, actual);
-	}
+    @Test
+    public void crud() throws Exception {
+        User expected = new User("userId", "password", "name", "javajigi@email.com");
+        UserDao userDao = UserDao.getInstance();
+        userDao.insert(expected);
+
+        User actual = userDao.findByUserId(expected.getUserId());
+        assertEquals(expected, actual);
+    }
 
 }
