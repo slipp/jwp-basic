@@ -9,15 +9,15 @@ import next.dao.UserDao;
 import next.model.User;
 
 public class LoginController implements Controller {
-	@Override
-	public String execute(HttpServletRequest req, HttpServletResponse resp) throws Exception {
-		String userId = req.getParameter("userId");
+    @Override
+    public String execute(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+        String userId = req.getParameter("userId");
         String password = req.getParameter("password");
         UserDao userDao = new UserDao();
         User user = userDao.findByUserId(userId);
         if (user == null) {
-           req.setAttribute("loginFailed", true);
-           return "/user/login.jsp";
+            req.setAttribute("loginFailed", true);
+            return "/user/login.jsp";
         }
         if (user.matchPassword(password)) {
             HttpSession session = req.getSession();
@@ -27,5 +27,5 @@ public class LoginController implements Controller {
             req.setAttribute("loginFailed", true);
             return "/user/login.jsp";
         }
-	}
+    }
 }

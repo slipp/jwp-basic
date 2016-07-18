@@ -13,17 +13,14 @@ import next.model.User;
 public class CreateUserController implements Controller {
     private static final Logger log = LoggerFactory.getLogger(CreateUserController.class);
 
-	@Override
-	public String execute(HttpServletRequest req, HttpServletResponse resp) throws Exception {
-		User user = new User(
-				req.getParameter("userId"), 
-				req.getParameter("password"), 
-				req.getParameter("name"),
-				req.getParameter("email"));
-		log.debug("User : {}", user);
-		
-		UserDao userDao = new UserDao();
-		userDao.insert(user);
-		return "redirect:/";
-	}
+    @Override
+    public String execute(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+        User user = new User(req.getParameter("userId"), req.getParameter("password"), req.getParameter("name"),
+                req.getParameter("email"));
+        log.debug("User : {}", user);
+
+        UserDao userDao = new UserDao();
+        userDao.insert(user);
+        return "redirect:/";
+    }
 }
