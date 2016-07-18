@@ -7,7 +7,6 @@ import javax.servlet.http.HttpSession;
 import core.mvc.AbstractController;
 import core.mvc.ModelAndView;
 
-
 public class LogoutController extends AbstractController {
     @Override
     public ModelAndView execute(HttpServletRequest request, HttpServletResponse response) throws Exception {

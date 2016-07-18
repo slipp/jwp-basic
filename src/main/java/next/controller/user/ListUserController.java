@@ -13,10 +13,10 @@ public class ListUserController extends AbstractController {
 
     @Override
     public ModelAndView execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-    	if (!UserSessionUtils.isLogined(request.getSession())) {
-			return jspView("redirect:/users/loginForm.next");
-		}
-    	
+        if (!UserSessionUtils.isLogined(request.getSession())) {
+            return jspView("redirect:/users/loginForm.next");
+        }
+
         ModelAndView mav = jspView("/user/list.jsp");
         mav.addObject("users", userDao.findAll());
         return mav;
