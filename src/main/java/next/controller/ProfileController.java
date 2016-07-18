@@ -13,9 +13,9 @@ import java.io.IOException;
 
 @WebServlet("/users/profile")
 public class ProfileController extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Override
+    @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String userId = req.getParameter("userId");
         User user = DataBase.findUserById(userId);
