@@ -6,16 +6,16 @@ import next.model.Question;
 
 public interface QuestionDao {
 
-	Question insert(Question question);
+    Question insert(Question question);
 
-	List<Question> findAll();
+    List<Question> findAll();
 
-	Question findById(long questionId);
+    Question findById(long questionId);
 
-	void update(Question question);
+    void update(Question question);
 
-	void delete(long questionId);
+    void delete(long questionId);
 
-	void updateCountOfAnswer(long questionId);
+    void updateCountOfAnswer(long questionId);
 
 }

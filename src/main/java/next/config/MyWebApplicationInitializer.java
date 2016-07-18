@@ -11,15 +11,15 @@ import core.web.WebApplicationInitializer;
 import core.web.mvc.DispatcherServlet;
 
 public class MyWebApplicationInitializer implements WebApplicationInitializer {
-	private static final Logger log = LoggerFactory.getLogger(MyWebApplicationInitializer.class);
-	
-	@Override
-	public void onStartup(ServletContext servletContext) throws ServletException {
-		// AnnotationApplicationContext를 생성한 후 DisptacherSerlvet의 생성자로 전달한다.
-		ServletRegistration.Dynamic dispatcher = servletContext.addServlet("dispatcher", new DispatcherServlet());
+    private static final Logger log = LoggerFactory.getLogger(MyWebApplicationInitializer.class);
+
+    @Override
+    public void onStartup(ServletContext servletContext) throws ServletException {
+        // AnnotationApplicationContext를 생성한 후 DisptacherSerlvet의 생성자로 전달한다.
+        ServletRegistration.Dynamic dispatcher = servletContext.addServlet("dispatcher", new DispatcherServlet());
         dispatcher.setLoadOnStartup(1);
         dispatcher.addMapping("/");
-        
-		log.info("Start My WebApplication Initializer");
-	}
+
+        log.info("Start My WebApplication Initializer");
+    }
 }

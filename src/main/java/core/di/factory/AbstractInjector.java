@@ -11,44 +11,44 @@ import org.springframework.beans.BeanUtils;
 import com.google.common.collect.Lists;
 
 public abstract class AbstractInjector implements Injector {
-	private static final Logger logger = LoggerFactory.getLogger(AbstractInjector.class);
-	
-	private BeanFactory beanFactory;
+    private static final Logger logger = LoggerFactory.getLogger(AbstractInjector.class);
 
-	public AbstractInjector(BeanFactory beanFactory) {
-		this.beanFactory = beanFactory;
-	}
-	
-	@Override
-	public void inject(Class<?> clazz) {
-		instantiateClass(clazz);
-		Set<?> injectedBeans = getInjectedBeans(clazz);
-		for (Object injectedBean : injectedBeans) {
-			Class<?> beanClass = getBeanClass(injectedBean);
-			inject(injectedBean, instantiateClass(beanClass), beanFactory);
-		}
-	}
-	
-	abstract Set<?> getInjectedBeans(Class<?> clazz);
+    private BeanFactory beanFactory;
 
-	abstract Class<?> getBeanClass(Object injectedBean);
-	
-	abstract void inject(Object injectedBean, Object bean, BeanFactory beanFactory);
-	
-	private Object instantiateClass(Class<?> clazz) {
-		Class<?> concreteClass = findBeanClass(clazz, beanFactory.getPreInstanticateBeans());
+    public AbstractInjector(BeanFactory beanFactory) {
+        this.beanFactory = beanFactory;
+    }
+
+    @Override
+    public void inject(Class<?> clazz) {
+        instantiateClass(clazz);
+        Set<?> injectedBeans = getInjectedBeans(clazz);
+        for (Object injectedBean : injectedBeans) {
+            Class<?> beanClass = getBeanClass(injectedBean);
+            inject(injectedBean, instantiateClass(beanClass), beanFactory);
+        }
+    }
+
+    abstract Set<?> getInjectedBeans(Class<?> clazz);
+
+    abstract Class<?> getBeanClass(Object injectedBean);
+
+    abstract void inject(Object injectedBean, Object bean, BeanFactory beanFactory);
+
+    private Object instantiateClass(Class<?> clazz) {
+        Class<?> concreteClass = findBeanClass(clazz, beanFactory.getPreInstanticateBeans());
         Object bean = beanFactory.getBean(concreteClass);
         if (bean != null) {
             return bean;
         }
-        
+
         Constructor<?> injectedConstructor = BeanFactoryUtils.getInjectedConstructor(concreteClass);
         if (injectedConstructor == null) {
             bean = BeanUtils.instantiate(concreteClass);
             beanFactory.registerBean(concreteClass, bean);
             return bean;
         }
-        
+
         logger.debug("Constructor : {}", injectedConstructor);
         bean = instantiateConstructor(injectedConstructor);
         beanFactory.registerBean(concreteClass, bean);
@@ -68,9 +68,9 @@ public abstract class AbstractInjector implements Injector {
         }
         return BeanUtils.instantiateClass(constructor, args.toArray());
     }
-    
+
     private Class<?> findBeanClass(Class<?> clazz, Set<Class<?>> preInstanticateBeans) {
-    	Class<?> concreteClazz = BeanFactoryUtils.findConcreteClass(clazz, preInstanticateBeans);
+        Class<?> concreteClazz = BeanFactoryUtils.findConcreteClass(clazz, preInstanticateBeans);
         if (!preInstanticateBeans.contains(concreteClazz)) {
             throw new IllegalStateException(clazz + "는 Bean이 아니다.");
         }
