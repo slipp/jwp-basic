@@ -18,18 +18,18 @@ public class AnswerDao {
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
         String sql = "INSERT INTO ANSWERS (writer, contents, createdDate, questionId) VALUES (?, ?, ?, ?)";
         PreparedStatementCreator psc = new PreparedStatementCreator() {
-			@Override
-			public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
-				PreparedStatement pstmt = con.prepareStatement(sql);
-				pstmt.setString(1, answer.getWriter());
-				pstmt.setString(2, answer.getContents());
-				pstmt.setTimestamp(3, new Timestamp(answer.getTimeFromCreateDate()));
-				pstmt.setLong(4, answer.getQuestionId());
-				return pstmt;
-			}
-		};
-        
-		KeyHolder keyHolder = new KeyHolder();
+            @Override
+            public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
+                PreparedStatement pstmt = con.prepareStatement(sql);
+                pstmt.setString(1, answer.getWriter());
+                pstmt.setString(2, answer.getContents());
+                pstmt.setTimestamp(3, new Timestamp(answer.getTimeFromCreateDate()));
+                pstmt.setLong(4, answer.getQuestionId());
+                return pstmt;
+            }
+        };
+
+        KeyHolder keyHolder = new KeyHolder();
         jdbcTemplate.update(psc, keyHolder);
         return findById(keyHolder.getId());
     }
@@ -65,9 +65,9 @@ public class AnswerDao {
         return jdbcTemplate.query(sql, rm, questionId);
     }
 
-	public void delete(Long answerId) {
-		JdbcTemplate jdbcTemplate = new JdbcTemplate();
+    public void delete(Long answerId) {
+        JdbcTemplate jdbcTemplate = new JdbcTemplate();
         String sql = "DELETE FROM ANSWERS WHERE answerId = ?";
         jdbcTemplate.update(sql, answerId);
-	}
+    }
 }
