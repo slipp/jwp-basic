@@ -17,7 +17,7 @@ public class AnswerDaoTest {
         populator.addScript(new ClassPathResource("jwp.sql"));
         DatabasePopulatorUtils.execute(populator, ConnectionManager.getDataSource());
     }
-    
+
     @Test
     public void addAnswer() throws Exception {
         long questionId = 1L;
