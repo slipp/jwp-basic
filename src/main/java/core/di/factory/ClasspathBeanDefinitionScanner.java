@@ -18,21 +18,22 @@ public class ClasspathBeanDefinitionScanner {
         this.beanDefinitionRegistry = beanDefinitionRegistry;
     }
 
-	@SuppressWarnings("unchecked")
-	public void doScan(Object... basePackages) {
-		Reflections reflections = new Reflections(basePackages);
-		Set<Class<?>> beanClasses = getTypesAnnotatedWith(reflections, Controller.class, Service.class, Repository.class);
-		for (Class<?> clazz : beanClasses) {
-			beanDefinitionRegistry.registerBeanDefinition(clazz, new BeanDefinition(clazz));
-		}
-	}
-	
-	@SuppressWarnings("unchecked")
-	private Set<Class<?>> getTypesAnnotatedWith(Reflections reflections, Class<? extends Annotation>... annotations) {
-		Set<Class<?>> preInstantiatedBeans = Sets.newHashSet();
-		for (Class<? extends Annotation> annotation : annotations) {
-			preInstantiatedBeans.addAll(reflections.getTypesAnnotatedWith(annotation));
-		}
-		return preInstantiatedBeans;
-	}
+    @SuppressWarnings("unchecked")
+    public void doScan(Object... basePackages) {
+        Reflections reflections = new Reflections(basePackages);
+        Set<Class<?>> beanClasses = getTypesAnnotatedWith(reflections, Controller.class, Service.class,
+                Repository.class);
+        for (Class<?> clazz : beanClasses) {
+            beanDefinitionRegistry.registerBeanDefinition(clazz, new BeanDefinition(clazz));
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    private Set<Class<?>> getTypesAnnotatedWith(Reflections reflections, Class<? extends Annotation>... annotations) {
+        Set<Class<?>> preInstantiatedBeans = Sets.newHashSet();
+        for (Class<? extends Annotation> annotation : annotations) {
+            preInstantiatedBeans.addAll(reflections.getTypesAnnotatedWith(annotation));
+        }
+        return preInstantiatedBeans;
+    }
 }
