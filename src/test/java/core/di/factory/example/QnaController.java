@@ -11,19 +11,19 @@ import core.nmvc.AbstractNewController;
 
 @Controller
 public class QnaController extends AbstractNewController {
-	private MyQnaService qnaService;
+    private MyQnaService qnaService;
 
-	@Inject
-	public QnaController(MyQnaService qnaService) {
-		this.qnaService = qnaService;
-	}
-	
-	public MyQnaService getQnaService() {
-		return qnaService;
-	}
-	
-	@RequestMapping("/questions")
-	public ModelAndView list(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		return jspView("/qna/list.jsp");
-	}
+    @Inject
+    public QnaController(MyQnaService qnaService) {
+        this.qnaService = qnaService;
+    }
+
+    public MyQnaService getQnaService() {
+        return qnaService;
+    }
+
+    @RequestMapping("/questions")
+    public ModelAndView list(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        return jspView("/qna/list.jsp");
+    }
 }

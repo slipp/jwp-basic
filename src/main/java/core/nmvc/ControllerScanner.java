@@ -12,29 +12,29 @@ import com.google.common.collect.Maps;
 import core.annotation.Controller;
 
 public class ControllerScanner {
-	private static final Logger log = LoggerFactory.getLogger(ControllerScanner.class);
+    private static final Logger log = LoggerFactory.getLogger(ControllerScanner.class);
 
-	private Reflections reflections;
+    private Reflections reflections;
 
-	public ControllerScanner(Object... basePackage) {
-		reflections = new Reflections(basePackage);
-	}
+    public ControllerScanner(Object... basePackage) {
+        reflections = new Reflections(basePackage);
+    }
 
-	public Map<Class<?>, Object> getControllers() {
-		Set<Class<?>> preInitiatedControllers = reflections.getTypesAnnotatedWith(Controller.class);
-		return instantiateControllers(preInitiatedControllers);
-	}
+    public Map<Class<?>, Object> getControllers() {
+        Set<Class<?>> preInitiatedControllers = reflections.getTypesAnnotatedWith(Controller.class);
+        return instantiateControllers(preInitiatedControllers);
+    }
 
-	Map<Class<?>, Object> instantiateControllers(Set<Class<?>> preInitiatedControllers) {
-		Map<Class<?>, Object> controllers = Maps.newHashMap();
-		try {
-			for (Class<?> clazz : preInitiatedControllers) {
-				controllers.put(clazz, clazz.newInstance());
-			}
-		} catch (InstantiationException | IllegalAccessException e) {
-			log.error(e.getMessage());
-		}
+    Map<Class<?>, Object> instantiateControllers(Set<Class<?>> preInitiatedControllers) {
+        Map<Class<?>, Object> controllers = Maps.newHashMap();
+        try {
+            for (Class<?> clazz : preInitiatedControllers) {
+                controllers.put(clazz, clazz.newInstance());
+            }
+        } catch (InstantiationException | IllegalAccessException e) {
+            log.error(e.getMessage());
+        }
 
-		return controllers;
-	}
+        return controllers;
+    }
 }

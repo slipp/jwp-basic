@@ -11,11 +11,11 @@ public class ApiListQuestionController extends AbstractController {
     private QuestionDao questionDao;
 
     public ApiListQuestionController(QuestionDao questionDao) {
-    	this.questionDao = questionDao;
+        this.questionDao = questionDao;
     }
-    
-	@Override
-	public ModelAndView execute(HttpServletRequest req, HttpServletResponse resp) throws Exception {
-		return jsonView().addObject("questions", questionDao.findAll());
-	}
+
+    @Override
+    public ModelAndView execute(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+        return jsonView().addObject("questions", questionDao.findAll());
+    }
 }

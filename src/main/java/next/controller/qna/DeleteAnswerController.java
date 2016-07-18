@@ -10,23 +10,23 @@ import next.dao.AnswerDao;
 import next.model.Result;
 
 public class DeleteAnswerController extends AbstractController {
-	private AnswerDao answerDao;
+    private AnswerDao answerDao;
 
-	public DeleteAnswerController(AnswerDao answerDao) {
-		this.answerDao = answerDao;
-	}
-	
-	@Override
-	public ModelAndView execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		Long answerId = Long.parseLong(request.getParameter("answerId"));
-        
-		ModelAndView mav = jsonView();
-		try {
-			answerDao.delete(answerId);
-			mav.addObject("result", Result.ok());
-		} catch (DataAccessException e) {
-			mav.addObject("result", Result.fail(e.getMessage()));
-		}
-		return mav;
-	}
+    public DeleteAnswerController(AnswerDao answerDao) {
+        this.answerDao = answerDao;
+    }
+
+    @Override
+    public ModelAndView execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        Long answerId = Long.parseLong(request.getParameter("answerId"));
+
+        ModelAndView mav = jsonView();
+        try {
+            answerDao.delete(answerId);
+            mav.addObject("result", Result.ok());
+        } catch (DataAccessException e) {
+            mav.addObject("result", Result.fail(e.getMessage()));
+        }
+        return mav;
+    }
 }
