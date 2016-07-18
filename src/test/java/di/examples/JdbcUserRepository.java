@@ -7,10 +7,10 @@ import core.annotation.Repository;
 
 @Repository
 public class JdbcUserRepository implements UserRepository {
-	@Inject
-	private DataSource dataSource;
-	
-	public DataSource getDataSource() {
-		return dataSource;
-	}
+    @Inject
+    private DataSource dataSource;
+
+    public DataSource getDataSource() {
+        return dataSource;
+    }
 }

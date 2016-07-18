@@ -14,17 +14,17 @@ import core.annotation.PostConstruct;
 
 @Component
 public class DBInitializer {
-	private static final Logger log = LoggerFactory.getLogger(DBInitializer.class);
-	
-	@Inject
-	private DataSource dataSource;
-	
-	@PostConstruct
-	public void initialize() {
-		ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
-		populator.addScript(new ClassPathResource("jwp.sql"));
-		DatabasePopulatorUtils.execute(populator, dataSource);
-		
-		log.info("Completed Load ServletContext!");
-	}
+    private static final Logger log = LoggerFactory.getLogger(DBInitializer.class);
+
+    @Inject
+    private DataSource dataSource;
+
+    @PostConstruct
+    public void initialize() {
+        ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
+        populator.addScript(new ClassPathResource("jwp.sql"));
+        DatabasePopulatorUtils.execute(populator, dataSource);
+
+        log.info("Completed Load ServletContext!");
+    }
 }

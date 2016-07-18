@@ -10,80 +10,80 @@ import com.google.common.collect.Sets;
 import core.di.beans.factory.config.BeanDefinition;
 
 public class DefaultBeanDefinition implements BeanDefinition {
-	private Class<?> beanClazz;
-	private Constructor<?> injectConstructor;
-	private Set<Field> injectFields;
+    private Class<?> beanClazz;
+    private Constructor<?> injectConstructor;
+    private Set<Field> injectFields;
 
-	public DefaultBeanDefinition(Class<?> clazz) {
-		this.beanClazz = clazz;
-		injectConstructor = getInjectConstructor(clazz);
-		injectFields = getInjectFields(clazz, injectConstructor);
-	}
+    public DefaultBeanDefinition(Class<?> clazz) {
+        this.beanClazz = clazz;
+        injectConstructor = getInjectConstructor(clazz);
+        injectFields = getInjectFields(clazz, injectConstructor);
+    }
 
-	private static Constructor<?> getInjectConstructor(Class<?> clazz) {
-		return BeanFactoryUtils.getInjectedConstructor(clazz);
-	}
+    private static Constructor<?> getInjectConstructor(Class<?> clazz) {
+        return BeanFactoryUtils.getInjectedConstructor(clazz);
+    }
 
-	private Set<Field> getInjectFields(Class<?> clazz, Constructor<?> constructor) {
-		if (constructor != null) {
-			return Sets.newHashSet();
-		}
-		
-		Set<Field> injectFields = Sets.newHashSet();
-		Set<Class<?>> injectProperties = getInjectPropertiesType(clazz);
-		Field[] fields = clazz.getDeclaredFields();
-		for (Field field : fields) {
-			if (injectProperties.contains(field.getType())) {
-				injectFields.add(field);
-			}
-		}
-		return injectFields;
-	}
+    private Set<Field> getInjectFields(Class<?> clazz, Constructor<?> constructor) {
+        if (constructor != null) {
+            return Sets.newHashSet();
+        }
 
-	private static Set<Class<?>> getInjectPropertiesType(Class<?> clazz) {
-		Set<Class<?>> injectProperties = Sets.newHashSet();
-		Set<Method> injectMethod = BeanFactoryUtils.getInjectedMethods(clazz);
-		for (Method method : injectMethod) {
-			Class<?>[] paramTypes = method.getParameterTypes();
-			if (paramTypes.length != 1) {
-				throw new IllegalStateException("DI할 메소드 인자는 하나여야 합니다.");
-			}
+        Set<Field> injectFields = Sets.newHashSet();
+        Set<Class<?>> injectProperties = getInjectPropertiesType(clazz);
+        Field[] fields = clazz.getDeclaredFields();
+        for (Field field : fields) {
+            if (injectProperties.contains(field.getType())) {
+                injectFields.add(field);
+            }
+        }
+        return injectFields;
+    }
 
-			injectProperties.add(paramTypes[0]);
-		}
+    private static Set<Class<?>> getInjectPropertiesType(Class<?> clazz) {
+        Set<Class<?>> injectProperties = Sets.newHashSet();
+        Set<Method> injectMethod = BeanFactoryUtils.getInjectedMethods(clazz);
+        for (Method method : injectMethod) {
+            Class<?>[] paramTypes = method.getParameterTypes();
+            if (paramTypes.length != 1) {
+                throw new IllegalStateException("DI할 메소드 인자는 하나여야 합니다.");
+            }
 
-		Set<Field> injectField = BeanFactoryUtils.getInjectedFields(clazz);
-		for (Field field : injectField) {
-			injectProperties.add(field.getType());
-		}
-		return injectProperties;
-	}
+            injectProperties.add(paramTypes[0]);
+        }
 
-	@Override
-	public Constructor<?> getInjectConstructor() {
-		return injectConstructor;
-	}
+        Set<Field> injectField = BeanFactoryUtils.getInjectedFields(clazz);
+        for (Field field : injectField) {
+            injectProperties.add(field.getType());
+        }
+        return injectProperties;
+    }
 
-	@Override
-	public Set<Field> getInjectFields() {
-		return this.injectFields;
-	}
+    @Override
+    public Constructor<?> getInjectConstructor() {
+        return injectConstructor;
+    }
 
-	@Override
-	public Class<?> getBeanClass() {
-		return this.beanClazz;
-	}
+    @Override
+    public Set<Field> getInjectFields() {
+        return this.injectFields;
+    }
 
-	@Override
-	public InjectType getResolvedInjectMode() {
-		if (injectConstructor != null) {
-			return InjectType.INJECT_CONSTRUCTOR;
-		}
+    @Override
+    public Class<?> getBeanClass() {
+        return this.beanClazz;
+    }
 
-		if (!injectFields.isEmpty()) {
-			return InjectType.INJECT_FIELD;
-		}
+    @Override
+    public InjectType getResolvedInjectMode() {
+        if (injectConstructor != null) {
+            return InjectType.INJECT_CONSTRUCTOR;
+        }
 
-		return InjectType.INJECT_NO;
-	}
+        if (!injectFields.isEmpty()) {
+            return InjectType.INJECT_FIELD;
+        }
+
+        return InjectType.INJECT_NO;
+    }
 }

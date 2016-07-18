@@ -12,30 +12,29 @@ import core.di.beans.factory.support.BeanDefinitionRegistry;
 import core.di.beans.factory.support.BeanFactoryUtils;
 import core.di.beans.factory.support.DefaultBeanDefinition;
 
-
 public class AnnotatedBeanDefinitionReader implements BeanDefinitionReader {
-	private static final Logger log = LoggerFactory.getLogger(AnnotatedBeanDefinitionReader.class);
-	
-	private BeanDefinitionRegistry beanDefinitionRegistry;
+    private static final Logger log = LoggerFactory.getLogger(AnnotatedBeanDefinitionReader.class);
 
-	public AnnotatedBeanDefinitionReader(BeanDefinitionRegistry beanDefinitionRegistry) {
-		this.beanDefinitionRegistry = beanDefinitionRegistry;
-	}
+    private BeanDefinitionRegistry beanDefinitionRegistry;
 
-	@Override
-	public void loadBeanDefinitions(Class<?>... annotatedClasses) {
-		for (Class<?> annotatedClass : annotatedClasses) {
-			registerBean(annotatedClass);
-		}
-	}
+    public AnnotatedBeanDefinitionReader(BeanDefinitionRegistry beanDefinitionRegistry) {
+        this.beanDefinitionRegistry = beanDefinitionRegistry;
+    }
 
-	private void registerBean(Class<?> annotatedClass) {
-		beanDefinitionRegistry.registerBeanDefinition(annotatedClass, new DefaultBeanDefinition(annotatedClass));
-		Set<Method> beanMethods = BeanFactoryUtils.getBeanMethods(annotatedClass, Bean.class);
-		for (Method beanMethod : beanMethods) {
-			log.debug("@Bean method : {}", beanMethod);
-			AnnotatedBeanDefinition abd = new AnnotatedBeanDefinition(beanMethod.getReturnType(), beanMethod);
-			beanDefinitionRegistry.registerBeanDefinition(beanMethod.getReturnType(), abd);
-		}
-	}
+    @Override
+    public void loadBeanDefinitions(Class<?>... annotatedClasses) {
+        for (Class<?> annotatedClass : annotatedClasses) {
+            registerBean(annotatedClass);
+        }
+    }
+
+    private void registerBean(Class<?> annotatedClass) {
+        beanDefinitionRegistry.registerBeanDefinition(annotatedClass, new DefaultBeanDefinition(annotatedClass));
+        Set<Method> beanMethods = BeanFactoryUtils.getBeanMethods(annotatedClass, Bean.class);
+        for (Method beanMethod : beanMethods) {
+            log.debug("@Bean method : {}", beanMethod);
+            AnnotatedBeanDefinition abd = new AnnotatedBeanDefinition(beanMethod.getReturnType(), beanMethod);
+            beanDefinitionRegistry.registerBeanDefinition(beanMethod.getReturnType(), abd);
+        }
+    }
 }

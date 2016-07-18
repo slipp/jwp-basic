@@ -12,7 +12,8 @@ import javax.servlet.annotation.HandlesTypes;
 @HandlesTypes(WebApplicationInitializer.class)
 public class MyServletContainerInitializer implements ServletContainerInitializer {
     @Override
-    public void onStartup(Set<Class<?>> webAppInitializerClasses, ServletContext servletContext) throws ServletException {
+    public void onStartup(Set<Class<?>> webAppInitializerClasses, ServletContext servletContext)
+            throws ServletException {
         List<WebApplicationInitializer> initializers = new LinkedList<WebApplicationInitializer>();
 
         if (webAppInitializerClasses != null) {
@@ -24,12 +25,12 @@ public class MyServletContainerInitializer implements ServletContainerInitialize
                 }
             }
         }
-        
+
         if (initializers.isEmpty()) {
             servletContext.log("No Spring WebApplicationInitializer types detected on classpath");
             return;
         }
-        
+
         for (WebApplicationInitializer initializer : initializers) {
             initializer.onStartup(servletContext);
         }

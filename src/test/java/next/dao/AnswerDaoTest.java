@@ -10,16 +10,16 @@ import next.config.MyConfiguration;
 import next.model.Answer;
 
 public class AnswerDaoTest {
-	private static final Logger log = LoggerFactory.getLogger(AnswerDaoTest.class);
-	
-	private AnswerDao answerDao;
-	
+    private static final Logger log = LoggerFactory.getLogger(AnswerDaoTest.class);
+
+    private AnswerDao answerDao;
+
     @Before
     public void setup() {
-    	AnnotationConfigApplicationContext ac = new AnnotationConfigApplicationContext(MyConfiguration.class);
-    	answerDao = ac.getBean(AnswerDao.class);
+        AnnotationConfigApplicationContext ac = new AnnotationConfigApplicationContext(MyConfiguration.class);
+        answerDao = ac.getBean(AnswerDao.class);
     }
-    
+
     @Test
     public void addAnswer() throws Exception {
         long questionId = 1L;

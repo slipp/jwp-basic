@@ -8,11 +8,11 @@ import core.di.beans.factory.support.InjectType;
 
 public interface BeanDefinition {
 
-	Constructor<?> getInjectConstructor();
+    Constructor<?> getInjectConstructor();
 
-	Set<Field> getInjectFields();
+    Set<Field> getInjectFields();
 
-	Class<?> getBeanClass();
+    Class<?> getBeanClass();
 
-	InjectType getResolvedInjectMode();
+    InjectType getResolvedInjectMode();
 }

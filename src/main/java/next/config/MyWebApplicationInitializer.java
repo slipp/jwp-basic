@@ -15,16 +15,16 @@ import core.web.mvc.DispatcherServlet;
 
 public class MyWebApplicationInitializer implements WebApplicationInitializer {
     private static final Logger log = LoggerFactory.getLogger(MyWebApplicationInitializer.class);
-    
+
     @Override
     public void onStartup(ServletContext servletContext) throws ServletException {
-    	ApplicationContext ac = new AnnotationConfigApplicationContext(MyConfiguration.class);
-    	AnnotationHandlerMapping ahm = new AnnotationHandlerMapping(ac);
-    	ahm.initialize();
+        ApplicationContext ac = new AnnotationConfigApplicationContext(MyConfiguration.class);
+        AnnotationHandlerMapping ahm = new AnnotationHandlerMapping(ac);
+        ahm.initialize();
         ServletRegistration.Dynamic dispatcher = servletContext.addServlet("dispatcher", new DispatcherServlet(ahm));
         dispatcher.setLoadOnStartup(1);
         dispatcher.addMapping("/");
-        
+
         log.info("Start MyWebApplication Initializer");
     }
 }
