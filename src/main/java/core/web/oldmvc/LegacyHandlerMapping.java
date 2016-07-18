@@ -12,24 +12,24 @@ import core.web.mvc.DispatcherServlet;
 import core.web.mvc.HandlerMapping;
 
 public class LegacyHandlerMapping implements HandlerMapping {
-	private static final Logger logger = LoggerFactory.getLogger(DispatcherServlet.class);
-	private Map<String, Controller> mappings = new HashMap<>();
-	
-	public void initMapping() {
+    private static final Logger logger = LoggerFactory.getLogger(DispatcherServlet.class);
+    private Map<String, Controller> mappings = new HashMap<>();
 
-		logger.info("Initialized Request Mapping!");
-	}
-	
-	public Controller findController(String url) {
-		return mappings.get(url);
-	}
-	
-	void put(String url, Controller controller) {
-		mappings.put(url, controller);
-	}
+    public void initMapping() {
 
-	@Override
-	public Controller getHandler(HttpServletRequest request) {
-		return mappings.get(request.getRequestURI());
-	}
+        logger.info("Initialized Request Mapping!");
+    }
+
+    public Controller findController(String url) {
+        return mappings.get(url);
+    }
+
+    void put(String url, Controller controller) {
+        mappings.put(url, controller);
+    }
+
+    @Override
+    public Controller getHandler(HttpServletRequest request) {
+        return mappings.get(request.getRequestURI());
+    }
 }

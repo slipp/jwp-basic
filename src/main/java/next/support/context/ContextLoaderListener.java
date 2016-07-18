@@ -14,18 +14,18 @@ import core.jdbc.ConnectionManager;
 
 @WebListener
 public class ContextLoaderListener implements ServletContextListener {
-	private static final Logger logger = LoggerFactory.getLogger(ContextLoaderListener.class);
-	
-	@Override
-	public void contextInitialized(ServletContextEvent sce) {
-		ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
-		populator.addScript(new ClassPathResource("jwp.sql"));
-		DatabasePopulatorUtils.execute(populator, ConnectionManager.getDataSource());
-		
-		logger.info("Completed Load ServletContext!");
-	}
+    private static final Logger logger = LoggerFactory.getLogger(ContextLoaderListener.class);
 
-	@Override
-	public void contextDestroyed(ServletContextEvent sce) {
-	}
+    @Override
+    public void contextInitialized(ServletContextEvent sce) {
+        ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
+        populator.addScript(new ClassPathResource("jwp.sql"));
+        DatabasePopulatorUtils.execute(populator, ConnectionManager.getDataSource());
+
+        logger.info("Completed Load ServletContext!");
+    }
+
+    @Override
+    public void contextDestroyed(ServletContextEvent sce) {
+    }
 }

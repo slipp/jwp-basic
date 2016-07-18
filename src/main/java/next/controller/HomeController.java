@@ -16,9 +16,9 @@ public class HomeController extends AbstractNewController {
 
     @Inject
     public HomeController(QuestionDao questionDao) {
-    	this.questionDao = questionDao;
+        this.questionDao = questionDao;
     }
-    
+
     @RequestMapping("/")
     public ModelAndView home(HttpServletRequest request, HttpServletResponse response) throws Exception {
         return jspView("home.jsp").addObject("questions", questionDao.findAll());
