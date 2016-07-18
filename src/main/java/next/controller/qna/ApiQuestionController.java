@@ -22,42 +22,43 @@ import next.service.QnaService;
 @RestController
 @RequestMapping("/api")
 public class ApiQuestionController {
-	private Logger log = LoggerFactory.getLogger(ApiQuestionController.class);
-	
-	private QnaService qnaService;
+    private Logger log = LoggerFactory.getLogger(ApiQuestionController.class);
 
-	@Inject
-	public ApiQuestionController(QnaService qnaService) {
-		this.qnaService = qnaService;
+    private QnaService qnaService;
+
+    @Inject
+    public ApiQuestionController(QnaService qnaService) {
+        this.qnaService = qnaService;
     }
-	
-	@RequestMapping(value="/questions/{questionId}", method=RequestMethod.DELETE)
-	public Result deleteQuestion(@LoginUser User loginUser, @PathVariable Long questionId) throws Exception {
-		try {
-			qnaService.deleteQuestion(questionId, loginUser);
-			return Result.ok();
-		} catch (CannotOperateException e) {
-			return Result.fail(e.getMessage());
-		}
-	}
-	
-	@RequestMapping(value = "/questions", method = RequestMethod.GET)
-	public List<Question> list() throws Exception {
-		return qnaService.findQuestions();
-	}
-	
-	@RequestMapping(value = "/questions/{questionId}/answers", method = RequestMethod.POST)
-	public Model addAnswer(@LoginUser User loginUser, @PathVariable Long questionId, String contents, Model model) throws Exception {
-		log.debug("questionId : {}, contents : {}", questionId, contents);
-		
-		model.addAttribute("answer", qnaService.addAnswer(loginUser, questionId, contents));
-		model.addAttribute("result", Result.ok());
-		return model;
-	}
-	
-	@RequestMapping(value = "/questions/{questionId}/answers/{answerId}", method = RequestMethod.DELETE)
-	public Result deleteAnswer(@LoginUser User loginUser, @PathVariable Long answerId) throws Exception {
-		qnaService.deleteAnswer(answerId, loginUser);
-		return Result.ok();
-	}
+
+    @RequestMapping(value = "/questions/{questionId}", method = RequestMethod.DELETE)
+    public Result deleteQuestion(@LoginUser User loginUser, @PathVariable Long questionId) throws Exception {
+        try {
+            qnaService.deleteQuestion(questionId, loginUser);
+            return Result.ok();
+        } catch (CannotOperateException e) {
+            return Result.fail(e.getMessage());
+        }
+    }
+
+    @RequestMapping(value = "/questions", method = RequestMethod.GET)
+    public List<Question> list() throws Exception {
+        return qnaService.findQuestions();
+    }
+
+    @RequestMapping(value = "/questions/{questionId}/answers", method = RequestMethod.POST)
+    public Model addAnswer(@LoginUser User loginUser, @PathVariable Long questionId, String contents, Model model)
+            throws Exception {
+        log.debug("questionId : {}, contents : {}", questionId, contents);
+
+        model.addAttribute("answer", qnaService.addAnswer(loginUser, questionId, contents));
+        model.addAttribute("result", Result.ok());
+        return model;
+    }
+
+    @RequestMapping(value = "/questions/{questionId}/answers/{answerId}", method = RequestMethod.DELETE)
+    public Result deleteAnswer(@LoginUser User loginUser, @PathVariable Long answerId) throws Exception {
+        qnaService.deleteAnswer(answerId, loginUser);
+        return Result.ok();
+    }
 }

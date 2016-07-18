@@ -18,116 +18,115 @@ import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 public class Answer {
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long answerId;
-	
-	@ManyToOne
-	@JoinColumn(foreignKey = @ForeignKey(name = "fk_answer_writer"))
-	private User writer;
-	
-	@NotBlank
-	@Size(min = 4, max = 5000)
-	@Column(length = 5000, nullable = false)
-	private String contents;
-	
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(nullable = false, updatable = false)
-	private Date createdDate;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long answerId;
 
-	@ManyToOne
-	@JoinColumn(foreignKey = @ForeignKey(name = "fk_answer_question"))
-	private Question question;
-	
-	public Answer() {
-	}
-	
-	public Answer(User writer, String contents, Question question) {
-		this(0L, writer, contents, new Date(), question);
-	}
-	
-	public Answer(Long answerId, User writer, String contents, Date createdDate, Question question) {
-		this.answerId = answerId;
-		this.writer = writer;
-		this.contents = contents;
-		this.createdDate = createdDate;
-		this.question = question;
-	}
-	
-	public long getAnswerId() {
-		return answerId;
-	}
+    @ManyToOne
+    @JoinColumn(foreignKey = @ForeignKey(name = "fk_answer_writer"))
+    private User writer;
 
-	public void setAnswerId(long answerId) {
-		this.answerId = answerId;
-	}
+    @NotBlank
+    @Size(min = 4, max = 5000)
+    @Column(length = 5000, nullable = false)
+    private String contents;
 
-	public User getWriter() {
-		return writer;
-	}
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(nullable = false, updatable = false)
+    private Date createdDate;
 
-	public void setWriter(User writer) {
-		this.writer = writer;
-	}
+    @ManyToOne
+    @JoinColumn(foreignKey = @ForeignKey(name = "fk_answer_question"))
+    private Question question;
 
-	public String getContents() {
-		return contents;
-	}
+    public Answer() {
+    }
 
-	public void setContents(String contents) {
-		this.contents = contents;
-	}
+    public Answer(User writer, String contents, Question question) {
+        this(0L, writer, contents, new Date(), question);
+    }
 
-	public Date getCreatedDate() {
-		return createdDate;
-	}
+    public Answer(Long answerId, User writer, String contents, Date createdDate, Question question) {
+        this.answerId = answerId;
+        this.writer = writer;
+        this.contents = contents;
+        this.createdDate = createdDate;
+        this.question = question;
+    }
 
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
-	}
+    public long getAnswerId() {
+        return answerId;
+    }
 
-	public Question getQuestion() {
-		return question;
-	}
+    public void setAnswerId(long answerId) {
+        this.answerId = answerId;
+    }
 
-	public void setQuestion(Question question) {
-		this.question = question;
-	}
+    public User getWriter() {
+        return writer;
+    }
 
-	public boolean canDelete(User user) {
-		return user.isSameUser(this.writer);
-	}
-	
-	public boolean isSameWriter(User user) {
-		return user.isSameUser(this.writer);
-	}
-	
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + (int) (answerId ^ (answerId >>> 32));
-		return result;
-	}
+    public void setWriter(User writer) {
+        this.writer = writer;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Answer other = (Answer) obj;
-		if (answerId != other.answerId)
-			return false;
-		return true;
-	}
+    public String getContents() {
+        return contents;
+    }
 
-	@Override
-	public String toString() {
-		return "Answer [answerId=" + answerId + ", writer=" + writer
-				+ ", contents=" + contents + ", createdDate=" + createdDate
-				+ ", question=" + question + "]";
-	}
+    public void setContents(String contents) {
+        this.contents = contents;
+    }
+
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public Question getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(Question question) {
+        this.question = question;
+    }
+
+    public boolean canDelete(User user) {
+        return user.isSameUser(this.writer);
+    }
+
+    public boolean isSameWriter(User user) {
+        return user.isSameUser(this.writer);
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + (int) (answerId ^ (answerId >>> 32));
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Answer other = (Answer) obj;
+        if (answerId != other.answerId)
+            return false;
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Answer [answerId=" + answerId + ", writer=" + writer + ", contents=" + contents + ", createdDate="
+                + createdDate + ", question=" + question + "]";
+    }
 }

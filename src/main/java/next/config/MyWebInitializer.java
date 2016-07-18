@@ -17,29 +17,29 @@ import org.springframework.web.servlet.DispatcherServlet;
 
 public class MyWebInitializer implements WebApplicationInitializer {
 
-	@Override
-	public void onStartup(ServletContext servletContext) throws ServletException {
-		AnnotationConfigWebApplicationContext appContext = new AnnotationConfigWebApplicationContext();
-		appContext.register(ApplicationConfig.class);
-		servletContext.addListener(new ContextLoaderListener(appContext));
+    @Override
+    public void onStartup(ServletContext servletContext) throws ServletException {
+        AnnotationConfigWebApplicationContext appContext = new AnnotationConfigWebApplicationContext();
+        appContext.register(ApplicationConfig.class);
+        servletContext.addListener(new ContextLoaderListener(appContext));
 
-		CharacterEncodingFilter cef = new CharacterEncodingFilter();
-		cef.setEncoding("UTF-8");
-		cef.setForceEncoding(true);
+        CharacterEncodingFilter cef = new CharacterEncodingFilter();
+        cef.setEncoding("UTF-8");
+        cef.setForceEncoding(true);
 
-		servletContext.addFilter("characterEncodingFilter", cef).addMappingForUrlPatterns(null, false, "/*");
+        servletContext.addFilter("characterEncodingFilter", cef).addMappingForUrlPatterns(null, false, "/*");
 
-		servletContext.addFilter("httpMethodFilter", HiddenHttpMethodFilter.class)
-				.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), false, "/*");
+        servletContext.addFilter("httpMethodFilter", HiddenHttpMethodFilter.class)
+                .addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), false, "/*");
 
-		servletContext.addFilter("openEntityManagerInViewFilter", OpenEntityManagerInViewFilter.class)
-	      .addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), false, "/*");
-		
-		AnnotationConfigWebApplicationContext webContext = new AnnotationConfigWebApplicationContext();
-		webContext.setParent(appContext);
-		webContext.register(WebMvcConfig.class);
-		ServletRegistration.Dynamic dispatcher = servletContext.addServlet("next", new DispatcherServlet(webContext));
-		dispatcher.setLoadOnStartup(1);
-		dispatcher.addMapping("/");
-	}
+        servletContext.addFilter("openEntityManagerInViewFilter", OpenEntityManagerInViewFilter.class)
+                .addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), false, "/*");
+
+        AnnotationConfigWebApplicationContext webContext = new AnnotationConfigWebApplicationContext();
+        webContext.setParent(appContext);
+        webContext.register(WebMvcConfig.class);
+        ServletRegistration.Dynamic dispatcher = servletContext.addServlet("next", new DispatcherServlet(webContext));
+        dispatcher.setLoadOnStartup(1);
+        dispatcher.addMapping("/");
+    }
 }

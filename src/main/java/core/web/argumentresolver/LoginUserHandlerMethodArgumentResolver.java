@@ -11,23 +11,23 @@ import next.model.User;
 import next.service.SessionComponent;
 
 public class LoginUserHandlerMethodArgumentResolver implements HandlerMethodArgumentResolver {
-	@Autowired
-	private SessionComponent sessionComponent;
-	
-	@Override
-	public boolean supportsParameter(MethodParameter parameter) {
-		return parameter.hasParameterAnnotation(LoginUser.class);
-	}
+    @Autowired
+    private SessionComponent sessionComponent;
 
-	@Override
-	public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest,
-			WebDataBinderFactory binderFactory) throws Exception {
-		LoginUser loginUserAnnotation = parameter.getParameterAnnotation(LoginUser.class);
-		User loginUser = sessionComponent.findUser(webRequest);
-		if (loginUserAnnotation.required() && loginUser.isGuestUser()) {
-			throw new LoginRequiredException();
-		}
-		return loginUser;
-	}
+    @Override
+    public boolean supportsParameter(MethodParameter parameter) {
+        return parameter.hasParameterAnnotation(LoginUser.class);
+    }
+
+    @Override
+    public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer,
+            NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
+        LoginUser loginUserAnnotation = parameter.getParameterAnnotation(LoginUser.class);
+        User loginUser = sessionComponent.findUser(webRequest);
+        if (loginUserAnnotation.required() && loginUser.isGuestUser()) {
+            throw new LoginRequiredException();
+        }
+        return loginUser;
+    }
 
 }

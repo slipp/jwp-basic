@@ -22,7 +22,7 @@ import core.web.argumentresolver.LoginUserHandlerMethodArgumentResolver;
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
     private static final int CACHE_PERIOD = 31556926; // one year
-    
+
     @Bean
     public ViewResolver viewResolver() {
         InternalResourceViewResolver bean = new InternalResourceViewResolver();
@@ -31,26 +31,24 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         bean.setSuffix(".jsp");
         return bean;
     }
-    
+
     @Bean
     public HandlerMethodArgumentResolver loginUserHandlerMethodArgumentResolver() {
-    	return new LoginUserHandlerMethodArgumentResolver();
+        return new LoginUserHandlerMethodArgumentResolver();
     }
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         // Static ressources from both WEB-INF and webjars
-        registry
-            .addResourceHandler("/resources/**")
-                .addResourceLocations("/WEB-INF/static_resources/")
+        registry.addResourceHandler("/resources/**").addResourceLocations("/WEB-INF/static_resources/")
                 .setCachePeriod(CACHE_PERIOD);
     }
-    
+
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
-    	argumentResolvers.add(loginUserHandlerMethodArgumentResolver());
+        argumentResolvers.add(loginUserHandlerMethodArgumentResolver());
     }
-    
+
     @Override
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
         configurer.enable();

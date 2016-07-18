@@ -11,12 +11,12 @@ import next.service.QnaService;
 
 @Controller
 public class HomeController {
-	@Inject
-	private QnaService qnaService;
+    @Inject
+    private QnaService qnaService;
 
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String execute(Model model) throws Exception {
-		model.addAttribute("questions", qnaService.findQuestions());
-		return "index";
-	}
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public String execute(Model model) throws Exception {
+        model.addAttribute("questions", qnaService.findQuestions());
+        return "index";
+    }
 }

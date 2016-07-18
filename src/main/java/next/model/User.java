@@ -12,153 +12,153 @@ import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 public class User {
-	public static final GuestUser GUEST_USER = new GuestUser();
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+    public static final GuestUser GUEST_USER = new GuestUser();
 
-	@NotBlank
-	@Size(min = 4, max = 12)
-	@Column(length = 12, nullable = false, unique = true)
-	private String userId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
-	@NotBlank
-	@Size(min = 4, max = 12)
-	@Column(length = 12, nullable = false)
-	private String password;
+    @NotBlank
+    @Size(min = 4, max = 12)
+    @Column(length = 12, nullable = false, unique = true)
+    private String userId;
 
-	@NotBlank
-	@Size(min = 2, max = 20)
-	@Column(length = 20, nullable = false)
-	private String name;
+    @NotBlank
+    @Size(min = 4, max = 12)
+    @Column(length = 12, nullable = false)
+    private String password;
 
-	@Email(message="this is invalid email")
-	@Column(length = 50, nullable = true)
-	private String email;
+    @NotBlank
+    @Size(min = 2, max = 20)
+    @Column(length = 20, nullable = false)
+    private String name;
 
-	public User() {
-	}
+    @Email(message = "this is invalid email")
+    @Column(length = 50, nullable = true)
+    private String email;
 
-	public User(String userId, String password, String name, String email) {
-		this.userId = userId;
-		this.password = password;
-		this.name = name;
-		this.email = email;
-	}
+    public User() {
+    }
 
-	public Long getId() {
-		return id;
-	}
+    public User(String userId, String password, String name, String email) {
+        this.userId = userId;
+        this.password = password;
+        this.name = name;
+        this.email = email;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public String getUserId() {
-		return userId;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
+    public String getUserId() {
+        return userId;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public String getPassword() {
+        return password;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public void update(User updateUser) {
-		this.password = updateUser.password;
-		this.name = updateUser.name;
-		this.email = updateUser.email;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public boolean matchPassword(String password) {
-		if (password == null) {
-			return false;
-		}
+    public void update(User updateUser) {
+        this.password = updateUser.password;
+        this.name = updateUser.name;
+        this.email = updateUser.email;
+    }
 
-		return this.password.equals(password);
-	}
+    public boolean matchPassword(String password) {
+        if (password == null) {
+            return false;
+        }
 
-	public boolean isSameUser(User user) {
-		return isSameUser(user.getId());
-	}
+        return this.password.equals(password);
+    }
 
-	public boolean isSameUser(Long newUserId) {
-		return this.id.equals(newUserId);
-	}
-	
-	public boolean isGuestUser() {
-		return false;
-	}
-	
-	private static class GuestUser extends User {
-		@Override
-		public boolean isGuestUser() {
-			return true;
-		}
-	}
+    public boolean isSameUser(User user) {
+        return isSameUser(user.getId());
+    }
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((email == null) ? 0 : email.hashCode());
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + ((userId == null) ? 0 : userId.hashCode());
-		return result;
-	}
+    public boolean isSameUser(Long newUserId) {
+        return this.id.equals(newUserId);
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		User other = (User) obj;
-		if (email == null) {
-			if (other.email != null)
-				return false;
-		} else if (!email.equals(other.email))
-			return false;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
-		if (userId == null) {
-			if (other.userId != null)
-				return false;
-		} else if (!userId.equals(other.userId))
-			return false;
-		return true;
-	}
+    public boolean isGuestUser() {
+        return false;
+    }
 
-	@Override
-	public String toString() {
-		return "User [userId=" + userId + ", name=" + name + ", email=" + email + "]";
-	}
+    private static class GuestUser extends User {
+        @Override
+        public boolean isGuestUser() {
+            return true;
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((email == null) ? 0 : email.hashCode());
+        result = prime * result + ((name == null) ? 0 : name.hashCode());
+        result = prime * result + ((userId == null) ? 0 : userId.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        User other = (User) obj;
+        if (email == null) {
+            if (other.email != null)
+                return false;
+        } else if (!email.equals(other.email))
+            return false;
+        if (name == null) {
+            if (other.name != null)
+                return false;
+        } else if (!name.equals(other.name))
+            return false;
+        if (userId == null) {
+            if (other.userId != null)
+                return false;
+        } else if (!userId.equals(other.userId))
+            return false;
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "User [userId=" + userId + ", name=" + name + ", email=" + email + "]";
+    }
 }

@@ -26,162 +26,160 @@ import next.CannotOperateException;
 
 @Entity
 public class Question {
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long questionId;
-	
-	@ManyToOne
-	@JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
-	private User writer;
-	
-	@NotBlank
-	@Size(min = 4, max = 50)
-	@Column(length = 50, nullable = false)
-	private String title;
-	
-	@NotBlank
-	@Size(min = 4, max = 5000)
-	@Column(length = 5000, nullable = false)
-	private String contents;
-	
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(nullable = false, updatable = false)
-	private Date createdDate;
-	
-	private int countOfComment;
-	
-	@OneToMany(mappedBy = "question", fetch = FetchType.LAZY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long questionId;
+
+    @ManyToOne
+    @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
+    private User writer;
+
+    @NotBlank
+    @Size(min = 4, max = 50)
+    @Column(length = 50, nullable = false)
+    private String title;
+
+    @NotBlank
+    @Size(min = 4, max = 5000)
+    @Column(length = 5000, nullable = false)
+    private String contents;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(nullable = false, updatable = false)
+    private Date createdDate;
+
+    private int countOfComment;
+
+    @OneToMany(mappedBy = "question", fetch = FetchType.LAZY)
     @OrderBy("answerId ASC")
-	private List<Answer> answers;
-	
-	public Question() {
-	}
-	
-	public Question(User writer, String title, String contents, List<Answer> answers) {
-		this(0L, writer, title, contents, new Date(), 0, answers);
-	}	
-	
-	public Question(Long questionId, User writer, String title, String contents,
-			Date createdDate, int countOfComment, List<Answer> answers) {
-		this.questionId = questionId;
-		this.writer = writer;
-		this.title = title;
-		this.contents = contents;
-		this.createdDate = createdDate;
-		this.countOfComment = countOfComment;
-		this.answers = answers;
-	}
+    private List<Answer> answers;
 
-	public Long getQuestionId() {
-		return questionId;
-	}
+    public Question() {
+    }
 
-	public void setQuestionId(Long questionId) {
-		this.questionId = questionId;
-	}
+    public Question(User writer, String title, String contents, List<Answer> answers) {
+        this(0L, writer, title, contents, new Date(), 0, answers);
+    }
 
-	public User getWriter() {
-		return writer;
-	}
+    public Question(Long questionId, User writer, String title, String contents, Date createdDate, int countOfComment,
+            List<Answer> answers) {
+        this.questionId = questionId;
+        this.writer = writer;
+        this.title = title;
+        this.contents = contents;
+        this.createdDate = createdDate;
+        this.countOfComment = countOfComment;
+        this.answers = answers;
+    }
 
-	public void setWriter(User writer) {
-		this.writer = writer;
-	}
+    public Long getQuestionId() {
+        return questionId;
+    }
 
-	public String getTitle() {
-		return title;
-	}
+    public void setQuestionId(Long questionId) {
+        this.questionId = questionId;
+    }
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
+    public User getWriter() {
+        return writer;
+    }
 
-	public String getContents() {
-		return contents;
-	}
+    public void setWriter(User writer) {
+        this.writer = writer;
+    }
 
-	public void setContents(String contents) {
-		this.contents = contents;
-	}
+    public String getTitle() {
+        return title;
+    }
 
-	public Date getCreatedDate() {
-		return createdDate;
-	}
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
-	}
+    public String getContents() {
+        return contents;
+    }
 
-	public int getCountOfComment() {
-		return countOfComment;
-	}
+    public void setContents(String contents) {
+        this.contents = contents;
+    }
 
-	public void setCountOfComment(int countOfComment) {
-		this.countOfComment = countOfComment;
-	}
+    public Date getCreatedDate() {
+        return createdDate;
+    }
 
-	public List<Answer> getAnswers() {
-		return answers;
-	}
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
+    }
 
-	public boolean isSameWriter(User user) {
-		return user.isSameUser(this.writer);
-	}
-	
-	public Question writeBy(User user) {
-		return new Question(user, title, contents, Lists.newArrayList());
-	}
-	
-	public void update(Question newQuestion) {
-		this.title = newQuestion.title;
-		this.contents = newQuestion.contents;
-	}
-	
-	public void addAnswer() {
-		this.countOfComment += 1;
-	}
-	
-	public boolean canDelete(User loginUser) throws CannotOperateException {
-		if (!loginUser.isSameUser(this.writer)) {
-			throw new CannotOperateException("다른 사용자가 쓴 글을 삭제할 수 없습니다.");
-		}
-		
-		for (Answer answer : this.answers) {
-			if (!answer.canDelete(loginUser)) {
-				throw new CannotOperateException("다른 사용자가 추가한 댓글이 존재해 삭제할 수 없습니다.");
-			}
-		}
-		
-		return true;
-	}
-	
-	@Override
-	public String toString() {
-		return "Question [questionId=" + questionId + ", writer=" + writer
-				+ ", title=" + title + ", contents=" + contents
-				+ ", createdDate=" + createdDate + ", countOfComment="
-				+ countOfComment + "]";
-	}
+    public int getCountOfComment() {
+        return countOfComment;
+    }
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + (int) (questionId ^ (questionId >>> 32));
-		return result;
-	}
+    public void setCountOfComment(int countOfComment) {
+        this.countOfComment = countOfComment;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Question other = (Question) obj;
-		if (questionId != other.questionId)
-			return false;
-		return true;
-	}
+    public List<Answer> getAnswers() {
+        return answers;
+    }
+
+    public boolean isSameWriter(User user) {
+        return user.isSameUser(this.writer);
+    }
+
+    public Question writeBy(User user) {
+        return new Question(user, title, contents, Lists.newArrayList());
+    }
+
+    public void update(Question newQuestion) {
+        this.title = newQuestion.title;
+        this.contents = newQuestion.contents;
+    }
+
+    public void addAnswer() {
+        this.countOfComment += 1;
+    }
+
+    public boolean canDelete(User loginUser) throws CannotOperateException {
+        if (!loginUser.isSameUser(this.writer)) {
+            throw new CannotOperateException("다른 사용자가 쓴 글을 삭제할 수 없습니다.");
+        }
+
+        for (Answer answer : this.answers) {
+            if (!answer.canDelete(loginUser)) {
+                throw new CannotOperateException("다른 사용자가 추가한 댓글이 존재해 삭제할 수 없습니다.");
+            }
+        }
+
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Question [questionId=" + questionId + ", writer=" + writer + ", title=" + title + ", contents="
+                + contents + ", createdDate=" + createdDate + ", countOfComment=" + countOfComment + "]";
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + (int) (questionId ^ (questionId >>> 32));
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Question other = (Question) obj;
+        if (questionId != other.questionId)
+            return false;
+        return true;
+    }
 }

@@ -14,33 +14,31 @@ import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.env.Environment;
 
 @Configuration
-@Import(value = { 
-        PersistenceJPAConfig.class
-} )
+@Import(value = { PersistenceJPAConfig.class })
 @ComponentScan(basePackages = { "next.service", "next.support" })
 public class ApplicationConfig {
     private static final Logger log = LoggerFactory.getLogger(ApplicationConfig.class);
 
     @Autowired
-    private Environment         env;
+    private Environment env;
 
     @PostConstruct
     public void initApp() {
-    	log.debug("Looking for Spring profiles...");
+        log.debug("Looking for Spring profiles...");
         if (env.getActiveProfiles().length == 0) {
-        	log.info("No Spring profile configured, running with default configuration.");
+            log.info("No Spring profile configured, running with default configuration.");
         } else {
             for (String profile : env.getActiveProfiles()) {
-            	log.info("Detected Spring profile: {}", profile);
+                log.info("Detected Spring profile: {}", profile);
             }
         }
     }
-    
+
     @Bean
     public MessageSource messageSource() {
-    	ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
-    	messageSource.setBasename("messages/messages");
-    	messageSource.setDefaultEncoding("UTF-8");
-    	return messageSource;
+        ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
+        messageSource.setBasename("messages/messages");
+        messageSource.setDefaultEncoding("UTF-8");
+        return messageSource;
     }
 }

@@ -15,10 +15,11 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface LoginUser {
-	/**
-	 * 로그인이 필수인지 여부를 정한다.
-	 * true이면 비로그인 사용자 접근시 예외가 발생한다. {@link LoginRequiredException}
-	 * @return
-	 */
-	boolean required() default true;
+    /**
+     * 로그인이 필수인지 여부를 정한다. true이면 비로그인 사용자 접근시 예외가 발생한다.
+     * {@link LoginRequiredException}
+     * 
+     * @return
+     */
+    boolean required() default true;
 }
