@@ -1,6 +1,5 @@
 package core.di.factory;
 
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.util.List;
 import java.util.Map;
@@ -80,8 +79,7 @@ public class BeanFactory {
     public Map<Class<?>, Object> getControllers() {
         Map<Class<?>, Object> controllers = Maps.newHashMap();
         for (Class<?> clazz : preInstanticateBeans) {
-            Annotation annotation = clazz.getAnnotation(Controller.class);
-            if (annotation != null) {
+            if (clazz.isAnnotationPresent(Controller.class)) {
                 controllers.put(clazz, beans.get(clazz));
             }
         }
