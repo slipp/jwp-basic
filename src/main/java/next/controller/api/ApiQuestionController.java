@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class ApiQuestionController extends AbstractController {
 
-    private QuestionDao questionDao = new QuestionDao();
+    private QuestionDao questionDao = QuestionDao.getQuestionDao();
 
     @Override
     public ModelAndView execute(HttpServletRequest req, HttpServletResponse res) throws Exception {

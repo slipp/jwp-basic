@@ -9,7 +9,7 @@ import core.mvc.AbstractController;
 import core.mvc.ModelAndView;
 
 public class ListUserController extends AbstractController {
-    private UserDao userDao = new UserDao();
+    private UserDao userDao = UserDao.getUserDao();
 
     @Override
     public ModelAndView execute(HttpServletRequest request, HttpServletResponse response) throws Exception {

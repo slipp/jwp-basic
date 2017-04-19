@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 public class UpdateQuestionFormController extends AbstractController {
     private static final Logger logger = LoggerFactory.getLogger(UpdateQuestionFormController.class);
 
-    private UserDao userDao = new UserDao();
+    private UserDao userDao = UserDao.getUserDao();
 
     @Override
     public ModelAndView execute(HttpServletRequest req, HttpServletResponse res) throws Exception {

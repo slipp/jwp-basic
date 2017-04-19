@@ -22,7 +22,7 @@ public class QuestionController extends AbstractController {
 
         User user = UserSessionUtils.getUserFromSession(session);
         ModelAndView mav = jspView("/qna/form.jsp");
-        mav.addObject("userName", user.getName());
+        mav.addObject("user", user);
         return mav;
     }
 }

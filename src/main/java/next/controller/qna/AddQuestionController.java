@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 public class AddQuestionController extends AbstractController {
     private static final Logger log = LoggerFactory.getLogger(AddAnswerController.class);
 
-    private QuestionDao questionDao = new QuestionDao();
+    private QuestionDao questionDao = QuestionDao.getQuestionDao();
 
     @Override
     public ModelAndView execute(HttpServletRequest req, HttpServletResponse response) throws Exception {

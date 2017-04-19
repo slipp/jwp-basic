@@ -11,8 +11,8 @@ import core.mvc.AbstractController;
 import core.mvc.ModelAndView;
 
 public class DeleteAnswerController extends AbstractController {
-    private AnswerDao answerDao = new AnswerDao();
-    private QuestionDao questionDao = new QuestionDao();
+    private AnswerDao answerDao = AnswerDao.getAnswerDao();
+    private QuestionDao questionDao = QuestionDao.getQuestionDao();
 
     @Override
     public ModelAndView execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
