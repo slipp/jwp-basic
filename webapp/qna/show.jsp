@@ -76,7 +76,8 @@
 										</li>
 										<li>
 											<form class="form-delete" action="/api/qna/deleteAnswer" method="POST">
-												<input type="hidden" name="answerId" value="${answer.answerId}">
+                                                <%--<input type="hidden" name="_method" value="delete" id="${answer.answerId}">--%>
+                                                <input id="delete-btn" type="hidden" name="answerId" value="${answer.answerId}">
 												<button type="submit" class="link-delete-article">삭제</button>
 											</form>
 										</li>
@@ -86,7 +87,7 @@
 							</c:forEach>
 							<div class="answerWrite">
                             <form name="answer" method="post">
-								<input type="hidden" name="questionId" value="${question.questionId}">
+								<input id="question-id" type="hidden" name="questionId" value="${question.questionId}">
 								<div class="form-group col-lg-4" style="padding-top:10px;">
 									<input class="form-control" id="writer" name="writer" placeholder="이름">
 								</div>
