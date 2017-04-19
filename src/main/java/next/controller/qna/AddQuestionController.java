@@ -24,7 +24,8 @@ public class AddQuestionController extends AbstractController {
         if (UserSessionUtils.isLogined(req.getSession())) {
             return jspView("redirect:/user/login");
         }
-        Question question = new Question(req.getParameter("writer"), req.getParameter("title"), req.getParameter("contents"));
+        Question question = new Question(req.getParameter("writer"),
+                req.getParameter("title"), req.getParameter("contents"));
         log.debug("question : {}", question);
 
         questionDao.insert(question);

@@ -12,9 +12,6 @@ import org.slf4j.LoggerFactory;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * Created by Jbee on 2017. 4. 19..
- */
 public class UpdateQuestionFormController extends AbstractController {
     private static final Logger logger = LoggerFactory.getLogger(UpdateQuestionFormController.class);
 
@@ -22,11 +19,10 @@ public class UpdateQuestionFormController extends AbstractController {
 
     @Override
     public ModelAndView execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
-        User user = userDao.findByUserName(req.getParameter("writer"));//글쓴이
+        User user = userDao.findByUserName(req.getParameter("writer"));
         if (!UserSessionUtils.isSameUser(req.getSession(), user)) {
             throw new IllegalStateException("다른 사용자의 글을 수정할 수 없습니다.");
         }
-        logger.info("countOfComment: {}", req.getParameter("countOfComment"));
         Question question = new Question(
                 Long.parseLong(req.getParameter("questionId")),
                 req.getParameter("writer"),

@@ -18,7 +18,6 @@ public class ApiQuestionController extends AbstractController {
 
     @Override
     public ModelAndView execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
-        List<Question> questionList = questionDao.findAll();
-        return jsonView().addObject("questionList", questionList);
+        return jsonView().addObject("questionList", questionDao.findAll());
     }
 }
