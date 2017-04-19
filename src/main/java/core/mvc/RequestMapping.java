@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import next.controller.HomeController;
+import next.controller.api.ApiDeleteQuestionController;
 import next.controller.api.ApiQuestionController;
 import next.controller.qna.*;
 import next.controller.user.CreateUserController;
@@ -44,6 +45,7 @@ public class RequestMapping {
         mappings.put("/api/qna/deleteAnswer", new DeleteAnswerController());
 
         mappings.put("/api/qna/list", new ApiQuestionController());
+        mappings.put("/api/qna/delete", new ApiDeleteQuestionController());
 
         logger.info("Initialized Request Mapping!");
     }
