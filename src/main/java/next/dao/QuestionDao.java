@@ -20,6 +20,20 @@ public class QuestionDao {
 
     private QuestionDao() {}
 
+    public void delete(long questionId) {
+        String sql = "DELETE FROM QUESTIONS WHERE questionId = ?";
+        PreparedStatementCreator psc = new PreparedStatementCreator() {
+            @Override
+            public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
+                PreparedStatement pstmt = con.prepareStatement(sql);
+                pstmt.setLong(1, questionId);
+                return pstmt;
+            }
+        };
+        KeyHolder keyHolder = new KeyHolder();
+        jdbcTemplate.update(psc, keyHolder);
+    }
+
     private static class SingletonHolder {
         public static QuestionDao questionDao = new QuestionDao();
     }
