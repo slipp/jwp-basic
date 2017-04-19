@@ -29,6 +29,10 @@ public class Question {
         this.countOfComment = countOfComment;
     }
 
+    public Question(long questionId, String writer, String title, String contents, int countOfComment) {
+        this(questionId, writer, title, contents, new Date(), countOfComment);
+    }
+
     public long getQuestionId() {
         return questionId;
     }
