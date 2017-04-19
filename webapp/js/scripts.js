@@ -4,24 +4,20 @@ $(".qna-comment-slipp-articles").on("click", ".link-delete-article", deleteAnswe
 
 function deleteAnswer(e) {
     e.preventDefault();
-
-    let deleteBtn = document.getElementById("delete-btn");
+    let deleteBtn = $(this).siblings("input");
+    let answerId = deleteBtn.prop("value");
     let question = document.getElementById("question-id");
-    console.log("answerId: ", deleteBtn.value);
-    console.log("questioinId: ", question.value);
     $.ajax({
         type: 'post',
         url: '/api/qna/deleteAnswer',
         data : {
-            answerId: deleteBtn.value,
+            answerId: answerId,
             questionId: question.value
         },
         dataType : 'json',
         error: onError,
         success: function(data, status) {
-            console.log($("#delete-btn").closest(".article"));
-            $("#delete-btn").closest(".article").remove();
-
+            deleteBtn.closest("article").remove();
             let countOfCommentText = $(".qna-comment-count strong").text();
             let countOfComment = Number(countOfCommentText);
             countOfComment -= 1;
@@ -50,6 +46,7 @@ function onSuccess(json, status){
   var answerTemplate = $("#answerTemplate").html();
   var template = answerTemplate.format(answer.writer, new Date(answer.createdDate), answer.contents, answer.answerId, answer.answerId);
   $(".qna-comment-slipp-articles").prepend(template);
+
   let countOfCommentText = $(".qna-comment-count strong").text();
   let countOfComment = Number(countOfCommentText);
   countOfComment += 1;
