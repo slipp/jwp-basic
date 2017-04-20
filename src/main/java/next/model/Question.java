@@ -1,6 +1,7 @@
 package next.model;
 
 import java.util.Date;
+import java.util.List;
 
 public class Question {
     private long questionId;
@@ -90,6 +91,15 @@ public class Question {
         Question other = (Question) obj;
         if (questionId != other.questionId)
             return false;
+        return true;
+    }
+
+    public boolean canDelete(List<Answer> answers) {
+        for (Answer answer : answers) {
+            if (!answer.isSameWriter(writer)) {
+                return false;
+            }
+        }
         return true;
     }
 }
