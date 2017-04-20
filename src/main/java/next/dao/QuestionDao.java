@@ -11,12 +11,83 @@ import core.jdbc.JdbcTemplate;
 import core.jdbc.KeyHolder;
 import core.jdbc.PreparedStatementCreator;
 import core.jdbc.RowMapper;
+import next.model.Answer;
 import next.model.Question;
 
 public class QuestionDao {
+
+    private JdbcTemplate jdbcTemplate = JdbcTemplate.getJdbcTemplate();
+
+    private QuestionDao() {}
+
+    public void delete(long questionId) {
+        String sql = "DELETE FROM QUESTIONS WHERE questionId = ?";
+        PreparedStatementCreator psc = new PreparedStatementCreator() {
+            @Override
+            public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
+                PreparedStatement pstmt = con.prepareStatement(sql);
+                pstmt.setLong(1, questionId);
+                return pstmt;
+            }
+        };
+        KeyHolder keyHolder = new KeyHolder();
+        jdbcTemplate.update(psc, keyHolder);
+    }
+
+    private static class SingletonHolder {
+        public static QuestionDao questionDao = new QuestionDao();
+    }
+
+    public static QuestionDao getQuestionDao() {
+        return SingletonHolder.questionDao;
+    }
+
+    public void update(Question question) {
+        String sql = "UPDATE QUESTIONS SET title = ?, contents = ? WHERE questionId = ?";
+        PreparedStatementCreator psc = new PreparedStatementCreator() {
+            @Override
+            public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
+                PreparedStatement pstmt = con.prepareStatement(sql);
+                pstmt.setString(1, question.getTitle());
+                pstmt.setString(2, question.getContents());
+                pstmt.setLong(3, question.getQuestionId());
+                return pstmt;
+            }
+        };
+        KeyHolder keyHolder = new KeyHolder();
+        jdbcTemplate.update(psc, keyHolder);
+    }
+
+    public void addCountOfAnswer(long questionId) {
+        String sql = "UPDATE QUESTIONS SET countOfAnswer = countOfAnswer + 1 WHERE questionId = ?";
+        PreparedStatementCreator psc = new PreparedStatementCreator() {
+            @Override
+            public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
+                PreparedStatement pstmt = con.prepareStatement(sql);
+                pstmt.setLong(1, questionId);
+                return pstmt;
+            }
+        };
+        KeyHolder keyHolder = new KeyHolder();
+        jdbcTemplate.update(psc, keyHolder);
+    }
+
+    public void decreaseCountOfAnswer(long questionId) {
+        String sql = "UPDATE QUESTIONS SET countOfAnswer = countOfAnswer - 1 WHERE questionId = ?";
+        PreparedStatementCreator psc = new PreparedStatementCreator() {
+            @Override
+            public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
+                PreparedStatement pstmt = con.prepareStatement(sql);
+                pstmt.setLong(1, questionId);
+                return pstmt;
+            }
+        };
+        KeyHolder keyHolder = new KeyHolder();
+        jdbcTemplate.update(psc, keyHolder);
+    }
+
     public Question insert(Question question) {
-        JdbcTemplate jdbcTemplate = new JdbcTemplate();
-        String sql = "INSERT INTO QUESTIONS " + 
+        String sql = "INSERT INTO QUESTIONS " +
                 "(writer, title, contents, createdDate) " + 
                 " VALUES (?, ?, ?, ?)";
         PreparedStatementCreator psc = new PreparedStatementCreator() {
@@ -37,7 +108,6 @@ public class QuestionDao {
     }
     
     public List<Question> findAll() {
-        JdbcTemplate jdbcTemplate = new JdbcTemplate();
         String sql = "SELECT questionId, writer, title, createdDate, countOfAnswer FROM QUESTIONS "
                 + "order by questionId desc";
 
@@ -54,7 +124,6 @@ public class QuestionDao {
     }
 
     public Question findById(long questionId) {
-        JdbcTemplate jdbcTemplate = new JdbcTemplate();
         String sql = "SELECT questionId, writer, title, contents, createdDate, countOfAnswer FROM QUESTIONS "
                 + "WHERE questionId = ?";
 

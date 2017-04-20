@@ -1,6 +1,7 @@
 package next.model;
 
 import java.util.Date;
+import java.util.List;
 
 public class Question {
     private long questionId;
@@ -27,6 +28,10 @@ public class Question {
         this.contents = contents;
         this.createdDate = createdDate;
         this.countOfComment = countOfComment;
+    }
+
+    public Question(long questionId, String writer, String title, String contents, int countOfComment) {
+        this(questionId, writer, title, contents, new Date(), countOfComment);
     }
 
     public long getQuestionId() {
@@ -57,6 +62,10 @@ public class Question {
         return countOfComment;
     }
 
+    public boolean isSameUser(User user) {
+        return user.isSameUser(this.writer);
+    }
+
     @Override
     public String toString() {
         return "Question [questionId=" + questionId + ", writer=" + writer + ", title=" + title + ", contents="
@@ -82,6 +91,15 @@ public class Question {
         Question other = (Question) obj;
         if (questionId != other.questionId)
             return false;
+        return true;
+    }
+
+    public boolean canDelete(List<Answer> answers) {
+        for (Answer answer : answers) {
+            if (!answer.isSameWriter(writer)) {
+                return false;
+            }
+        }
         return true;
     }
 }

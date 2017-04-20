@@ -14,7 +14,7 @@ import core.mvc.AbstractController;
 import core.mvc.ModelAndView;
 
 public class UpdateUserController extends AbstractController {
-    private UserDao userDao = new UserDao();
+    private UserDao userDao = UserDao.getUserDao();
     private static final Logger log = LoggerFactory.getLogger(UpdateUserController.class);
 
     @Override
