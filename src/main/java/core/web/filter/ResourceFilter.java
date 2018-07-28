@@ -38,14 +38,14 @@ public class ResourceFilter implements Filter {
     }
 
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-            throws IOException, ServletException {
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) request;
         String path = req.getRequestURI().substring(req.getContextPath().length());
         if (isResourceUrl(path)) {
             logger.debug("path : {}", path);
             defaultRequestDispatcher.forward(request, response);
         } else {
+            logger.debug("chain[][]");
             chain.doFilter(request, response);
         }
     }
@@ -61,6 +61,7 @@ public class ResourceFilter implements Filter {
 
     @Override
     public void destroy() {
+
     }
 
 }

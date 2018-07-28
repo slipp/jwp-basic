@@ -1,5 +1,6 @@
 package next.controller;
 
+import core.controller.Controller;
 import core.db.DataBase;
 import next.model.User;
 import org.slf4j.Logger;
@@ -14,11 +15,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet(value = { "/users/update", "/users/updateForm" })
-public class UpdateUserController extends HttpServlet {
+public class UpdateFormUserController implements Controller {
     private static final long serialVersionUID = 1L;
-    private static final Logger log = LoggerFactory.getLogger(UpdateUserController.class);
+    private static final Logger log = LoggerFactory.getLogger(UpdateFormUserController.class);
 
-    @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String userId = req.getParameter("userId");
         User user = DataBase.findUserById(userId);
@@ -30,7 +30,6 @@ public class UpdateUserController extends HttpServlet {
         rd.forward(req, resp);
     }
 
-    @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         User user = DataBase.findUserById(req.getParameter("userId"));
         DataBase.removeUser(user);
@@ -39,5 +38,10 @@ public class UpdateUserController extends HttpServlet {
         log.debug("user : {}", user);
         DataBase.addUser(user);
         resp.sendRedirect("/users/list");
+    }
+
+    @Override
+    public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        return null;
     }
 }
