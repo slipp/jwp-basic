@@ -43,7 +43,7 @@
                         <li><a href="https://facebook.com" target="_blank">Facebook</a></li>
                     </ul>
                 </li>
-                <li><a href="./user/list.html"><i class="glyphicon glyphicon-user"></i></a></li>
+                <li><a href="./users/list.html"><i class="glyphicon glyphicon-user"></i></a></li>
             </ul>
         </div>
     </div>
@@ -56,7 +56,7 @@
                 <small><i class="glyphicon glyphicon-chevron-down"></i></small>
             </a>
             <ul class="nav dropdown-menu">
-                <li><a href="user/profile.html"><i class="glyphicon glyphicon-user" style="color:#1111dd;"></i> Profile</a>
+                <li><a href="/users/profile.html"><i class="glyphicon glyphicon-user" style="color:#1111dd;"></i> Profile</a>
                 </li>
                 <li class="nav-divider"></li>
                 <li><a href="#"><i class="glyphicon glyphicon-cog" style="color:#dd1111;"></i> Settings</a></li>
@@ -67,12 +67,12 @@
                 <li class="active"><a href="index.jsp">Posts</a></li>
                 <c:choose>
                     <c:when test="${not empty sessionScope.user}">
-                        <li><a href="user/logout" role="button">로그아웃</a></li>
-                        <li><a href="user/update.jsp" role="button">개인정보수정</a></li>
+                        <li><a href="/users/logout" role="button">로그아웃</a></li>
+                        <li><a href="/users/update.jsp" role="button">개인정보수정</a></li>
                     </c:when>
                     <c:otherwise>
-                        <li><a href="user/login.html" role="button">로그인</a></li>
-                        <li><a href="user/form.html" role="button">회원가입</a></li>
+                        <li><a href="/users/login.html" role="button">로그인</a></li>
+                        <li><a href="/users/form.jsp" role="button">회원가입</a></li>
                     </c:otherwise>
                 </c:choose>
 
@@ -99,7 +99,7 @@
                             <div class="auth-info">
                                 <i class="icon-add-comment"></i>
                                 <span class="time">2016-01-15 18:47</span>
-                                <a href="./user/profile.html" class="author">자바지기</a>
+                                <a href="./users/profile.html" class="author">자바지기</a>
                             </div>
                             <div class="reply" title="댓글">
                                 <i class="icon-reply"></i>
@@ -117,7 +117,7 @@
                             <div class="auth-info">
                                 <i class="icon-add-comment"></i>
                                 <span class="time">2016-01-05 18:47</span>
-                                <a href="./user/profile.html" class="author">김문수</a>
+                                <a href="./users/profile.html" class="author">김문수</a>
                             </div>
                             <div class="reply" title="댓글">
                                 <i class="icon-reply"></i>

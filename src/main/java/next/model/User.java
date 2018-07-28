@@ -1,5 +1,11 @@
 package next.model;
 
+
+import javax.servlet.http.HttpSession;
+
+import static next.controller.UserSessionUtils.USER_SESSION_KEY;
+import static next.controller.UserSessionUtils.isLogined;
+
 public class User {
     private String userId;
     private String password;
@@ -29,6 +35,10 @@ public class User {
         return email;
     }
 
+    public boolean login(String password) {
+        return password.equals(this.password);
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -39,6 +49,20 @@ public class User {
         return result;
     }
 
+    public boolean isSameUser(User user) {
+        return userId.equals(user.userId);
+    }
+
+    public boolean matchPassword(String password) {
+        if (password == null) {
+            return false;
+        }
+
+        return this.password.equals(password);
+    }
+
+
+/*
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
@@ -64,6 +88,6 @@ public class User {
         } else if (!userId.equals(other.userId))
             return false;
         return true;
-    }
+    }*/
 
 }
