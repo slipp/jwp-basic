@@ -7,7 +7,7 @@ import next.model.User;
 public class UserSessionUtils {
     public static final String USER_SESSION_KEY = "user";
 
-    public static User getUserFromSession(HttpSession session) {
+    public static User getUserFormSession(HttpSession session) {
         Object user = session.getAttribute(USER_SESSION_KEY);
         if (user == null) {
             return null;
@@ -16,7 +16,7 @@ public class UserSessionUtils {
     }
 
     public static boolean isLogined(HttpSession session) {
-        if (getUserFromSession(session) == null) {
+        if (getUserFormSession(session) == null) {
             return false;
         }
         return true;
@@ -31,6 +31,6 @@ public class UserSessionUtils {
             return false;
         }
 
-        return user.isSameUser(getUserFromSession(session));
+        return user.isSameUser(getUserFormSession(session));
     }
 }

@@ -1,14 +1,15 @@
-package core.controller;
+package core.mvc;
 
 import next.controller.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class RequestMapping {
     private static final Logger logger = LoggerFactory.getLogger(DispatcherServlet.class);
-    private Map<String, Controller> mappings;
+    private Map<String, Controller> mappings = new HashMap<>();
 
     void initMapping() {
         mappings.put("/", new HomeController());
@@ -20,7 +21,7 @@ public class RequestMapping {
         mappings.put("/users/logout", new LogoutController());
         mappings.put("/users/create", new CreateUserController());
         mappings.put("/users/updateForm", new UpdateFormUserController());
-        mappings.put("/users/update", new UpdateFormUserController());
+        mappings.put("/users/update", new UpdateUserController());
 
         logger.info("Initialized Request Mapping!");
     }
@@ -32,5 +33,4 @@ public class RequestMapping {
     void put(String url, Controller controller) {
         mappings.put(url, controller);
     }
-
 }
