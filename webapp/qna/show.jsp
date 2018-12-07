@@ -23,8 +23,8 @@
 							<img src="https://graph.facebook.com/v2.3/100000059371774/picture" class="article-author-thumb" alt="">
 						</div>
 						<div class="article-header-text">
-							<a href="/users/92/kimmunsu" class="article-author-name">${question.writer}</a>
-							<a href="/questions/413" class="article-header-time" title="퍼머링크">
+							<a href="#" class="article-author-name">${question.writer}</a>
+							<a href="#" class="article-header-time" title="퍼머링크">
 								<fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${question.createdDate}" />
 								<i class="icon-link"></i>
 							</a>
