@@ -16,10 +16,18 @@ function addAnswer(e) {
   });
 }
 
+
+
 function onSuccess(json, status){
   var answerTemplate = $("#answerTemplate").html();
-  var template = answerTemplate.format(json.writer, new Date(json.createdDate), json.contents, json.answerId, json.answerId);
+  var template = answerTemplate.format(json.writer, 
+  new Date(json.createdDate), json.contents, 
+  json.answerId, json.answerId);
   $(".qna-comment-slipp-articles").prepend(template);
+  
+  var countTemplate = %("#countTemplate").html();
+  var template2 = countTemplate.format(json.countOfAnswer);
+  $("#countAnswer").children().first().replaceWith(template2);
 }
 
 function onError(xhr, status) {
