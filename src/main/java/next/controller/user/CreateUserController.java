@@ -1,5 +1,7 @@
 package next.controller.user;
 
+import java.sql.SQLException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -20,7 +22,13 @@ public class CreateUserController implements Controller {
         log.debug("User : {}", user);
 
         UserDao userDao = new UserDao();
-        userDao.insert(user);
+        
+        try{
+        	userDao.insert(user);
+        }catch(SQLException e){
+        	log.debug(e.getMessage());
+        }
+        
         return "redirect:/";
     }
 }

@@ -8,8 +8,14 @@ import org.slf4j.LoggerFactory;
 
 import next.controller.HomeController;
 import next.controller.qna.AddAnswerController;
+import next.controller.qna.CreateQuestionController;
 import next.controller.qna.DeleteAnswerController;
+import next.controller.qna.DeleteQuestionController;
 import next.controller.qna.ShowController;
+import next.controller.qna.UpdateAnswerController;
+import next.controller.qna.UpdateFormAnswerController;
+import next.controller.qna.UpdateFormQuestionController;
+import next.controller.qna.UpdateQuestionController;
 import next.controller.user.CreateUserController;
 import next.controller.user.ListUserController;
 import next.controller.user.LoginController;
@@ -23,6 +29,8 @@ public class RequestMapping {
     private Map<String, Controller> mappings = new HashMap<>();
 
     void initMapping() {
+    	
+    	
         mappings.put("/", new HomeController());
         mappings.put("/users/form", new ForwardController("/user/form.jsp"));
         mappings.put("/users/loginForm", new ForwardController("/user/login.jsp"));
@@ -34,11 +42,18 @@ public class RequestMapping {
         mappings.put("/users/updateForm", new UpdateFormUserController());
         mappings.put("/users/update", new UpdateUserController());
         mappings.put("/qna/show", new ShowController());
+        mappings.put("/qna/form", new ForwardController("/qna/form.jsp"));
+        mappings.put("/qna/create", new CreateQuestionController());
+        mappings.put("/qna/delete", new DeleteQuestionController());
+        mappings.put("/qna/updateForm", new UpdateFormQuestionController());
+        mappings.put("/qna/update", new UpdateQuestionController());
         mappings.put("/api/qna/addAnswer", new AddAnswerController());
         mappings.put("/api/qna/deleteAnswer", new DeleteAnswerController());
-
+        mappings.put("/api/qna/updateFormAnswer", new UpdateFormAnswerController());
+        mappings.put("/api/qna/updateAnswer", new UpdateAnswerController());
+        
         logger.info("Initialized Request Mapping!");
-    }
+    } 
 
     public Controller findController(String url) {
         return mappings.get(url);

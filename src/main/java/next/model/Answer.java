@@ -3,82 +3,97 @@ package next.model;
 import java.util.Date;
 
 public class Answer {
-    private long answerId;
-    private String writer;
-    private String contents;
-    private Date createdDate;
-    private long questionId;
-    private int countOfAnswer;
-    
+	private long questionId;
+	private String writer;
+	private String contents;
+	private Date createDate;
+	private long answerId;
+	private int countOfAnswer;
+	public Answer(String writer,String contents,long questionId) {
+		this(0,writer,contents,new Date(),questionId);
+	}
+	
+	
+	public Answer(long answerId,String writer,String contents,Date createDate,long questionId) {
+		this.questionId = questionId;
+		this.writer = writer;
+		this.contents = contents;
+		this.createDate = createDate;
+		this.answerId = answerId;
+	}
+	
+	public long getQuestionId(){
+		return questionId;
+	}
+	
 
-    public Answer(String writer, String contents, long questionId) {
-        this(0, writer, contents, new Date(), questionId);
-    }
+	public String getWriter() {
+		return writer;
+	}
 
-    public Answer(long answerId, String writer, String contents, Date createdDate, long questionId) {
-        this.answerId = answerId;
-        this.writer = writer;
-        this.contents = contents;
-        this.createdDate = createdDate;
-        this.questionId = questionId;
-    }
+	public String getContents() {
+		return contents;
+	}
 
-    public int getCountOfAnswer() {
-    		return countOfAnswer;
-    }
-    public void setCountOfAnswer(int count) {
-    		this.countOfAnswer= count;
-    }
-    
-    public long getAnswerId() {
-        return answerId;
-    }
+	public Date getCreateDate() {
+		return createDate;
+	}
+	
+	public long getTimeFromCreatedDate() {
+		return this.createDate.getTime();
+	}
+	
+	public long getAnswerId() {
+		return answerId;
+	}
 
-    public String getWriter() {
-        return writer;
-    }
+	public int getCountOfAnswer() {
+		return countOfAnswer;
+	}
+	
+	public void setCountOfAnswer(int count) {
+		this.countOfAnswer=count;
+	}
+	
+	@Override
+	public int hashCode() {
+		final int prime =31;
+		int result = 1;
+		
+		result = prime*result+(int)(questionId^(questionId>>>32));
+		return result;
+	}
+	 public void update(Answer newAnswer) {
+	       this.contents = newAnswer.contents;
+	    }
 
-    public String getContents() {
-        return contents;
-    }
+	@Override
+	public boolean equals(Object obj) {
+		if(this==obj) {
+			return true;
+		}
+		if(obj==null) {
+			return false;
+		}
+		if(this.getClass()!=obj.getClass()) {
+			return false;
+		}
+		Answer other = (Answer) obj;
+		if(questionId != other.questionId) {
+			return false;
+		}else {
+			return true;
+		}
+		
+	}
+	
 
-    public Date getCreatedDate() {
-        return createdDate;
-    }
+	@Override
+	public String toString() {
+		return "Answer [answerId="+answerId+",writer ="+writer+","
+				+ "contents="+contents+",createdDate"+createDate+",questionId="+questionId;
+	}
 
-    public long getTimeFromCreateDate() {
-        return this.createdDate.getTime();
-    }
-
-    public long getQuestionId() {
-        return questionId;
-    }
-
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + (int) (answerId ^ (answerId >>> 32));
-        return result;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Answer other = (Answer) obj;
-        if (answerId != other.answerId)
-            return false;
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "Answer [answerId=" + answerId + ", writer=" + writer + ", contents=" + contents + ", createdDate="
-                + createdDate + ", questionId=" + questionId + "]";
-    }
+	
+	
 }

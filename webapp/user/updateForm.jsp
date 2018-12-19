@@ -16,7 +16,7 @@
                 <input type="hidden" name="userId" value="${user.userId}" />
                 <div class="form-group">
                     <label>사용자 아이디</label>
-                   <input disabled class="form-control" value="${user.userId}"/>
+                	<input disabled class="form-control" value=${user.userId}>
                 </div>
                 <div class="form-group">
                     <label for="password">비밀번호</label>
