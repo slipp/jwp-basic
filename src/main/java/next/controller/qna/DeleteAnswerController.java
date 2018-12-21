@@ -37,7 +37,7 @@ public class DeleteAnswerController implements Controller {
         }
 		
 
-		log.debug("answerId : {}", answerId);
+		log.debug("answerId : {}", answerId); 
 		
 		
 		
