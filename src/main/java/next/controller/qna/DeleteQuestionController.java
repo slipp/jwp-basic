@@ -25,7 +25,7 @@ public class DeleteQuestionController implements Controller {
 		
 		Question question = questionDao.findById(questionId);
 	        if (!question.isSameUser(UserSessionUtils.getUserFromSession(req.getSession()))) {
-	            throw new IllegalStateException("다른 사용자가 작성한 게시글을 삭제 할 수 없습니다.");
+	            throw new IllegalStateException("다른 사용자가 작성한 게시글은 삭제 할 수 없습니다.");
 	        }
 			
 		

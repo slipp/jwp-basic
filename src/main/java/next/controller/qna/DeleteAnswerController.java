@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import core.mvc.Controller;
+import next.controller.UserSessionUtils;
 import next.dao.AnswerDao;
 import next.dao.QuestionDao;
 import next.model.Answer;
@@ -21,12 +22,19 @@ public class DeleteAnswerController implements Controller {
 	private final static Logger log = LoggerFactory.getLogger(DeleteAnswerController.class);
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+		if (!UserSessionUtils.isLogined(req.getSession())) {
+            return "redirect:/users/loginForm";
+        }
 		Long answerId = Long.parseLong(req.getParameter("answerId"));
 		long questionId = Long.parseLong(req.getParameter("questionId"));
 		
 		QuestionDao questionDao = new QuestionDao();
 		AnswerDao answerDao = new AnswerDao();
 		Answer answer = answerDao.findById(answerId);
+		
+		if (!answer.isSameUser(UserSessionUtils.getUserFromSession(req.getSession()))) {
+            throw new IllegalStateException();
+        }
 		
 
 		log.debug("answerId : {}", answerId);

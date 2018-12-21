@@ -16,9 +16,9 @@ public class UpdateAnswerController implements Controller {
 		System.out.println(req.getParameter("answerId"));
         long answerId = Long.parseLong(req.getParameter("answerId"));
 
-		System.out.println("11111111111111111111");
+	
         Answer answer = answerDao.findById(answerId);
-        System.out.println("11111111111111111111");
+        
 
         Answer newAnswer = new Answer( answer.getWriter(), req.getParameter("contents"),answer.getAnswerId());
         answer.update(newAnswer);

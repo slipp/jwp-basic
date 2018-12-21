@@ -94,6 +94,11 @@ public class Answer {
 				+ "contents="+contents+",createdDate"+createDate+",questionId="+questionId;
 	}
 
+
+	public boolean isSameUser(User userFromSession) {
+		return userFromSession.isSameUser(this.writer);
+	}
+
 	
 	
 }

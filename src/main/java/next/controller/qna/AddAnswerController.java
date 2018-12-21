@@ -11,7 +11,9 @@ import org.slf4j.LoggerFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import core.mvc.Controller;
+import next.controller.UserSessionUtils;
 import next.dao.AnswerDao;
+import next.dao.QuestionDao;
 import next.model.Answer;
 
 public class AddAnswerController implements Controller {
@@ -20,13 +22,20 @@ public class AddAnswerController implements Controller {
 	
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+		if (!UserSessionUtils.isLogined(req.getSession())) {
+			throw new IllegalStateException();
+        }
+		
 		Long questionId = Long.parseLong(req.getParameter("questionId"));
+		QuestionDao questionDao = new QuestionDao();
 		log.debug("questionId : {}",questionId);
 		
 		Answer answer = new Answer(req.getParameter("writer"),req.getParameter("contents"),questionId);
 		log.debug("Answer : {}", answer);
 		AnswerDao answerDao = new AnswerDao();
 		Answer savedAnswer = answerDao.insert(answer);
+		
+		
 		log.debug("SavedAnswer : {}", savedAnswer);
 		
 		ObjectMapper mapper = new ObjectMapper();
