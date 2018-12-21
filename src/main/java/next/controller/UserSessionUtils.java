@@ -30,7 +30,7 @@ public class UserSessionUtils {
         if (user == null) {
             return false;
         }
-
+  
         return user.isSameUser(getUserFromSession(session));
     }
 }
