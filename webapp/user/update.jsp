@@ -74,7 +74,8 @@
           <form name="question" method="post" action="/user/create">
               <div class="form-group">
                   <label for="userId">사용자 아이디</label>
-                  <input type="hidden" class="form-control" id="userId" name="userId" value="${user.userId}">
+                  <input type="hidden" class="form-control" id="userId" name="userId" ">
+                  <p style="margin-left : 4px;"> ${user.userId}</p>
               </div>
               <div class="form-group">
                   <label for="password">비밀번호</label>
