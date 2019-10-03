@@ -7,6 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import next.model.User;
 
@@ -26,6 +27,8 @@ public class CreateUserServlet extends HttpServlet {
                 req.getParameter("email"));
         log.debug("user : {}", user);
         DataBase.addUser(user);
+        HttpSession session = req.getSession();
+        session.setAttribute("user", user);
         resp.sendRedirect("/user/list");
     }
 }
