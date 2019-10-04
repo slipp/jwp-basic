@@ -19,7 +19,7 @@ public class UserLoginServlet extends HttpServlet{
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 	
 		forward(req, resp, "/user/login.jsp");
-		//resp.sendRedirect("/user/login.html");
+		//resp.sendRedirect("/user/login.jsp");
 		
 		
 				
