@@ -4,7 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class ForwardController implements Controller {
-    private String forwardUrl;
+    private final String forwardUrl;
 
     public ForwardController(String forwardUrl) {
         this.forwardUrl = forwardUrl;
@@ -14,7 +14,7 @@ public class ForwardController implements Controller {
     }
 
     @Override
-    public String execute(HttpServletRequest req, HttpServletResponse resp) throws Exception {
-        return forwardUrl;
+    public View execute(HttpServletRequest req, HttpServletResponse resp) {
+        return new JspView(forwardUrl);
     }
 }
