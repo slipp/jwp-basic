@@ -12,9 +12,8 @@ import java.util.Map;
 public class JsonView implements View {
 
 	@Override
-	public void render(final HttpServletRequest request, final HttpServletResponse response) throws Exception {
+	public void render(final Map<String, ?> model, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		ObjectMapper objectMapper = new ObjectMapper();
-		Map<String, Object> model = createModelFromRequest(request);
 		response.setContentType("application/json;charset=UTF-8");
 		PrintWriter writer = response.getWriter();
 		writer.print(objectMapper.writeValueAsString(model));

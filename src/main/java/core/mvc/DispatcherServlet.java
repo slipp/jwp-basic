@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 public class DispatcherServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private static final Logger logger = LoggerFactory.getLogger(DispatcherServlet.class);
-    private static final String DEFAULT_REDIRECT_PREFIX = "redirect:";
 
     private RequestMapping rm;
 
@@ -30,8 +29,9 @@ public class DispatcherServlet extends HttpServlet {
 
         Controller controller = rm.findController(requestUri);
         try {
-            View view = controller.execute(req, resp);
-            view.render(req, resp);
+            ModelAndView modelAndView = controller.execute(req, resp);
+            View view = modelAndView.getView();
+            view.render(modelAndView.getModel(), req, resp);
         } catch (Throwable e) {
             logger.error("Exception: ", e);
             throw new ServletException(e.getMessage());
