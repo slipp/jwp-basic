@@ -26,7 +26,7 @@ public class AnswerDaoTest {
     public void addAnswer() throws Exception {
         long questionId = 1L;
         Answer expected = new Answer("javajigi", "answer contents", questionId);
-        AnswerDao dut = AnswerDao.getInstance();
+        AnswerDao dut = new JdbcAnswerDao();
         Answer answer = dut.insert(expected);
         log.debug("Answer : {}", answer);
     }

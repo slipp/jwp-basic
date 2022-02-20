@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import next.controller.UserSessionUtils;
+import next.dao.JdbcQuestionDao;
 import next.dao.QuestionDao;
 import next.model.Question;
 import next.model.User;
@@ -11,7 +12,11 @@ import core.mvc.AbstractController;
 import core.mvc.ModelAndView;
 
 public class CreateQuestionController extends AbstractController {
-    private QuestionDao questionDao = QuestionDao.getInstance();
+    private QuestionDao questionDao;
+
+    public CreateQuestionController(QuestionDao questionDao) {
+        this.questionDao = questionDao;
+    }
 
     @Override
     public ModelAndView execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
