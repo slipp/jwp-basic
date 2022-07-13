@@ -24,8 +24,15 @@ public class DispatcherServlet extends HttpServlet{
 		try {
 			log.debug("요청 온 method : {}", req.getMethod());
 			log.debug("요청 온 request URI : {}", req.getRequestURI());
-			RequestDispatcher rd = req.getRequestDispatcher(RequestMapping.getController(req.getRequestURI(), req, resp));
-			rd.forward(req, resp);
+			String forwardUrl = RequestMapping.getController(req.getRequestURI(), req, resp);
+			if(forwardUrl.startsWith("redirect:")){
+				forwardUrl = forwardUrl.substring(9);
+				resp.sendRedirect(forwardUrl);
+			}
+			else {
+				RequestDispatcher rd = req.getRequestDispatcher(forwardUrl);
+				rd.forward(req, resp);
+			}
 		} catch (Exception e) {
 			log.error(e.getMessage());
 		}
@@ -36,8 +43,15 @@ public class DispatcherServlet extends HttpServlet{
 		try {
 			log.debug("요청 온 method : {}", req.getMethod());
 			log.debug("요청 온 request URI : {}", req.getRequestURI());
-			RequestDispatcher rd = req.getRequestDispatcher(RequestMapping.getController(req.getRequestURI(), req, resp));
-			rd.forward(req, resp);
+			String forwardUrl = RequestMapping.getController(req.getRequestURI(), req, resp);
+			if(forwardUrl.startsWith("redirect:")){
+				forwardUrl = forwardUrl.substring(9);
+				resp.sendRedirect(forwardUrl);
+			}
+			else {
+				RequestDispatcher rd = req.getRequestDispatcher(forwardUrl);
+				rd.forward(req, resp);
+			}
 		} catch (Exception e) {
 			log.error(e.getMessage());
 		}
