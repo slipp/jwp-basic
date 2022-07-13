@@ -24,7 +24,7 @@ public class RequestMapping{
 	
 	private static final Logger log = LoggerFactory.getLogger(RequestMapping.class);
 	
-	static {
+	public void init() {
 		controllers.put("/user/list", new ListUserController());
 		controllers.put("", new HomeController());
 		controllers.put("/", new HomeController());
@@ -38,7 +38,7 @@ public class RequestMapping{
 		controllers.put("/users/updateForm", new UpdateUserController());
 	}
 	
-	public static String getController(String requestUrl, HttpServletRequest req, HttpServletResponse resp) throws Exception {
+	public String getController(String requestUrl, HttpServletRequest req, HttpServletResponse resp) throws Exception {
 		log.debug("{}",controllers.get(requestUrl).getClass().getName());
 		return controllers.get(requestUrl).execute(req, resp);
 	}
