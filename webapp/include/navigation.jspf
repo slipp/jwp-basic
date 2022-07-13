@@ -46,7 +46,7 @@
     </div>
     <div class="collapse navbar-collapse" id="navbar-collapse2">
       <ul class="nav navbar-nav navbar-right">
-        <li class="active"><a href="index.html">Posts</a></li>
+        <li class="active"><a href="/">Posts</a></li>
         <c:choose>
         <c:when test="${not empty sessionScope.user}">
         <li><a href="/users/logout" role="button">로그아웃</a></li>
