@@ -1,51 +1,43 @@
 package next.controller;
 
-import java.io.IOException;
-
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import core.controller.Controller;
 import core.db.DataBase;
 import next.model.User;
 
-@WebServlet(value = { "/users/login", "/users/loginForm" })
-public class LoginController extends HttpServlet {
-    private static final long serialVersionUID = 1L;
+public class LoginController implements Controller {
+    
+	private static final Logger log = LoggerFactory.getLogger(LoginController.class);
 
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        forward("/user/login.jsp", req, resp);
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String userId = req.getParameter("userId");
-        String password = req.getParameter("password");
+	@Override
+	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		log.debug("로그인 제대로 넘어오는지");
+		if(request.getMethod().equals("GET")) return "/user/login.jsp";
+		
+		String userId = request.getParameter("userId");
+        String password = request.getParameter("password");
         User user = DataBase.findUserById(userId);
         if (user == null) {
-            req.setAttribute("loginFailed", true);
-            forward("/user/login.jsp", req, resp);
-            return;
+        	request.setAttribute("loginFailed", true);
+            return "/user/login.jsp";
         }
 
         if (user.matchPassword(password)) {
-            HttpSession session = req.getSession();
+            HttpSession session = request.getSession();
             session.setAttribute(UserSessionUtils.USER_SESSION_KEY, user);
-            resp.sendRedirect("/");
-        } else {
-            req.setAttribute("loginFailed", true);
-            forward("/user/login.jsp", req, resp);
+            return "redirect:/";
         }
-    }
+        
+        request.setAttribute("loginFailed", true);
+        return "/user/login.jsp";
+		
+	}
 
-    private void forward(String forwardUrl, HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
-        RequestDispatcher rd = req.getRequestDispatcher(forwardUrl);
-        rd.forward(req, resp);
-    }
+    
 }
