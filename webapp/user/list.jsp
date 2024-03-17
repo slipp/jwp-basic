@@ -85,7 +85,7 @@
                         <td>${user.userId}</td>
                         <td>${user.name}</td>
                         <td>${user.email}</td>
-                        <td><a href="#" class="btn btn-success" role="button">수정</a>
+                        <td><a href="/user/updateform?userId=${user.userId}" class="btn btn-success" role="button">수정</a>
                         </td>
                     </tr>
                 </c:forEach>
