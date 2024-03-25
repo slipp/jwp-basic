@@ -20,13 +20,13 @@ public class LoginUserServlet extends HttpServlet  {
 
 	@Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		System.out.println("/user/login req : "+req.getParameter("userId")+""+req.getParameter("password"));
         User user = DataBase.findUserById(req.getParameter("userId"));
-        if(user.getUserId()==req.getParameter("userId") & user.getPassword()==req.getParameter("password")) {
+        System.out.println("/user/login data  : "+user.toString());
+        if(user.getUserId().equals(req.getParameter("userId")) & user.getPassword().equals(req.getParameter("password"))) {
         	HttpSession session = req.getSession();
         	session.setAttribute("user", user);
-        	req.setAttribute("name", user.getName());
-            RequestDispatcher rd = req.getRequestDispatcher("/user/index.html");
-            rd.forward(req, resp);
+            resp.sendRedirect("/index.jsp");
         } else {
         	System.out.println("no match");
             RequestDispatcher rd = req.getRequestDispatcher("/user/login_failed.html");
